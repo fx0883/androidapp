@@ -6,4 +6,9 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="transition_cook_detail_imgv_bg">transition_cook_detail_imgv_bg</string>
+    <string name="transition_cook_detail_content">transition_cook_detail_content</string>
+
+    <string name="ingredients">用料</string>
+    <string name="methods">做法</string>
 </resources>

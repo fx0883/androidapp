@@ -290,6 +290,8 @@ public class MainActivity extends AppCompatActivity
     private void setupViews(List<RecipeBean> recipes) {
         recipeListView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         recipeListAdapter = new RecipeListAdapter(recipes);
+        recipeListAdapter.activity = this;
+
         recipeListView.setAdapter(recipeListAdapter);
         //设置item之间的间隔
         SpacesItemDecoration decoration=new SpacesItemDecoration(16);

@@ -8,21 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.recipes.app2.R;
+import com.recipes.app2.activitys.CookDetailActivity;
 import com.recipes.app2.model.bean.RecipeBean;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.ButterKnife;
+
 
 
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeViewHolder>{
     private List<RecipeBean> recipes = null;
+    public Activity activity = null;
+    public ImageView iv = null;
+
 
 
     public RecipeListAdapter(List<RecipeBean> list) {
@@ -36,7 +39,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     }
 
     @Override
-    public void onBindViewHolder(RecipeViewHolder recipeViewHolder, int position) {
+    public void onBindViewHolder(final RecipeViewHolder recipeViewHolder, final int position) {
         RecipeBean recipe = recipes.get(position);
         String recipeUrl = "file:///android_asset/recipesImage/" + recipe.getPhoto();
 
@@ -45,6 +48,19 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
                 .load(recipeUrl)
                 .into(recipeViewHolder.ivRecipe);
         recipeViewHolder.tvTitle.setText(recipes.get(position).getName());
+
+
+        recipeViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                // 点击事件
+                //Toast.makeText(recipeViewHolder.itemView.getContext(), position + "", 1000).show();
+                CookDetailActivity.startActivity(activity, recipeViewHolder.ivRecipe, recipes.get(position), true);
+            }
+        });
+
+
     }
 
     @Override

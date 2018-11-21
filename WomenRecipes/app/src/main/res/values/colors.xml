@@ -33,4 +33,23 @@
 
     <color name="pressed_color_ripple">#55000000</color>
     <color name="tab_title">@android:color/white</color>
+
+    <color name="seperate_line">#ffcdcdcd</color>
+
+    <color name="white">#ffffffff</color>
+    <color name="color_text_gray_darker">#333336</color>
+
+    <color name="black_alpha_light">#98e2e0df</color>
+    <color name="black_light">#e2e0df</color>
+    <color name="black_alpha_12">#1F000000</color>
+    <color name="black_alpha_30">#4D000000</color>
+    <color name="black_text">#c41a130b</color>
+    <color name="Orange">#e75946</color>
+    <color name="Yellow">#f4d227</color>
+    <color name="Blue">#4674e7</color>
+    <color name="Blue_light">#5e86e9</color>
+    <color name="Green">#0ba62c</color>
+    <color name="divider">#B6B6B6</color>
+    <color name="shadow_gray">#cabbbbbb</color>
+    <color name="lineColor">#60d3d3d3</color>
 </resources>

@@ -7,6 +7,7 @@
 
 package com.recipes.app2;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.recipes.app2.model.bean.DaoMaster;
@@ -51,6 +52,10 @@ public class RecipeApplication extends android.app.Application {
     // 获取Application
     public static RecipeApplication getApplication() {
         return instance;
+    }
+
+    public static Context getContext() {
+        return instance.getApplicationContext();
     }
 
 //    /**
