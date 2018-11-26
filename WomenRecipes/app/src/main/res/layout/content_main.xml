@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,26 +8,59 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/channel_recipe_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--<com.etsy.android.grid.StaggeredGridView xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/llBatchManagement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/gray_rect"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/tvSelectAll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="全选"
+            android:textColor="@color/common_h1"/>
+
+        <TextView
+            android:id="@+id/tvDelete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="删除"
+            android:textColor="@color/dark_red"/>
+    </LinearLayout>
+    <!--<FrameLayout-->
+        <!--android:id="@+id/content_frame"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+
+        <!--<android.support.v7.widget.RecyclerView-->
             <!--android:id="@+id/channel_recipe_list"-->
             <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--app:column_count="2"-->
-            <!--app:item_margin="38dp" />-->
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/channel_recipe_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <!--android:layout_height="match_parent">-->
 
-        </android.support.v7.widget.RecyclerView>
+        <!--</android.support.v7.widget.RecyclerView>-->
 
 
-    </FrameLayout>
+    <!--</FrameLayout>-->
 
 
-</android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>

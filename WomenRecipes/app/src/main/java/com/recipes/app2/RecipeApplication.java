@@ -29,6 +29,8 @@ public class RecipeApplication extends android.app.Application {
     public DaoSession daoSession;
     private static RecipeApplication instance;
 
+    public Boolean isCollectMode = false;
+
     private final CompositeDisposable disposables = new CompositeDisposable();
     @Override
     public void onCreate() {

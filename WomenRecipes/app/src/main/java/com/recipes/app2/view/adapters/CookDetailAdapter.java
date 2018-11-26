@@ -1,27 +1,34 @@
 package com.recipes.app2.view.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.recipes.app2.RecipeApplication;
+import com.recipes.app2.model.bean.CookRecipeMethod;
 import com.recipes.app2.model.bean.RecipeBean;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import com.recipes.app2.R;
+import com.recipes.app2.model.services.RecipeService;
 import com.recipes.app2.view.components.SwitchIconView;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Administrator on 2017/2/21.
@@ -35,7 +42,7 @@ public class CookDetailAdapter extends RecyclerView.Adapter<CookDetailAdapter.It
 
     private String sumary;
     private ArrayList<String> ingredientsDatas;
-//    private ArrayList<CookRecipeMethod> cookRecipeMethods;
+    private ArrayList<CookRecipeMethod> cookRecipeMethods;
     private boolean isShowCollection;
 
 //    private Gson gson;
@@ -46,21 +53,41 @@ public class CookDetailAdapter extends RecyclerView.Adapter<CookDetailAdapter.It
         this.srcData = data;
         this.isShowCollection = isShowCollection;
 
+        sumary = data.getPrompt();
+        sumary = sumary.replaceAll("<br>","");
+
         String str = data.getIngredients();
+        if(null == str || TextUtils.isEmpty(str)) {
+            ingredientsDatas = new ArrayList<>();
+        }
+        else{
+            String[] ingredients = str.split("<br>");
 
+            ingredientsDatas = new ArrayList<String>();
+//            ingredientsDatas.addAll(ingredients);
 
-//        str = data.getRecipe().getMethod();
-//        if(null == str || TextUtils.isEmpty(str)){
-//            cookRecipeMethods = new ArrayList<>();
-//        }
-//        else {
-//            str = str.replace("\\", "");
-//            cookRecipeMethods = gson.fromJson(
-//                    str
-//                    , new TypeToken<ArrayList<CookRecipeMethod>>() {
-//                    }.getType());
-//        }
-//
+            for(int i=0;i<ingredients.length;i++) {
+
+                ingredientsDatas.add(ingredients[i]);
+            }
+        }
+
+        str = data.getSteps();
+        if(null == str || TextUtils.isEmpty(str)){
+            cookRecipeMethods = new ArrayList<>();
+        }
+        else {
+            String[] steps = str.split("<br>");
+
+            cookRecipeMethods = new ArrayList<>();
+
+            for(int i=0;i<steps.length;i++) {
+                CookRecipeMethod cookRecipeMethod = new CookRecipeMethod();
+                cookRecipeMethod.setStep(steps[i]);
+                cookRecipeMethods.add(cookRecipeMethod);
+            }
+
+        }
         this.datas = CookDetailStruct.create(cookRecipeMethods);
     }
 
@@ -96,26 +123,28 @@ public class CookDetailAdapter extends RecyclerView.Adapter<CookDetailAdapter.It
             final CookManItemViewHolder holderView = (CookManItemViewHolder)holder;
 
             if(isShowCollection){
-                holderView.switchIconView.setVisibility(View.VISIBLE);
-
-                holderView.switchIconView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-//                        if(holderView.switchIconView.isIconEnabled()){
-//                            CookCollectionManager.getInstance().delete(srcData);
-//                        }
-//                        else{
+//                holderView.switchIconView.setVisibility(View.VISIBLE);
 //
-//
-//                            CookCollectionManager.getInstance().add(srcData);
-//                        }
-                        holderView.switchIconView.switchState();
-                    }
-                });
+//                holderView.switchIconView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+////                        if(holderView.switchIconView.isIconEnabled()){
+////                            CookCollectionManager.getInstance().delete(srcData);
+////                        }
+////                        else{
+////
+////
+////                            CookCollectionManager.getInstance().add(srcData);
+////                        }
+//                        holderView.switchIconView.switchState();
+//                    }
+//                });
             }
             else{
-                holderView.switchIconView.setVisibility(View.GONE);
+//                holderView.switchIconView.setVisibility(View.GONE);
             }
+
+
 
             holderView.textSumary.setText(sumary);
             return ;
@@ -155,20 +184,53 @@ public class CookDetailAdapter extends RecyclerView.Adapter<CookDetailAdapter.It
                 holderView.textIngredientsContent2.setText(ingredientsDatas.get(1));
                 holderView.textIngredientsContent3.setText(ingredientsDatas.get(2));
             }
+
+            if(RecipeApplication.getApplication().isCollectMode) {
+                holderView.imgButtonCollect.setVisibility(View.GONE);
+            }
+            else{
+                holderView.imgButtonCollect.setVisibility(View.VISIBLE);
+            }
+
+            if(srcData.getCollect())
+            {
+                holderView.imgButtonCollect.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.shoucanghuang));
+            }
+            else
+            {
+                holderView.imgButtonCollect.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.shoucangbai));
+            }
+
+
+
+            holderView.imgButtonCollect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    srcData.setCollect(!srcData.getCollect());
+
+//                    RecipeApplication.getApplication().daoSession.getRecipeBeanDao().update(srcData);
+
+                    RecipeService.getInstance().updateRecipe(srcData);
+                    notifyDataSetChanged();
+                }
+            });
+
             return ;
         }
 //
-//        StepItemViewHolder holderView = (StepItemViewHolder)holder;
-//        CookRecipeMethod data = datas.get(position).getData();
-//        holderView.textContent.setText(data.getStep());
-//
-//        if(data.getImg() != null && (!TextUtils.isEmpty(data.getImg()))) {
-//            holderView.imgvStep.setVisibility(View.VISIBLE);
-//            glideUtil.attach(holderView.imgvStep).injectImageWithNull(data.getImg());
-//        }
-//        else{
-//            holderView.imgvStep.setVisibility(View.GONE);
-//        }
+        StepItemViewHolder holderView = (StepItemViewHolder)holder;
+        CookRecipeMethod data = datas.get(position).getData();
+        holderView.textContent.setText(data.getStep());
+
+        if(data.getImg() != null && (!TextUtils.isEmpty(data.getImg()))) {
+            holderView.imgvStep.setVisibility(View.VISIBLE);
+            Picasso.with(context)
+                    .load(data.getImg())
+                    .into(holderView.imgvStep);
+        }
+        else{
+            holderView.imgvStep.setVisibility(View.GONE);
+        }
 
     }
 
@@ -188,39 +250,40 @@ public class CookDetailAdapter extends RecyclerView.Adapter<CookDetailAdapter.It
     private static class CookDetailStruct{
 
         private int type;
-//        private CookRecipeMethod data;
+        private CookRecipeMethod data;
 
         public CookDetailStruct(int type){
             this.type = type;
         }
 
-//        public CookDetailStruct(int type, CookRecipeMethod data){
-//            this.type = type;
-////            this.data = data;
-//        }
+        public CookDetailStruct(int type, CookRecipeMethod data){
+            this.type = type;
+            this.data = data;
+        }
 
         public int getType() {
             return type;
         }
 
-//        public CookRecipeMethod getData() {
-//            return data;
-//        }
+        public CookRecipeMethod getData() {
+            return data;
+        }
 
-//        public static List<CookDetailStruct> create(ArrayList<CookRecipeMethod> cookRecipeMethods){
-//            List<CookDetailStruct> datas = new ArrayList<>();
-//
-//            datas.add(new CookDetailStruct(Cook_Detail_Item_Type_CookMan));
-//            datas.add(new CookDetailStruct(Cook_Detail_Item_Type_Header));
-//
-//            if(null == cookRecipeMethods)
-//                return datas;
-//
-//            for(CookRecipeMethod item : cookRecipeMethods) {
-//                datas.add(new CookDetailStruct(Cook_Detail_Item_Type_Step, item));
-//            }
-//            return datas;
-//        }
+        public static List<CookDetailStruct> create(ArrayList<CookRecipeMethod> cookRecipeMethods){
+            List<CookDetailStruct> datas = new ArrayList<>();
+
+
+            datas.add(new CookDetailStruct(Cook_Detail_Item_Type_Header));
+
+            if(null == cookRecipeMethods)
+                return datas;
+
+            for(CookRecipeMethod item : cookRecipeMethods) {
+                datas.add(new CookDetailStruct(Cook_Detail_Item_Type_Step, item));
+            }
+            datas.add(new CookDetailStruct(Cook_Detail_Item_Type_CookMan));
+            return datas;
+        }
     }
 
     public class StepItemViewHolder extends ItemViewHolder{
@@ -237,10 +300,12 @@ public class CookDetailAdapter extends RecyclerView.Adapter<CookDetailAdapter.It
 
     public class CookManItemViewHolder extends ItemViewHolder{
 
-        @BindView(R.id.switchIconView_collection)
-        public SwitchIconView switchIconView;
+//        @BindView(R.id.switchIconView_collection)
+//        public SwitchIconView switchIconView;
         @BindView(R.id.text_sumary)
         public TextView textSumary;
+
+
 
         public CookManItemViewHolder(View itemView){
             super(itemView);
@@ -265,6 +330,10 @@ public class CookDetailAdapter extends RecyclerView.Adapter<CookDetailAdapter.It
         public TextView textIngredientsContent2;
         @BindView(R.id.text_ingredients_content3)
         public TextView textIngredientsContent3;
+
+
+        @BindView(R.id.recipe_collect)
+        public ImageButton imgButtonCollect;
 
         public HeaderItemViewHolder(View itemView){
             super(itemView);

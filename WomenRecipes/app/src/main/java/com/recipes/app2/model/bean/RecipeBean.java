@@ -5,13 +5,20 @@ import android.os.Parcelable;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Keep;
+import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.Transient;
 
 @Entity(
         nameInDb = "recipe",
         createInDb = false
 )
 public class RecipeBean implements Parcelable {
-    private int id;
+//public class RecipeBean {
+    @Property(nameInDb = "id")
+    @Id(autoincrement = true)
+    private Long id;
     private String name;
     private String ingredients;
     private String steps;
@@ -22,28 +29,34 @@ public class RecipeBean implements Parcelable {
     private String type;
     private String month;
     private String subername;
-@Generated(hash = 967799467)
-public RecipeBean(int id, String name, String ingredients, String steps,
-        String prompt, String photo, String suberphoto, String type,
-        String month, String subername) {
-    this.id = id;
-    this.name = name;
-    this.ingredients = ingredients;
-    this.steps = steps;
-    this.prompt = prompt;
-    this.photo = photo;
-    this.suberphoto = suberphoto;
-    this.type = type;
-    this.month = month;
-    this.subername = subername;
-}
+    private Boolean collect;
+
+    @Transient
+    public Boolean showCheckBox = false;
+
+    @Generated(hash = 836160)
+    public RecipeBean(Long id, String name, String ingredients, String steps, String prompt,
+            String photo, String suberphoto, String type, String month, String subername,
+            Boolean collect) {
+        this.id = id;
+        this.name = name;
+        this.ingredients = ingredients;
+        this.steps = steps;
+        this.prompt = prompt;
+        this.photo = photo;
+        this.suberphoto = suberphoto;
+        this.type = type;
+        this.month = month;
+        this.subername = subername;
+        this.collect = collect;
+    }
 @Generated(hash = 1492456445)
 public RecipeBean() {
 }
-public int getId() {
+public Long getId() {
     return this.id;
 }
-public void setId(int id) {
+public void setId(Long id) {
     this.id = id;
 }
 public String getName() {
@@ -100,6 +113,17 @@ public String getSubername() {
 public void setSubername(String subername) {
     this.subername = subername;
 }
+public Boolean getCollect() {
+    return this.collect;
+}
+public void setCollect(Boolean collect) {
+    this.collect = collect;
+}
+
+
+
+
+
 
     @Override
     public int describeContents() {
@@ -108,7 +132,7 @@ public void setSubername(String subername) {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
+        dest.writeLong(this.id);
         dest.writeString(this.name);
         dest.writeString(this.ingredients);
         dest.writeString(this.steps);
@@ -119,20 +143,36 @@ public void setSubername(String subername) {
         dest.writeString(this.type);
         dest.writeString(this.month);
         dest.writeString(this.subername);
+
+
+
+        dest.writeByte((byte) (this.collect ? 1 : 0)); //if myBoolean == true, byte == 1
+        dest.writeByte((byte) (this.showCheckBox ? 1 : 0));
+
+
     }
+    public Boolean getShowCheckBox() {
+        return this.showCheckBox;
+    }
+    public void setShowCheckBox(Boolean showCheckBox) {
+        this.showCheckBox = showCheckBox;
+    }
+
 
     protected RecipeBean(Parcel in) {
 
-        this.id = in.readInt();
-        this.name = in.readString();;
-        this.ingredients = in.readString();;
-        this.steps = in.readString();;
-        this.prompt = in.readString();;
-        this.photo = in.readString();;
-        this.suberphoto = in.readString();;
-        this.type = in.readString();;
-        this.month = in.readString();;
-        this.subername = in.readString();;
+        this.id = in.readLong();
+        this.name = in.readString();
+        this.ingredients = in.readString();
+        this.steps = in.readString();
+        this.prompt = in.readString();
+        this.photo = in.readString();
+        this.suberphoto = in.readString();
+        this.type = in.readString();
+        this.month = in.readString();
+        this.subername = in.readString();
+        this.collect = in.readByte() != 0;
+        this.showCheckBox = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<RecipeBean> CREATOR = new Parcelable.Creator<RecipeBean>() {
@@ -148,12 +188,5 @@ public void setSubername(String subername) {
     };
 
 
-///    protected RecipeBean(Parcel in) {
-//        this.ctgIds = in.createStringArrayList();
-//        this.ctgTitles = in.readString();
-//        this.menuId = in.readString();
-//        this.name = in.readString();
-//        this.recipe = in.readParcelable(CookRecipe.class.getClassLoader());
-//        this.thumbnail = in.readString();
-//    }
+
 }

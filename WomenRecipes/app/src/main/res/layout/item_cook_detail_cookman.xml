@@ -12,7 +12,7 @@
 
             <TextView
                 android:id="@+id/text_title"
-                android:text="@string/app_name"
+                android:text="@string/hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -21,18 +21,20 @@
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"/>
 
-            <com.example.administrator.cookman.ui.component.SwitchIconView
-                android:id="@+id/switchIconView_collection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_toRightOf="@+id/text_title"
-                android:layout_centerVertical="true"
-                app:si_disabled_alpha="0.95"
-                app:si_disabled_color="@color/shadow_gray"
-                app:si_enabled="true"
-                app:si_tint_color="@color/colorPrimary"
-                app:srcCompat="@mipmap/icon_collection"/>
+
+
+            <!--<com.recipes.app2.view.components.SwitchIconView-->
+                <!--android:id="@+id/switchIconView_collection"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_toRightOf="@+id/text_title"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--app:si_disabled_alpha="0.95"-->
+                <!--app:si_disabled_color="@color/shadow_gray"-->
+                <!--app:si_enabled="true"-->
+                <!--app:si_tint_color="@color/colorPrimary"-->
+                <!--app:srcCompat="@mipmap/icon_collection"/>-->
 
         </RelativeLayout>
 

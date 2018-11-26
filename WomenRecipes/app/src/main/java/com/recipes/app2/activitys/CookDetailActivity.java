@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import com.recipes.app2.view.components.StatusBarUtil;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class CookDetailActivity extends BaseSwipeBackActivity {
 
@@ -78,10 +80,16 @@ public class CookDetailActivity extends BaseSwipeBackActivity {
 
 
         getSupportActionBar().setTitle(data.getName());
-//
-//        cookDetailAdapter = new CookDetailAdapter(this, data, isShowCollection);
-//        recyclerList.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerList.setAdapter(cookDetailAdapter);
+
+        cookDetailAdapter = new CookDetailAdapter(this, data, isShowCollection);
+        recyclerList.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerList.setAdapter(cookDetailAdapter);
+    }
+
+    @OnClick
+    public void onClickShare() {
+        //分享当前菜谱
+        Log.d("134","134");
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.recipes.app2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
@@ -17,13 +18,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.etsy.android.grid.StaggeredGridView;
+import com.recipes.app2.activitys.CookDetailActivity;
+import com.recipes.app2.activitys.SearchActivity;
 import com.recipes.app2.model.bean.DaoSession;
 import com.recipes.app2.model.bean.RecipeBean;
 import com.recipes.app2.model.bean.RecipeBeanDao;
 import com.recipes.app2.model.services.RecipeService;
 import com.recipes.app2.utils.SpacesItemDecoration;
+import com.recipes.app2.view.adapters.OnItemClickListener;
 import com.recipes.app2.view.adapters.RecipeListAdapter;
 
 
@@ -36,6 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
+import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -45,7 +52,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,View.OnLongClickListener,OnItemClickListener {
 
 
     @BindView(R.id.drawer_layout)
@@ -54,6 +61,11 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView;
     @BindView(R.id.channel_recipe_list)
     RecyclerView recipeListView;
+    @BindView(R.id.imgv_search)
+    ImageView imvSearch;
+    @BindView(R.id.llBatchManagement)
+    LinearLayout llBatchManagement;
+
 
 
     private RecipeListAdapter recipeListAdapter;
@@ -68,15 +80,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        testDb();
+//        testDb();
         setupViews();
     }
 
@@ -101,11 +104,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @OnClick(R.id.imgv_search)
+    public void onClickImgvSearch(){
+        startActivityForResult(new Intent(MainActivity.this, SearchActivity.class), 1);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+//        getMenuInflater().inflate(R.menu.main, menu);
+        return false;
     }
 
     @Override
@@ -128,19 +136,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-//        if (id == R.id.nav_early_month) {
-//            this.hideMonthItem(id);
-//        } else if (id == R.id.nav_middle_month) {
-//            this.hideMonthItem(id);
-//        } else if (id == R.id.nav_late_month) {
-//            this.hideMonthItem(id);
-//        }
-//        else if (id == R.id.nav_function_recipe) {
-//            this.hideMonthItem(id);
-//        }
-//
-
         switch (id)
         {
             case R.id.nav_early_month:
@@ -151,61 +146,42 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_one_month:
-                this.updateRecipe(R.id.nav_one_month);
-                break;
             case R.id.nav_two_month:
-                this.updateRecipe(R.id.nav_two_month);
-                break;
             case R.id.nav_three_month:
-                this.updateRecipe(R.id.nav_three_month);
-                break;
             case R.id.nav_four_month:
-
-                this.updateRecipe(R.id.nav_four_month);
-                break;
             case R.id.nav_five_month:
-                this.updateRecipe(R.id.nav_five_month);
-
-                break;
             case R.id.nav_six_month:
-
-                this.updateRecipe(R.id.nav_six_month);
-                break;
             case R.id.nav_seven_month:
-                this.updateRecipe(R.id.nav_seven_month);
-
-                break;
             case R.id.nav_eight_month:
-                this.updateRecipe(R.id.nav_eight_month);
-                break;
             case R.id.nav_nine_month:
-
-                this.updateRecipe(R.id.nav_nine_month);
-                break;
             case R.id.nav_ten_month:
-
-                this.updateRecipe(R.id.nav_ten_month);
-                break;
-
-
-
-
-
             case R.id.nav_morning_sickness_recipe:
             case R.id.nav_enrichtheblood_recipe:
             case R.id.nav_vitamin_recipe:
             case R.id.nav_advantage_recipe:
                 this.updateRecipe(id);
+//                RecipeApplication.getApplication().isCollectMode = false;
+                collectMode(false);
+                break;
+            case R.id.nav_collect:
+                this.updateRecipe(id);
+//                RecipeApplication.getApplication().isCollectMode = true;
+                collectMode(true);
                 break;
         }
 
-//        drawer.closeDrawer(GravityCompat.START);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void collectMode(boolean isCollectModel){
+        RecipeApplication.getApplication().isCollectMode = isCollectModel;
+        imvSearch.setVisibility(isCollectModel?View.VISIBLE:View.GONE);
     }
 
 
     private void hideMonthItem(int itemId){
-//        earlyQi
+
         int curMonth[] = null;
         int earlyMonth[] = {R.id.nav_one_month,R.id.nav_two_month,R.id.nav_three_month};
         int middleMonth[] = {R.id.nav_four_month,R.id.nav_five_month,R.id.nav_six_month};
@@ -291,15 +267,38 @@ public class MainActivity extends AppCompatActivity
         recipeListView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         recipeListAdapter = new RecipeListAdapter(recipes);
         recipeListAdapter.activity = this;
-
+        recipeListAdapter.onLongClickListener = this;
+        recipeListAdapter.onItemClickListener = this;
         recipeListView.setAdapter(recipeListAdapter);
+
         //设置item之间的间隔
-        SpacesItemDecoration decoration=new SpacesItemDecoration(16);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
         recipeListView.addItemDecoration(decoration);
+
 
     }
 
+    /**
+     * 显示批量管理布局
+     */
+    private void showBatchManagementLayout() {
+        visible(llBatchManagement);
+        for (RecipeBean bean : recipeListAdapter.recipes) {
+            bean.showCheckBox = true;
+        }
+        recipeListAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public boolean onLongClick(View v) {
+
+        showBatchManagementLayout();
+        return true;
+    }
+    @Override
+    public void onItemClick(View view, int position) {
+        CookDetailActivity.startActivity(this, view, recipeListAdapter.recipes.get(position), true);
+    }
 
 
 
@@ -317,6 +316,91 @@ public class MainActivity extends AppCompatActivity
 //        List<Town> towns = townDao.loadAll();
 
     }
+
+    /**
+
+     * 为了得到传回的数据，必须在前面的Activity中（指MainActivity类）重写onActivityResult方法
+
+     *
+
+     * requestCode 请求码，即调用startActivityForResult()传递过去的值
+
+     * resultCode 结果码，结果码用于标识返回数据来自哪个新Activity
+
+     */
+
+    @Override
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch(requestCode){
+
+            case 1:
+
+                if(data!=null)
+                {
+                    String searchStr = data.getExtras().getString("searchKey");
+
+//                    searchStr = "鱼";
+                    disposables.add(RecipeService.getInstance().searchRecipeObservable(searchStr)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeWith(new DisposableObserver<List<RecipeBean>>() {
+                                @Override public void onComplete() {
+                                    disposables.clear();
+                                }
+
+                                @Override public void onError(Throwable e) {
+                                    disposables.clear();
+                                }
+
+                                @Override public void onNext(List<RecipeBean> recipes) {
+                                    recipeListAdapter.updateRecipe(recipes);
+
+                                }
+                            }));
+                }
+
+
+
+            case 2:
+
+                //来自按钮2的请求，作相应业务处理
+
+        }
+
+
+        //得到新Activity 关闭后返回的数据
+
+
+    }
+
+
+    protected void gone(final View... views) {
+        if (views != null && views.length > 0) {
+            for (View view : views) {
+                if (view != null) {
+                    view.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    protected void visible(final View... views) {
+        if (views != null && views.length > 0) {
+            for (View view : views) {
+                if (view != null) {
+                    view.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+    }
+
+    protected boolean isVisible(View view) {
+        return view.getVisibility() == View.VISIBLE;
+    }
+
 
 
 //    /**

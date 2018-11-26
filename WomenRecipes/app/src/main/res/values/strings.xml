@@ -11,4 +11,6 @@
 
     <string name="ingredients">用料</string>
     <string name="methods">做法</string>
+
+    <string name="hint">小贴士</string>
 </resources>

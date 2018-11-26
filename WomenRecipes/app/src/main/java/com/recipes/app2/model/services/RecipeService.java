@@ -24,6 +24,7 @@ import com.recipes.app2.R;
 public class RecipeService {
 
     public int curClickId;
+    public List<RecipeBean> recipeBeans = null;
 
     private static RecipeService instance = null;
 //    public RecipeService(){
@@ -36,7 +37,20 @@ public class RecipeService {
             instance = new RecipeService();
         }
         return instance;
+
     }
+
+    public void updateRecipe(RecipeBean recipeBean){
+        if(recipeBeans != null){
+            for(RecipeBean itemRecipe : recipeBeans) {//其内部实质上还是调用了迭代器遍历方式，这种循环方式还有其他限制，不建议使用。
+                if(itemRecipe.getId().longValue() == recipeBean.getId().longValue()){
+                    itemRecipe.setCollect(recipeBean.getCollect());
+                    RecipeApplication.getApplication().daoSession.getRecipeBeanDao().update(itemRecipe);
+                }
+            }
+        }
+    }
+
 
 
 
@@ -47,8 +61,22 @@ public class RecipeService {
                 DaoSession daoSession = RecipeApplication.getApplication().daoSession;
                 RecipeBeanDao recipeBeanDao = daoSession.getRecipeBeanDao();
 //                List<RecipeBean> recipeBeans= recipeBeanDao.loadAll();
-                List<RecipeBean> recipeBeans= recipeBeanDao.queryBuilder().where(RecipeBeanDao.Properties.Month.eq("1")).list();
-                return Observable.just(recipeBeans);
+                RecipeService.getInstance().recipeBeans= recipeBeanDao.queryBuilder().where(RecipeBeanDao.Properties.Month.eq("1")).list();
+                return Observable.just(RecipeService.getInstance().recipeBeans);
+            }
+        });
+    }
+
+    public Observable<List<RecipeBean>> searchRecipeObservable(final String key) {
+        return Observable.defer(new Callable<ObservableSource<? extends List<RecipeBean>>>() {
+            @Override public ObservableSource<? extends List<RecipeBean>> call() throws Exception {
+                // Do some long running operation
+                DaoSession daoSession = RecipeApplication.getApplication().daoSession;
+                RecipeBeanDao recipeBeanDao = daoSession.getRecipeBeanDao();
+//                List<RecipeBean> recipeBeans= recipeBeanDao.loadAll();
+                RecipeService.getInstance().recipeBeans=
+                        recipeBeanDao.queryBuilder().whereOr(RecipeBeanDao.Properties.Name.like("%"+key+"%"),RecipeBeanDao.Properties.Ingredients.like("%"+key+"%")).list();
+                return Observable.just(RecipeService.getInstance().recipeBeans);
             }
         });
     }
@@ -65,17 +93,20 @@ public class RecipeService {
                 HashMap<String,String> hashMapCondition = RecipeService.getInstance().getRecipeCondition(RecipeService.getInstance().curClickId);
 
 
-                List<RecipeBean> recipeBeans = null;
+//                List<RecipeBean> recipeBeans = null;
                 if(hashMapCondition.get("key").equals("month"))
                 {
-                    recipeBeans= recipeBeanDao.queryBuilder().where(RecipeBeanDao.Properties.Month.eq(hashMapCondition.get("value"))).list();
+                    RecipeService.getInstance().recipeBeans = recipeBeanDao.queryBuilder().where(RecipeBeanDao.Properties.Month.eq(hashMapCondition.get("value"))).list();
                 }
                 else if(hashMapCondition.get("key").equals("type")){
-                    recipeBeans= recipeBeanDao.queryBuilder().where(RecipeBeanDao.Properties.Type.eq(hashMapCondition.get("value"))).list();
+                    RecipeService.getInstance().recipeBeans = recipeBeanDao.queryBuilder().where(RecipeBeanDao.Properties.Type.eq(hashMapCondition.get("value"))).list();
+                }
+                else if(hashMapCondition.get("key").equals("collect")){
+                    RecipeService.getInstance().recipeBeans = recipeBeanDao.queryBuilder().where(RecipeBeanDao.Properties.Collect.eq(true)).list();
                 }
 
 
-                return Observable.just(recipeBeans);
+                return Observable.just(RecipeService.getInstance().recipeBeans);
             }
         });
     }
@@ -143,6 +174,11 @@ public class RecipeService {
             case R.id.nav_advantage_recipe:
                 retHashmap.put("key",keytype);
                 retHashmap.put("value","优生食谱");
+                break;
+
+            case R.id.nav_collect:
+                retHashmap.put("key","collect");
+                retHashmap.put("value","collect");
                 break;
 
         }
