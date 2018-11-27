@@ -16,6 +16,7 @@ import com.recipes.app2.R;
 import com.recipes.app2.RecipeApplication;
 import com.recipes.app2.activitys.CookDetailActivity;
 import com.recipes.app2.model.bean.RecipeBean;
+import com.recipes.app2.model.services.RecipeService;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     @Override
     public void onBindViewHolder(final RecipeViewHolder recipeViewHolder, final int position) {
-        RecipeBean recipe = recipes.get(position);
+        final RecipeBean recipe = recipes.get(position);
         String recipeUrl = "file:///android_asset/recipesImage/" + recipe.getPhoto();
 
 
@@ -73,8 +74,27 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         }
 
         recipeViewHolder.chk.setVisibility(recipe.getShowCheckBox()?View.VISIBLE:View.GONE);
+
+        recipeViewHolder.chk.setChecked(recipe.isCanDelete);
+
+//        recipeViewHolder.chk.setOnClickListener((arg0) -> {
+//
+//        });
+
+        recipeViewHolder.chk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+//                CookDetailActivity.startActivity(activity, recipeViewHolder.ivRecipe, recipes.get(position), true);
+                recipe.isCanDelete = recipeViewHolder.chk.isChecked();
+            }
+        });
     }
 
+    public void deleteRecipes(){
+        RecipeService.getInstance().deleteCollectRecipe();
+        recipes = RecipeService.getInstance().recipeBeans;
+        notifyDataSetChanged();
+    }
 
 
     @Override

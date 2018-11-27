@@ -30,12 +30,14 @@
 
         <CheckBox
             android:id="@+id/chkRecipeItem"
+            android:theme="@style/My_CheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

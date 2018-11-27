@@ -33,6 +33,8 @@ public class RecipeBean implements Parcelable {
 
     @Transient
     public Boolean showCheckBox = false;
+    @Transient
+    public Boolean isCanDelete = false;
 
     @Generated(hash = 836160)
     public RecipeBean(Long id, String name, String ingredients, String steps, String prompt,
@@ -120,6 +122,13 @@ public void setCollect(Boolean collect) {
     this.collect = collect;
 }
 
+    public Boolean getIsCanDelete() {
+        return this.isCanDelete;
+    }
+    public void setIsCanDelete(Boolean isCanDelete) {
+        this.isCanDelete = isCanDelete;
+    }
+
 
 
 
@@ -148,6 +157,7 @@ public void setCollect(Boolean collect) {
 
         dest.writeByte((byte) (this.collect ? 1 : 0)); //if myBoolean == true, byte == 1
         dest.writeByte((byte) (this.showCheckBox ? 1 : 0));
+        dest.writeByte((byte) (this.isCanDelete ? 1 : 0));
 
 
     }
@@ -173,6 +183,7 @@ public void setCollect(Boolean collect) {
         this.subername = in.readString();
         this.collect = in.readByte() != 0;
         this.showCheckBox = in.readByte() != 0;
+        this.isCanDelete = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<RecipeBean> CREATOR = new Parcelable.Creator<RecipeBean>() {

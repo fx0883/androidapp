@@ -40,6 +40,22 @@ public class RecipeService {
 
     }
 
+    public void deleteCollectRecipe() {
+        if(recipeBeans != null){
+            for(RecipeBean itemRecipe : recipeBeans) {//其内部实质上还是调用了迭代器遍历方式，这种循环方式还有其他限制，不建议使用。
+                if(itemRecipe.isCanDelete){
+                    itemRecipe.setCollect(false);
+                    itemRecipe.setShowCheckBox(false);
+                    RecipeApplication.getApplication().daoSession.getRecipeBeanDao().update(itemRecipe);
+                }
+            }
+        }
+        DaoSession daoSession = RecipeApplication.getApplication().daoSession;
+        RecipeBeanDao recipeBeanDao = daoSession.getRecipeBeanDao();
+        RecipeService.getInstance().recipeBeans = recipeBeanDao.queryBuilder().where(RecipeBeanDao.Properties.Collect.eq(true)).list();
+    }
+
+
     public void updateRecipe(RecipeBean recipeBean){
         if(recipeBeans != null){
             for(RecipeBean itemRecipe : recipeBeans) {//其内部实质上还是调用了迭代器遍历方式，这种循环方式还有其他限制，不建议使用。
@@ -49,6 +65,7 @@ public class RecipeService {
                 }
             }
         }
+
     }
 
 

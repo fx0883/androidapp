@@ -1,10 +1,13 @@
 package com.recipes.app2;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -20,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.etsy.android.grid.StaggeredGridView;
 import com.recipes.app2.activitys.CookDetailActivity;
@@ -65,6 +69,9 @@ public class MainActivity extends AppCompatActivity
     ImageView imvSearch;
     @BindView(R.id.llBatchManagement)
     LinearLayout llBatchManagement;
+
+    @BindView(R.id.tvSelectAll)
+    TextView tvSelectAll;
 
 
 
@@ -162,21 +169,23 @@ public class MainActivity extends AppCompatActivity
                 this.updateRecipe(id);
 //                RecipeApplication.getApplication().isCollectMode = false;
                 collectMode(false);
+                drawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.nav_collect:
                 this.updateRecipe(id);
 //                RecipeApplication.getApplication().isCollectMode = true;
                 collectMode(true);
+                drawer.closeDrawer(GravityCompat.START);
                 break;
         }
 
-        drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
     private void collectMode(boolean isCollectModel){
         RecipeApplication.getApplication().isCollectMode = isCollectModel;
-        imvSearch.setVisibility(isCollectModel?View.VISIBLE:View.GONE);
+        imvSearch.setVisibility(isCollectModel?View.GONE:View.VISIBLE);
     }
 
 
@@ -289,15 +298,65 @@ public class MainActivity extends AppCompatActivity
         recipeListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 显示批量管理布局
+     */
+    private void hideBatchManagementLayout() {
+        gone(llBatchManagement);
+        for (RecipeBean bean : recipeListAdapter.recipes) {
+            bean.showCheckBox = false;
+        }
+        recipeListAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public boolean onLongClick(View v) {
-
+        if(!RecipeApplication.getApplication().isCollectMode){
+            return true;
+        }
         showBatchManagementLayout();
         return true;
     }
     @Override
     public void onItemClick(View view, int position) {
+        if (isVisible(llBatchManagement)) //批量管理时，屏蔽点击事件
+            return;
         CookDetailActivity.startActivity(this, view, recipeListAdapter.recipes.get(position), true);
+    }
+
+    @OnClick(R.id.tvSelectAll)
+    public void onClickSelectAll(){
+        Boolean isDealChk = false;
+        String strShowText = "";
+        if(tvSelectAll.getText().equals("全选")) {
+            isDealChk  = true;
+            strShowText = "全不选";
+        }
+        else {
+            isDealChk  = false;
+            strShowText = "全选";
+        }
+        for (RecipeBean bean : recipeListAdapter.recipes) {
+            bean.setIsCanDelete(isDealChk);
+        }
+        recipeListAdapter.notifyDataSetChanged();
+        tvSelectAll.setText(strShowText);
+    }
+
+    @OnClick(R.id.tvDelete)
+    public void onClickDelete(){
+        showNormalDialog();
+
+    }
+    @OnClick(R.id.tvCancel)
+    public void onClickCancel(){
+        for (RecipeBean bean : recipeListAdapter.recipes) {
+            bean.setShowCheckBox(false);
+//            bean.isCanDelete(false);
+            bean.setIsCanDelete(false);
+        }
+        recipeListAdapter.notifyDataSetChanged();
+        hideBatchManagementLayout();
     }
 
 
@@ -431,7 +490,39 @@ public class MainActivity extends AppCompatActivity
 //            myInput.close();
 //        }
 //    }
+private void showNormalDialog(){
+    /* @setIcon 设置对话框图标
+     * @setTitle 设置对话框标题
+     * @setMessage 设置对话框消息提示
+     * setXXX方法返回Dialog对象，因此可以链式设置属性
+     */
+    final AlertDialog.Builder normalDialog =
+            new AlertDialog.Builder(MainActivity.this);
+//    normalDialog.setIcon(R.drawable.icon_dialog);
+    normalDialog.setTitle("提示");
+    normalDialog.setMessage("你确定要点删除这些吗?");
+    normalDialog.setPositiveButton("确定",
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //...To-do
+                    recipeListAdapter.deleteRecipes();
+                    hideBatchManagementLayout();
+                    dialog.dismiss();
+                }
+            });
+    normalDialog.setNegativeButton("取消",
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //...To-do
+                    dialog.dismiss();
+                }
+            });
+    // 显示
+    normalDialog.show();
 
+}
 
 
 
