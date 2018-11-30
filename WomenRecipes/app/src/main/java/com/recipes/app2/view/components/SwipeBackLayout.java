@@ -1,4 +1,4 @@
-package com.recipes.app2.view.components;
+package com.Recipes.app2.view.components;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,7 +17,7 @@ import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.recipes.app2.R;
+import com.Recipes.app2.R;
 
 public class SwipeBackLayout extends FrameLayout {
     /**

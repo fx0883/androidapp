@@ -4,6 +4,7 @@
         <attr name="textSizeSearch" format="dimension"  />
         <attr name="textColorSearch" format="color" />
         <attr name="textHintSearch" format="string" />
+        <attr name="textColorHintSearch" format="color" />
         <attr name="searchBlockHeight" format="integer" />
         <attr name="searchBlockColor" format="color" />
     </declare-styleable>

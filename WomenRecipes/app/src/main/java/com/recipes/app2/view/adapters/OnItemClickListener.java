@@ -1,4 +1,4 @@
-package com.recipes.app2.view.adapters;
+package com.Recipes.app2.view.adapters;
 
 import android.view.View;
 

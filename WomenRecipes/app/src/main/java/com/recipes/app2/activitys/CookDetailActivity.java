@@ -1,4 +1,4 @@
-package com.recipes.app2.activitys;
+package com.Recipes.app2.activitys;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,10 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.recipes.app2.R;
-import com.recipes.app2.model.bean.RecipeBean;
-import com.recipes.app2.view.adapters.CookDetailAdapter;
-import com.recipes.app2.view.components.StatusBarUtil;
+import com.Recipes.app2.R;
+import com.Recipes.app2.model.bean.RecipeBean;
+import com.Recipes.app2.view.adapters.CookDetailAdapter;
+import com.Recipes.app2.view.components.StatusBarUtil;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;

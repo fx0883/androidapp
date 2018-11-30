@@ -1,12 +1,12 @@
 
-package com.recipes.app2.view.components.app;
+package com.Recipes.app2.view.components.app;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.view.View;
 
 
-import com.recipes.app2.view.components.SwipeBackLayout;
+import com.Recipes.app2.view.components.SwipeBackLayout;
 
 
 public class SwipeBackPreferenceActivity extends PreferenceActivity implements SwipeBackActivityBase {

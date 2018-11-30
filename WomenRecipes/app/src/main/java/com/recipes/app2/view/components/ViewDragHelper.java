@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.recipes.app2.view.components;
+package com.Recipes.app2.view.components;
 
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;

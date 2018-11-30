@@ -1,18 +1,13 @@
-/*
- * Copyright (c) 2017. CMRI PRIVATE LIMITED. All rights reserved
- * Created by WangBo on 17-6-23 上午11:50
- *
- * Last modified 17-6-23 上午11:50
- */
 
-package com.recipes.app2;
+
+package com.Recipes.app2;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.recipes.app2.model.bean.DaoMaster;
-import com.recipes.app2.model.bean.DaoSession;
-import com.recipes.app2.utils.FileUtils;
+import com.Recipes.app2.model.bean.DaoMaster;
+import com.Recipes.app2.model.bean.DaoSession;
+import com.Recipes.app2.utils.FileUtils;
 
 import org.greenrobot.greendao.database.Database;
 

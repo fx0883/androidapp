@@ -1,4 +1,4 @@
-package com.recipes.app2.model.bean;
+package com.Recipes.app2.model.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

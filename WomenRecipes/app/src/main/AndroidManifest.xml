@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.recipes.app2">
+    package="com.Recipes.app2">
 
     <application
         android:name=".RecipeApplication"

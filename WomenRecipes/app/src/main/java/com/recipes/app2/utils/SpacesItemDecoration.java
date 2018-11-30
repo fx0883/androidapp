@@ -1,4 +1,4 @@
-package com.recipes.app2.utils;
+package com.Recipes.app2.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;

@@ -1,4 +1,4 @@
-package com.recipes.app2.view.adapters;
+package com.Recipes.app2.view.adapters;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -13,9 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-import com.recipes.app2.RecipeApplication;
-import com.recipes.app2.model.bean.CookRecipeMethod;
-import com.recipes.app2.model.bean.RecipeBean;
+import com.Recipes.app2.RecipeApplication;
+import com.Recipes.app2.model.bean.CookRecipeMethod;
+import com.Recipes.app2.model.bean.RecipeBean;
 
 
 import java.util.ArrayList;
@@ -25,9 +25,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import com.recipes.app2.R;
-import com.recipes.app2.model.services.RecipeService;
-import com.recipes.app2.view.components.SwitchIconView;
+import com.Recipes.app2.R;
+import com.Recipes.app2.model.services.RecipeService;
+import com.Recipes.app2.view.components.SwitchIconView;
 import com.squareup.picasso.Picasso;
 
 /**

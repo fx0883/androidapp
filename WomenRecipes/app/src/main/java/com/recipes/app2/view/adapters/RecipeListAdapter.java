@@ -1,4 +1,4 @@
-package com.recipes.app2.view.adapters;
+package com.Recipes.app2.view.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,11 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.recipes.app2.R;
-import com.recipes.app2.RecipeApplication;
-import com.recipes.app2.activitys.CookDetailActivity;
-import com.recipes.app2.model.bean.RecipeBean;
-import com.recipes.app2.model.services.RecipeService;
+import com.Recipes.app2.R;
+import com.Recipes.app2.RecipeApplication;
+import com.Recipes.app2.activitys.CookDetailActivity;
+import com.Recipes.app2.model.bean.RecipeBean;
+import com.Recipes.app2.model.services.RecipeService;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

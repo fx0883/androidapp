@@ -56,6 +56,7 @@ public class SearchView extends LinearLayout {
     private Float textSizeSearch;
     private int textColorSearch;
     private String textHintSearch;
+    private int textColorHintSearch;
 
     // 2. 搜索框设置：高度 & 颜色
     private int searchBlockHeight;
@@ -103,6 +104,7 @@ public class SearchView extends LinearLayout {
 
         // 搜索框提示内容（String）
         textHintSearch = typedArray.getString(R.styleable.Search_View_textHintSearch);
+        textColorHintSearch = typedArray.getColor(R.styleable.Search_View_textColorHintSearch, defaultColor);
 
         // 搜索框高度
         searchBlockHeight = typedArray.getInteger(R.styleable.Search_View_searchBlockHeight, 150);
@@ -250,6 +252,8 @@ public class SearchView extends LinearLayout {
         et_search.setTextSize(textSizeSearch);
         et_search.setTextColor(textColorSearch);
         et_search.setHint(textHintSearch);
+        et_search.setHintTextColor(textColorHintSearch);
+
 
         // 3. 搜索框背景颜色
         search_block = (LinearLayout)findViewById(R.id.search_block);

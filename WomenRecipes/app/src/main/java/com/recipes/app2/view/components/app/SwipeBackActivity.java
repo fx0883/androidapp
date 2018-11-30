@@ -1,10 +1,10 @@
 
-package com.recipes.app2.view.components.app;
+package com.Recipes.app2.view.components.app;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import com.recipes.app2.view.components.*;
+import com.Recipes.app2.view.components.*;
 
 
 

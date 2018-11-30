@@ -1,12 +1,12 @@
-package com.recipes.app2.activitys;
+package com.Recipes.app2.activitys;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 
-import com.recipes.app2.view.components.app.SwipeBackActivity;
-import com.recipes.app2.view.components.app.SwipeBackActivityBase;
+import com.Recipes.app2.view.components.app.SwipeBackActivity;
+import com.Recipes.app2.view.components.app.SwipeBackActivityBase;
 
 import butterknife.ButterKnife;
 

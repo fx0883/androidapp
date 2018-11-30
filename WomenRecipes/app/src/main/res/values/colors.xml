@@ -8,6 +8,7 @@
     <color name="cyan">#00BCD4</color>
     <color name="lime">#CDDC39</color>
     <color name="orange">#FFCC80</color>
+
     <color name="deep_orange">#FFA726</color>
     <color name="lightgray">#fafaf5</color>
     <color name="black">#484432</color>
@@ -20,8 +21,8 @@
     <color name="base">@color/lightgray</color>
     <color name="accent">@color/orange</color>
 
-    <color name="colorPrimary">@color/deep_orange</color>
-    <color name="colorPrimaryDark">@color/deep_orange</color>
+    <color name="colorPrimary">#EE696E</color>
+    <color name="colorPrimaryDark">#EE696E</color>
     <color name="colorAccent">@color/orange</color>
     <color name="status_bar">@color/deep_orange</color>
     <color name="navigation_bar">@android:color/black</color>

@@ -23,7 +23,7 @@
 
 
 
-            <!--<com.recipes.app2.view.components.SwitchIconView-->
+            <!--<com.Recipes.app2.view.components.SwitchIconView-->
                 <!--android:id="@+id/switchIconView_collection"-->
                 <!--android:layout_width="wrap_content"-->
                 <!--android:layout_height="wrap_content"-->

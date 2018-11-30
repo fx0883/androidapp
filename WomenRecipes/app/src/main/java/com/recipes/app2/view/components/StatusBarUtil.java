@@ -1,4 +1,4 @@
-package com.recipes.app2.view.components;
+package com.Recipes.app2.view.components;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,8 +1,9 @@
-package com.recipes.app2;
+package com.Recipes.app2;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
@@ -26,19 +27,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.etsy.android.grid.StaggeredGridView;
-import com.recipes.app2.activitys.CookDetailActivity;
-import com.recipes.app2.activitys.SearchActivity;
-import com.recipes.app2.model.bean.DaoSession;
-import com.recipes.app2.model.bean.RecipeBean;
-import com.recipes.app2.model.bean.RecipeBeanDao;
-import com.recipes.app2.model.services.RecipeService;
-import com.recipes.app2.utils.SpacesItemDecoration;
-import com.recipes.app2.view.adapters.OnItemClickListener;
-import com.recipes.app2.view.adapters.RecipeListAdapter;
+import com.Recipes.app2.activitys.CookDetailActivity;
+import com.Recipes.app2.activitys.SearchActivity;
+import com.Recipes.app2.model.bean.DaoSession;
+import com.Recipes.app2.model.bean.RecipeBean;
+import com.Recipes.app2.model.bean.RecipeBeanDao;
+import com.Recipes.app2.model.services.RecipeService;
+import com.Recipes.app2.utils.SpacesItemDecoration;
+import com.Recipes.app2.view.adapters.OnItemClickListener;
+import com.Recipes.app2.view.adapters.RecipeListAdapter;
 
 
-
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -56,7 +56,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,View.OnLongClickListener,OnItemClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnLongClickListener, OnItemClickListener {
 
 
     @BindView(R.id.drawer_layout)
@@ -73,12 +73,14 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.tvSelectAll)
     TextView tvSelectAll;
 
+    ActionBarDrawerToggle toggle;
 
 
     private RecipeListAdapter recipeListAdapter;
 //    private Subscription channelsSubscription = Subscriptions.empty();
 
     private final CompositeDisposable disposables = new CompositeDisposable();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -98,8 +100,9 @@ public class MainActivity extends AppCompatActivity
 
 //        testDb();
         setupViews();
-    }
 
+       toolbar.getNavigationIcon().setVisible(false,false);
+    }
 
 
     @Override
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @OnClick(R.id.imgv_search)
-    public void onClickImgvSearch(){
+    public void onClickImgvSearch() {
         startActivityForResult(new Intent(MainActivity.this, SearchActivity.class), 1);
     }
 
@@ -143,8 +146,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        switch (id)
-        {
+        switch (id) {
             case R.id.nav_early_month:
             case R.id.nav_middle_month:
             case R.id.nav_late_month:
@@ -177,25 +179,29 @@ public class MainActivity extends AppCompatActivity
                 collectMode(true);
                 drawer.closeDrawer(GravityCompat.START);
                 break;
+
+            case R.id.nav_send:
+                this.sendEmail();
+                break;
         }
 
 
         return true;
     }
 
-    private void collectMode(boolean isCollectModel){
+    private void collectMode(boolean isCollectModel) {
         RecipeApplication.getApplication().isCollectMode = isCollectModel;
-        imvSearch.setVisibility(isCollectModel?View.GONE:View.VISIBLE);
+        imvSearch.setVisibility(isCollectModel ? View.GONE : View.VISIBLE);
     }
 
 
-    private void hideMonthItem(int itemId){
+    private void hideMonthItem(int itemId) {
 
         int curMonth[] = null;
-        int earlyMonth[] = {R.id.nav_one_month,R.id.nav_two_month,R.id.nav_three_month};
-        int middleMonth[] = {R.id.nav_four_month,R.id.nav_five_month,R.id.nav_six_month};
-        int lateMonth[] = {R.id.nav_seven_month,R.id.nav_eight_month,R.id.nav_nine_month,R.id.nav_ten_month};
-        int functionRecipe[] = {R.id.nav_morning_sickness_recipe,R.id.nav_enrichtheblood_recipe,R.id.nav_vitamin_recipe,R.id.nav_advantage_recipe};
+        int earlyMonth[] = {R.id.nav_one_month, R.id.nav_two_month, R.id.nav_three_month};
+        int middleMonth[] = {R.id.nav_four_month, R.id.nav_five_month, R.id.nav_six_month};
+        int lateMonth[] = {R.id.nav_seven_month, R.id.nav_eight_month, R.id.nav_nine_month, R.id.nav_ten_month};
+        int functionRecipe[] = {R.id.nav_morning_sickness_recipe, R.id.nav_enrichtheblood_recipe, R.id.nav_vitamin_recipe, R.id.nav_advantage_recipe};
         switch (itemId) {
             case R.id.nav_early_month:
                 curMonth = earlyMonth;
@@ -211,22 +217,19 @@ public class MainActivity extends AppCompatActivity
                 break;
 
 
-
-
-
         }
-        for(int curItemId:curMonth)
-        {
+        for (int curItemId : curMonth) {
             MenuItem item = navigationView.getMenu().findItem(curItemId);
             item.setVisible(!item.isVisible());
         }
 
     }
-    @Override protected void onDestroy() {
+
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
 //        disposables.clear();
     }
-
 
 
     private void setupViews() {
@@ -234,15 +237,18 @@ public class MainActivity extends AppCompatActivity
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<List<RecipeBean>>() {
-                    @Override public void onComplete() {
+                    @Override
+                    public void onComplete() {
                         disposables.clear();
                     }
 
-                    @Override public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
                         disposables.clear();
                     }
 
-                    @Override public void onNext(List<RecipeBean> recipes) {
+                    @Override
+                    public void onNext(List<RecipeBean> recipes) {
                         setupViews(recipes);
 
                     }
@@ -250,20 +256,23 @@ public class MainActivity extends AppCompatActivity
 //        this.setupViews(null);
     }
 
-    private void updateRecipe(int id){
+    private void updateRecipe(int id) {
         disposables.add(RecipeService.getInstance().getRecipeObservable(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<List<RecipeBean>>() {
-                    @Override public void onComplete() {
+                    @Override
+                    public void onComplete() {
                         disposables.clear();
                     }
 
-                    @Override public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
                         disposables.clear();
                     }
 
-                    @Override public void onNext(List<RecipeBean> recipes) {
+                    @Override
+                    public void onNext(List<RecipeBean> recipes) {
                         recipeListAdapter.updateRecipe(recipes);
 
                     }
@@ -271,9 +280,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     private void setupViews(List<RecipeBean> recipes) {
-        recipeListView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        recipeListView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recipeListAdapter = new RecipeListAdapter(recipes);
         recipeListAdapter.activity = this;
         recipeListAdapter.onLongClickListener = this;
@@ -311,12 +319,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onLongClick(View v) {
-        if(!RecipeApplication.getApplication().isCollectMode){
+        if (!RecipeApplication.getApplication().isCollectMode) {
             return true;
         }
         showBatchManagementLayout();
+        toggle.setDrawerIndicatorEnabled(false);
         return true;
     }
+
     @Override
     public void onItemClick(View view, int position) {
         if (isVisible(llBatchManagement)) //批量管理时，屏蔽点击事件
@@ -325,15 +335,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @OnClick(R.id.tvSelectAll)
-    public void onClickSelectAll(){
+    public void onClickSelectAll() {
         Boolean isDealChk = false;
         String strShowText = "";
-        if(tvSelectAll.getText().equals("全选")) {
-            isDealChk  = true;
+        if (tvSelectAll.getText().equals("全选")) {
+            isDealChk = true;
             strShowText = "全不选";
-        }
-        else {
-            isDealChk  = false;
+        } else {
+            isDealChk = false;
             strShowText = "全选";
         }
         for (RecipeBean bean : recipeListAdapter.recipes) {
@@ -344,12 +353,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     @OnClick(R.id.tvDelete)
-    public void onClickDelete(){
+    public void onClickDelete() {
         showNormalDialog();
 
     }
+
     @OnClick(R.id.tvCancel)
-    public void onClickCancel(){
+    public void onClickCancel() {
         for (RecipeBean bean : recipeListAdapter.recipes) {
             bean.setShowCheckBox(false);
 //            bean.isCanDelete(false);
@@ -357,18 +367,18 @@ public class MainActivity extends AppCompatActivity
         }
         recipeListAdapter.notifyDataSetChanged();
         hideBatchManagementLayout();
+        toggle.setDrawerIndicatorEnabled(true);
     }
-
 
 
     public void testDb() {
         DaoSession daoSession = ((RecipeApplication) getApplication()).daoSession;
         RecipeBeanDao recipeBeanDao = daoSession.getRecipeBeanDao();
-        List<RecipeBean> recipeBeans= recipeBeanDao.loadAll();
+        List<RecipeBean> recipeBeans = recipeBeanDao.loadAll();
 
 //        for(int i=0;i<recipeBeans)
 
-        for( int i = 0 ; i < recipeBeans.size() ; i++) {//内部不锁定，效率最高，但在多线程要考虑并发操作的问题。
+        for (int i = 0; i < recipeBeans.size(); i++) {//内部不锁定，效率最高，但在多线程要考虑并发操作的问题。
             System.out.println(recipeBeans.get(i));
         }
 //        TownDao townDao = daoSession.getTownDao();
@@ -377,27 +387,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-
      * 为了得到传回的数据，必须在前面的Activity中（指MainActivity类）重写onActivityResult方法
-
-     *
-
+     * <p>
+     * <p>
+     * <p>
      * requestCode 请求码，即调用startActivityForResult()传递过去的值
-
+     * <p>
      * resultCode 结果码，结果码用于标识返回数据来自哪个新Activity
-
      */
 
     @Override
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        switch(requestCode){
+        switch (requestCode) {
 
             case 1:
 
-                if(data!=null)
-                {
+                if (data != null) {
                     String searchStr = data.getExtras().getString("searchKey");
 
 //                    searchStr = "鱼";
@@ -405,21 +412,23 @@ public class MainActivity extends AppCompatActivity
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeWith(new DisposableObserver<List<RecipeBean>>() {
-                                @Override public void onComplete() {
+                                @Override
+                                public void onComplete() {
                                     disposables.clear();
                                 }
 
-                                @Override public void onError(Throwable e) {
+                                @Override
+                                public void onError(Throwable e) {
                                     disposables.clear();
                                 }
 
-                                @Override public void onNext(List<RecipeBean> recipes) {
+                                @Override
+                                public void onNext(List<RecipeBean> recipes) {
                                     recipeListAdapter.updateRecipe(recipes);
 
                                 }
                             }));
                 }
-
 
 
             case 2:
@@ -461,8 +470,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-//    /**
+    //    /**
 //     * Copies your database from your local assets-folder to the just created
 //     * empty database in the system folder, from where it can be accessed and
 //     * handled. This is done by transfering bytestream.
@@ -490,40 +498,57 @@ public class MainActivity extends AppCompatActivity
 //            myInput.close();
 //        }
 //    }
-private void showNormalDialog(){
-    /* @setIcon 设置对话框图标
-     * @setTitle 设置对话框标题
-     * @setMessage 设置对话框消息提示
-     * setXXX方法返回Dialog对象，因此可以链式设置属性
-     */
-    final AlertDialog.Builder normalDialog =
-            new AlertDialog.Builder(MainActivity.this);
+    private void showNormalDialog() {
+        /* @setIcon 设置对话框图标
+         * @setTitle 设置对话框标题
+         * @setMessage 设置对话框消息提示
+         * setXXX方法返回Dialog对象，因此可以链式设置属性
+         */
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(MainActivity.this);
 //    normalDialog.setIcon(R.drawable.icon_dialog);
-    normalDialog.setTitle("提示");
-    normalDialog.setMessage("你确定要点删除这些吗?");
-    normalDialog.setPositiveButton("确定",
-            new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //...To-do
-                    recipeListAdapter.deleteRecipes();
-                    hideBatchManagementLayout();
-                    dialog.dismiss();
-                }
-            });
-    normalDialog.setNegativeButton("取消",
-            new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //...To-do
-                    dialog.dismiss();
-                }
-            });
-    // 显示
-    normalDialog.show();
+        normalDialog.setTitle("提示");
+        normalDialog.setMessage("你确定要点删除这些吗?");
+        normalDialog.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                        recipeListAdapter.deleteRecipes();
+                        hideBatchManagementLayout();
+                        dialog.dismiss();
+                        toggle.setDrawerIndicatorEnabled(true);
+                    }
+                });
+        normalDialog.setNegativeButton("取消",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                        dialog.dismiss();
+                    }
+                });
+        // 显示
+        normalDialog.show();
 
-}
+    }
+
+    public void sendEmail() {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        // i.setType("text/plain"); //模拟器请使用这行
+        i.setType("message/rfc822"); // 真机上使用这行
+        i.putExtra(Intent.EXTRA_EMAIL,
+                new String[]{getString(R.string.feedbackEmail)});
+
+        String txtTitle = getResources().getString(R.string.feedbackTitle);
+        txtTitle = String.format(txtTitle, getString( R.string.app_name));
 
 
-
+        i.putExtra(Intent.EXTRA_SUBJECT, txtTitle);
+        i.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedbackBody));
+        ArrayList<Uri> uris = new ArrayList<>();
+        i.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+        startActivity(Intent.createChooser(i,
+                "选择email程序."));
+    }
 }

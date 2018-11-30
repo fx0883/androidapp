@@ -1,9 +1,9 @@
-package com.recipes.app2.activitys;
+package com.Recipes.app2.activitys;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.recipes.app2.R;
+import com.Recipes.app2.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

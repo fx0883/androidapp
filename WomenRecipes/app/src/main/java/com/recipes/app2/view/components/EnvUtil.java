@@ -1,10 +1,10 @@
-package com.recipes.app2.view.components;
+package com.Recipes.app2.view.components;
 
 import android.content.Context;
 import android.util.TypedValue;
 
 
-import com.recipes.app2.RecipeApplication;
+import com.Recipes.app2.RecipeApplication;
 
 /**
  * Created by Administrator on 2017/3/1.

@@ -1,11 +1,11 @@
-package com.recipes.app2.model.services;
+package com.Recipes.app2.model.services;
 
 import android.os.SystemClock;
 
-import com.recipes.app2.RecipeApplication;
-import com.recipes.app2.model.bean.DaoSession;
-import com.recipes.app2.model.bean.RecipeBean;
-import com.recipes.app2.model.bean.RecipeBeanDao;
+import com.Recipes.app2.RecipeApplication;
+import com.Recipes.app2.model.bean.DaoSession;
+import com.Recipes.app2.model.bean.RecipeBean;
+import com.Recipes.app2.model.bean.RecipeBeanDao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import java.util.concurrent.Callable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 
-import com.recipes.app2.R;
+import com.Recipes.app2.R;
 
 public class RecipeService {
 

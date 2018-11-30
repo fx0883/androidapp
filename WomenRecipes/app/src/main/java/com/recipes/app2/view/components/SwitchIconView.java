@@ -1,4 +1,4 @@
-package com.recipes.app2.view.components;
+package com.Recipes.app2.view.components;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -22,7 +22,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.animation.DecelerateInterpolator;
 
-import com.recipes.app2.R;
+import com.Recipes.app2.R;
 
 /**
  * Created by Administrator on 2017/2/25.

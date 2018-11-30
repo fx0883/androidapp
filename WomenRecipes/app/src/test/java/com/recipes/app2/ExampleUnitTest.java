@@ -1,4 +1,4 @@
-package com.recipes.app2;
+package com.Recipes.app2;
 
 import org.junit.Test;
 

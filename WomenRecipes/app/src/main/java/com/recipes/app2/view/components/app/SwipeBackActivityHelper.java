@@ -1,4 +1,4 @@
-package com.recipes.app2.view.components.app;
+package com.Recipes.app2.view.components.app;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -6,9 +6,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.recipes.app2.R;
-import com.recipes.app2.view.components.SwipeBackLayout;
-import com.recipes.app2.view.components.Utils;
+import com.Recipes.app2.R;
+import com.Recipes.app2.view.components.SwipeBackLayout;
+import com.Recipes.app2.view.components.Utils;
 
 
 /**

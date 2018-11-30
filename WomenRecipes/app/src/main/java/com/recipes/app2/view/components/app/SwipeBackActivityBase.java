@@ -1,7 +1,7 @@
-package com.recipes.app2.view.components.app;
+package com.Recipes.app2.view.components.app;
 
 
-import com.recipes.app2.view.components.SwipeBackLayout;
+import com.Recipes.app2.view.components.SwipeBackLayout;
 
 /**
  * @author Yrom
