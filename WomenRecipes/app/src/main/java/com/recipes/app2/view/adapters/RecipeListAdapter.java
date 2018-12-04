@@ -17,7 +17,8 @@ import com.Recipes.app2.RecipeApplication;
 import com.Recipes.app2.activitys.CookDetailActivity;
 import com.Recipes.app2.model.bean.RecipeBean;
 import com.Recipes.app2.model.services.RecipeService;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+//import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -51,7 +52,11 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         String recipeUrl = "file:///android_asset/recipesImage/" + recipe.getPhoto();
 
 
-        Picasso.with(recipeViewHolder.itemView.getContext())
+//        Picasso.with(recipeViewHolder.itemView.getContext())
+//                .load(recipeUrl)
+//                .into(recipeViewHolder.ivRecipe);
+
+        Glide.with(recipeViewHolder.itemView.getContext())
                 .load(recipeUrl)
                 .into(recipeViewHolder.ivRecipe);
         recipeViewHolder.tvTitle.setText(recipes.get(position).getName());

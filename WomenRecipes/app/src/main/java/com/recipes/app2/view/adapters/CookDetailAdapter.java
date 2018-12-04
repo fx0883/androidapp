@@ -28,7 +28,8 @@ import butterknife.ButterKnife;
 import com.Recipes.app2.R;
 import com.Recipes.app2.model.services.RecipeService;
 import com.Recipes.app2.view.components.SwitchIconView;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+//import com.squareup.picasso.Picasso;
 
 /**
  * Created by Administrator on 2017/2/21.
@@ -224,7 +225,10 @@ public class CookDetailAdapter extends RecyclerView.Adapter<CookDetailAdapter.It
 
         if(data.getImg() != null && (!TextUtils.isEmpty(data.getImg()))) {
             holderView.imgvStep.setVisibility(View.VISIBLE);
-            Picasso.with(context)
+//            Picasso.with(context)
+////                    .load(data.getImg())
+////                    .into(holderView.imgvStep);
+                Glide.with(context)
                     .load(data.getImg())
                     .into(holderView.imgvStep);
         }

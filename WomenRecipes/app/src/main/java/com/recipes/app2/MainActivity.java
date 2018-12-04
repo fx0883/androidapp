@@ -73,6 +73,12 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.tvSelectAll)
     TextView tvSelectAll;
 
+    @BindView(R.id.txt_Title)
+    TextView tvTitle;
+
+    Toolbar toolbar;
+
+
     ActionBarDrawerToggle toggle;
 
 
@@ -86,14 +92,17 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setTitle("213123123123123");
 
 
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
 
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -257,6 +266,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateRecipe(int id) {
+
+        String strTitleText = this.getTitleText(id);
+
+        tvTitle.setText(strTitleText);
         disposables.add(RecipeService.getInstance().getRecipeObservable(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -406,7 +419,7 @@ public class MainActivity extends AppCompatActivity
 
                 if (data != null) {
                     String searchStr = data.getExtras().getString("searchKey");
-
+                    tvTitle.setText("关键字"+searchStr+"的搜索结果");
 //                    searchStr = "鱼";
                     disposables.add(RecipeService.getInstance().searchRecipeObservable(searchStr)
                             .subscribeOn(Schedulers.io())
@@ -550,5 +563,59 @@ public class MainActivity extends AppCompatActivity
         i.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
         startActivity(Intent.createChooser(i,
                 "选择email程序."));
+    }
+
+
+    String getTitleText(int id){
+        String strRet = "孕妇营养食谱";
+        switch (id) {
+            case R.id.nav_one_month:
+                strRet="怀孕第一个月食谱大全";
+                break;
+            case R.id.nav_two_month:
+                strRet="怀孕第二个月食谱大全";
+                break;
+            case R.id.nav_three_month:
+                strRet="怀孕第三个月食谱大全";
+                break;
+            case R.id.nav_four_month:
+                strRet="怀孕第四个月食谱大全";
+                break;
+            case R.id.nav_five_month:
+                strRet="怀孕第五个月食谱大全";
+                break;
+            case R.id.nav_six_month:
+                strRet="怀孕第六个月食谱大全";
+                break;
+            case R.id.nav_seven_month:
+                strRet="怀孕第七个月食谱大全";
+                break;
+            case R.id.nav_eight_month:
+                strRet="怀孕第八个月食谱大全";
+                break;
+            case R.id.nav_nine_month:
+                strRet="怀孕第九个月食谱大全";
+                break;
+            case R.id.nav_ten_month:
+                strRet="怀孕第十个月食谱大全";
+                break;
+            case R.id.nav_morning_sickness_recipe:
+                strRet="缓解孕吐食谱大全";
+                break;
+            case R.id.nav_enrichtheblood_recipe:
+                strRet="补血食谱大全";
+                break;
+            case R.id.nav_vitamin_recipe:
+                strRet="孕妇补维生素食谱大全";
+                break;
+            case R.id.nav_advantage_recipe:
+                strRet="优生食谱大全";
+                break;
+
+            case R.id.nav_collect:
+                strRet="我的收藏";
+                break;
+        }
+        return strRet;
     }
 }

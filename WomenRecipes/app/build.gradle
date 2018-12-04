@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.Recipes.app2"
-        minSdkVersion 26
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion 22
+        targetSdkVersion 27
+        versionCode 22
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -20,29 +20,29 @@ android {
 }
 
 dependencies {
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.etsy.android.grid:library:1.0.5'
-
-//    implementation 'com.carson_ho:SearchLayout:1.0.1'
-
-
+    //    implementation 'com.carson_ho:SearchLayout:1.0.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-// Because RxAndroid releases are few and far between, it is recommended you also
-// explicitly depend on RxJava's latest version for bug fixes and new features.
-// (see https://github.com/ReactiveX/RxJava/releases for latest 2.x.x version)
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
+    // (see https://github.com/ReactiveX/RxJava/releases for latest 2.x.x version)
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
     implementation project(':searchview')
-    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation files('libs/GDTUnionSDK.TBS.4.20.580.min.jar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation 'com.google.android.gms:play-services-ads:17.1.1'
+    //    implementation 'com.google.android.gms:play-services-ads:11.8.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:customtabs:27.1.1'
+
 }

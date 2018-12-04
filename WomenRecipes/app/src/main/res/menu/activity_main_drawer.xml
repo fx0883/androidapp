@@ -96,28 +96,35 @@
             android:title="优生食谱"
             android:visible="false" />
 
-
-    </group>
-
-    <group android:id="@+id/g2">
         <item
             android:id="@+id/nav_collect"
             android:icon="@android:drawable/btn_star_big_on"
             android:title="我的收藏" />
 
+
     </group>
 
+    <!--<group android:id="@+id/g2">-->
+        <!--<item-->
+            <!--android:id="@+id/nav_collect"-->
+            <!--android:icon="@android:drawable/btn_star_big_on"-->
+            <!--android:title="我的收藏" />-->
+
+    <!--</group>-->
+
     <group android:id="@+id/g3">
+
 
         <item
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_menu_share"
-            android:title="Share" />
+            android:title="分享"
+            android:visible="false" />
 
         <item
             android:id="@+id/nav_send"
             android:icon="@drawable/ic_menu_send"
-            android:title="Send" />
+            android:title="反馈" />
     </group>
 
 
