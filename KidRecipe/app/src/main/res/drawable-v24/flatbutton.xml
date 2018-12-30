@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 点击时的背景颜色 -->
+    <!--<item-->
+        <!--android:state_pressed="true"-->
+        <!--&gt;-->
+        <!--<shape>-->
+            <!--&lt;!&ndash; 颜色值 &ndash;&gt;-->
+            <!--<solid android:color="#f6aa3e"/>-->
+            <!--&lt;!&ndash; 颜色值 &ndash;&gt;-->
+            <!--<corners android:radius="10dp"/>-->
+        <!--</shape>-->
+    <!--</item>-->
+    <!-- 默认的背景颜色 -->
+    <item>
+        <shape>
+            <!-- 颜色值 -->
+            <solid android:color="#eeeeee"/>
+            <!-- 颜色值 -->
+            <corners android:radius="5dp"/>
+        </shape>
+    </item>
+</selector>

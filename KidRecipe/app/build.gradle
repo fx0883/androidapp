@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.childhealthdiet.app2"
+        minSdkVersion 22
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    // View injection
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
+    // RxJava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
+    //bga-banner
+    implementation 'cn.bingoogolapple:bga-banner:2.2.5'
+    //icon 按钮
+    implementation 'com.githang:com-phillipcalvin-iconbutton:1.0.1@aar'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //LRecyclerView
+    implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.3'
+    //NiceImageView
+    //    implementation 'com.github.SheHuan:NiceImageView:1.0.5'
+    //    implementation project(':niceimageview')
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'org.kie.modules:com-google-code-gson:6.5.0.Final'
+}
