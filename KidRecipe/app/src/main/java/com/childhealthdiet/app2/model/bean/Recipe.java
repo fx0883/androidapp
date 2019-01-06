@@ -1,6 +1,8 @@
 package com.childhealthdiet.app2.model.bean;
 
-public class RecipeBean {
+
+
+public class Recipe {
     private Long id;
     public String name;
     private String ingredients;

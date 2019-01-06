@@ -1,13 +1,8 @@
 package com.childhealthdiet.app2.ui.fragment;
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,11 +13,12 @@ import android.widget.SimpleAdapter;
 import com.bumptech.glide.Glide;
 import com.childhealthdiet.app2.R;
 import com.childhealthdiet.app2.adapter.DataAdapter;
-import com.childhealthdiet.app2.model.bean.MonthBean;
-import com.childhealthdiet.app2.model.bean.RecipeBean;
+import com.childhealthdiet.app2.model.bean.MonthRecipe;
+import com.childhealthdiet.app2.presenter.FragmentHomePresenter;
+import com.childhealthdiet.app2.presenter.contract.FragmentHomeContract;
 import com.childhealthdiet.app2.ui.base.BaseFragment;
+import com.childhealthdiet.app2.ui.base.BaseMVPFragment;
 import com.childhealthdiet.app2.utils.FileUtils;
-import com.github.jdsjlzx.ItemDecoration.DividerDecoration;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.google.gson.Gson;
@@ -35,12 +31,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.bingoogolapple.bgabanner.BGABanner;
-import cn.bingoogolapple.bgabanner.BGALocalImageSize;
 
 
-
-
-public class HomeFragment extends BaseFragment implements BGABanner.Delegate<ImageView, String>, BGABanner.Adapter<ImageView, String> {
+public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter> implements BGABanner.Delegate<ImageView, String>, BGABanner.Adapter<ImageView, String>,FragmentHomeContract.View {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -52,6 +45,9 @@ public class HomeFragment extends BaseFragment implements BGABanner.Delegate<Ima
 
 
     private BGABanner mHomeTopBanner;
+
+    private ArrayList<HashMap<String ,String>> categoryItemArrayList;
+    SimpleAdapter gvSimpleAdapter;
 
     @BindView(R.id.home_recycler_view)
     LRecyclerView mRecyclerView;
@@ -99,7 +95,8 @@ public class HomeFragment extends BaseFragment implements BGABanner.Delegate<Ima
     }
 
     @Override
-    protected void initWidget(Bundle savedInstanceState){
+    protected void processLogic() {
+        super.processLogic();
         //header头部
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.home_header_view,null);
         mHomeTopBanner = headView.findViewById(R.id.home_top_banner);
@@ -122,28 +119,19 @@ public class HomeFragment extends BaseFragment implements BGABanner.Delegate<Ima
     private void initCategoryGridView(View view){
         mGridViewCategory = view.findViewById(R.id.gridview_category);
 
-        String[] gvCategorys = getResources().getStringArray(R.array.gv_category);
-        //生成动态数组，并且转入数据
-        ArrayList<HashMap<String ,String>> listItemArrayList=new ArrayList<HashMap<String,String>>();
-        for(int i=0; i<gvCategorys.length; i++){
-            HashMap<String, String> map=new HashMap<String,String>();
-            map.put("itemTitle", gvCategorys[i]);
-            map.put("itemText", gvCategorys[i]);
-            listItemArrayList.add(map);
-        }
+//        String[] gvCategorys = getResources().getStringArray(R.array.gv_category);
+//        //生成动态数组，并且转入数据
+//        ArrayList<HashMap<String ,String>> listItemArrayList=new ArrayList<HashMap<String,String>>();
+//        for(int i=0; i<gvCategorys.length; i++){
+//            HashMap<String, String> map=new HashMap<String,String>();
+//            map.put("itemTitle", gvCategorys[i]);
+//            map.put("itemText", gvCategorys[i]);
+//            listItemArrayList.add(map);
+//        }
 
+        categoryItemArrayList = new ArrayList<HashMap<String,String>>();
 
-//        //生成适配器的ImageItem 与动态数组的元素相对应
-//        SimpleAdapter saImageItems = new SimpleAdapter(getActivity(),
-//                listItemArrayList,//数据来源
-//                R.layout.item,//item的XML
-//
-//                //动态数组与ImageItem对应的子项
-//                new String[]{"itemImage", "itemText"},
-//
-//                //ImageItem的XML文件里面的一个ImageView,TextView ID
-//                new int[]{R.id.img_shoukuan, R.id.txt_shoukuan});
-        SimpleAdapter gvSimpleAdapter = new SimpleAdapter(getActivity(),listItemArrayList,
+        gvSimpleAdapter = new SimpleAdapter(getActivity(),categoryItemArrayList,
                 R.layout.gv_category_item,new String[]{"itemTitle"},new int[]{R.id.tv_category_title});
         mGridViewCategory.setAdapter(gvSimpleAdapter);
         //添加消息处理
@@ -154,34 +142,20 @@ public class HomeFragment extends BaseFragment implements BGABanner.Delegate<Ima
             }
         });
 
-
+//        gvSimpleAdapter.notifyDataSetChanged();
+        mPresenter.loadCategoryField(this.getContext());
     }
 
     private void initLRecylerView(){
         mDataAdapter = new DataAdapter(getActivity());
 
-//        ArrayList<RecipeBean> dataList = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            RecipeBean itemModel = new RecipeBean();
-//            itemModel.name = "好菜";
-//            dataList.add(itemModel);
-//        }
 
         String jsonFilePath = getResources().getString(R.string.month_json_path);
         String monthJson = FileUtils.getJson(this.getActivity(),jsonFilePath);
 
-
-//        ArrayList<MonthBean> dataList = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            MonthBean itemModel = new MonthBean();
-//            itemModel.title = "好菜";
-//            dataList.add(itemModel);
-//        }
-
-
         Gson gson = new Gson();
-        List<MonthBean> dataList = (List<MonthBean>)gson .fromJson(monthJson,
-                new TypeToken<List<MonthBean>>(){}.getType());
+        List<MonthRecipe> dataList = (List<MonthRecipe>)gson .fromJson(monthJson,
+                new TypeToken<List<MonthRecipe>>(){}.getType());
 
         mDataAdapter.addAll(dataList);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
@@ -199,6 +173,8 @@ public class HomeFragment extends BaseFragment implements BGABanner.Delegate<Ima
 
 //        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
 //        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
+
+
     }
 
     void loadTopBanner(BGABanner banner){
@@ -238,6 +214,40 @@ public class HomeFragment extends BaseFragment implements BGABanner.Delegate<Ima
 
     @Override
     public void onBannerItemClick(BGABanner banner, ImageView itemView, @Nullable String model, int position) {
+
+    }
+
+    @Override
+    public void updateCategory(String[] aryCategory) {
+        //        String[] gvCategorys = getResources().getStringArray(R.array.gv_category);
+        //生成动态数组，并且转入数据
+//        ArrayList<HashMap<String ,String>> listItemArrayList=new ArrayList<HashMap<String,String>>();
+        for(int i=0; i<aryCategory.length; i++){
+            HashMap<String, String> map=new HashMap<String,String>();
+            map.put("itemTitle", aryCategory[i]);
+            map.put("itemText", aryCategory[i]);
+            categoryItemArrayList.add(map);
+        }
+        gvSimpleAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateMonthRecipeMenu(List<MonthRecipe> monthRecipes) {
+
+    }
+
+    @Override
+    protected FragmentHomeContract.Presenter bindPresenter() {
+        return new FragmentHomePresenter();
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void complete() {
 
     }
 

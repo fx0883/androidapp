@@ -1,5 +1,8 @@
 package com.childhealthdiet.app2.ui.base;
 
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -9,7 +12,7 @@ import io.reactivex.disposables.Disposable;
 
 public class RxPresenter<T extends BaseContract.BaseView> implements BaseContract.BasePresenter<T> {
 
-    protected T mView;
+    protected Reference<T> mViewRef;
     protected CompositeDisposable mDisposable;
 
     protected void unSubscribe() {
@@ -27,12 +30,27 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
 
     @Override
     public void attachView(T view) {
-        this.mView = view;
+
+        this.mViewRef = new WeakReference<T>(view);
     }
+
 
     @Override
     public void detachView() {
-        this.mView = null;
+        if(mViewRef != null){
+            mViewRef.clear();
+        }
+        this.mViewRef = null;
         unSubscribe();
+    }
+
+    @Override
+    public boolean isViewAttached() {
+        return mViewRef != null && mViewRef.get() != null;
+    }
+
+    @Override
+    public T getView() {
+        return mViewRef.get();
     }
 }

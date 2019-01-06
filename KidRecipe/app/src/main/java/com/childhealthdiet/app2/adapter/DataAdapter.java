@@ -4,8 +4,7 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.model.bean.MonthBean;
-import com.childhealthdiet.app2.model.bean.RecipeBean;
+import com.childhealthdiet.app2.model.bean.MonthRecipe;
 import com.childhealthdiet.app2.ui.base.SuperViewHolder;
 import com.childhealthdiet.app2.ui.base.adapter.ListBaseAdapter;
 
@@ -14,7 +13,7 @@ import com.childhealthdiet.app2.ui.base.adapter.ListBaseAdapter;
  * Created by Lzx on 2016/12/30.
  */
 
-public class DataAdapter extends ListBaseAdapter<MonthBean> {
+public class DataAdapter extends ListBaseAdapter<MonthRecipe> {
 
     public DataAdapter(Context context) {
         super(context);
@@ -27,10 +26,13 @@ public class DataAdapter extends ListBaseAdapter<MonthBean> {
 
     @Override
     public void onBindItemHolder(SuperViewHolder holder, int position) {
-        MonthBean item = mDataList.get(position);
+        MonthRecipe item = mDataList.get(position);
 
         TextView titleText = holder.getView(R.id.recipeName);
         titleText.setText(item.title);
+
+        TextView numberText = holder.getView(R.id.recipeNumber);
+        numberText.setText(item.subTitle+"篇菜谱");
     }
 
     @Override

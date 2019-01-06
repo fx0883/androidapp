@@ -11,6 +11,10 @@ public interface BaseContract {
         void attachView(T view);
 
         void detachView();
+
+        boolean isViewAttached();
+
+        T getView();
     }
 
     interface BaseView {

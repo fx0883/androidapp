@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#dddddd">
+    android:background="@color/colorPrimaryGray">
 
 
     <cn.bingoogolapple.bgabanner.BGABanner
@@ -42,7 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="horizontal"
-        android:background="#ffffff">
+        android:background="#ffffff"
+        android:layout_marginTop="9dp">
 
 
         <!--<com.shehuan.niv.NiceImageView-->
