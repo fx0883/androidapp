@@ -33,19 +33,65 @@
             android:textSize="@dimen/dp_14"
             android:layout_marginTop="5dp"/>
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    >
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivrecipe_item1"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="60dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/lunch"
+        app:riv_corner_radius="10dp"
+        app:riv_mutate_background="true" />
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/ivrecipe_item"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/lunch"
-            app:riv_corner_radius="10dp"
-            app:riv_mutate_background="true" />
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivrecipe_item2"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="60dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/lunch"
+        app:riv_corner_radius="10dp"
+        app:riv_mutate_background="true" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivrecipe_item3"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="60dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/lunch"
+        app:riv_corner_radius="10dp"
+        app:riv_mutate_background="true" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivrecipe_item4"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="60dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/lunch"
+        app:riv_corner_radius="10dp"
+        app:riv_mutate_background="true" />
+
+</LinearLayout>
+
 
     </LinearLayout>
 

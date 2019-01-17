@@ -9,20 +9,22 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.adapter.DataAdapter;
+import com.childhealthdiet.app2.adapter.MonthRecipeDataAdapter;
 import com.childhealthdiet.app2.model.bean.MonthRecipe;
 import com.childhealthdiet.app2.presenter.FragmentHomePresenter;
 import com.childhealthdiet.app2.presenter.contract.FragmentHomeContract;
-import com.childhealthdiet.app2.ui.base.BaseFragment;
 import com.childhealthdiet.app2.ui.base.BaseMVPFragment;
 import com.childhealthdiet.app2.utils.FileUtils;
+import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,10 +32,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 
-public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter> implements BGABanner.Delegate<ImageView, String>, BGABanner.Adapter<ImageView, String>,FragmentHomeContract.View {
+public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter> implements  BGABanner.Adapter<ImageView, String>,FragmentHomeContract.View {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -46,20 +49,25 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
 
     private BGABanner mHomeTopBanner;
 
+    //category 数据
     private ArrayList<HashMap<String ,String>> categoryItemArrayList;
     SimpleAdapter gvSimpleAdapter;
 
     @BindView(R.id.home_recycler_view)
     LRecyclerView mRecyclerView;
 
-//    @BindView(R.id.gridview_category)
     GridView mGridViewCategory;
+    View headView;
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
 
-    private DataAdapter mDataAdapter = null;
+    private MonthRecipeDataAdapter mMonthRecipeMonthRecipeDataAdapter = null;
 
 
+    String[] topBannerTips;
+    String[] topBannerImgs;
+
+//    List<MonthRecipe> mMonthRecipeList;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -94,47 +102,41 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
         }
     }
 
+
     @Override
-    protected void processLogic() {
-        super.processLogic();
-        //header头部
-        View headView = LayoutInflater.from(getActivity()).inflate(R.layout.home_header_view,null);
-        mHomeTopBanner = headView.findViewById(R.id.home_top_banner);
-        loadTopBanner(mHomeTopBanner);
-        initLRecylerView();
-        mLRecyclerViewAdapter.addHeaderView(headView);
-
-        //禁用下拉刷新功能
-        mRecyclerView.setPullRefreshEnabled(false);
-
-        //禁用自动加载更多功能
-        mRecyclerView.setLoadMoreEnabled(false);
-
-//        mLRecyclerViewAdapter.notifyDataSetChanged();
-
-        initCategoryGridView(headView);
-
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
+        //loadTopBanner
+        topBannerTips = getResources().getStringArray(R.array.home_banner_labels);
+        topBannerImgs = getResources().getStringArray(R.array.home_banner_img);
     }
 
-    private void initCategoryGridView(View view){
-        mGridViewCategory = view.findViewById(R.id.gridview_category);
+    @Override
+    protected void initWidget(Bundle savedInstanceState) {
+        super.initWidget(savedInstanceState);
+        headView = LayoutInflater.from(getActivity()).inflate(R.layout.home_header_view,null);
+        mHomeTopBanner = headView.findViewById(R.id.home_top_banner);
+        initTopBanner(mHomeTopBanner);
+        initLRecylerView();
+        mLRecyclerViewAdapter.addHeaderView(headView);
+        //禁用下拉刷新功能
+        mRecyclerView.setPullRefreshEnabled(false);
+        //禁用自动加载更多功能
+        mRecyclerView.setLoadMoreEnabled(false);
+        initCategoryGridView(headView);
+    }
 
-//        String[] gvCategorys = getResources().getStringArray(R.array.gv_category);
-//        //生成动态数组，并且转入数据
-//        ArrayList<HashMap<String ,String>> listItemArrayList=new ArrayList<HashMap<String,String>>();
-//        for(int i=0; i<gvCategorys.length; i++){
-//            HashMap<String, String> map=new HashMap<String,String>();
-//            map.put("itemTitle", gvCategorys[i]);
-//            map.put("itemText", gvCategorys[i]);
-//            listItemArrayList.add(map);
-//        }
+    @Override
+    protected void initClick() {
+        super.initClick();
+        mHomeTopBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
+//                Toast.makeText(banner.getContext(), "点击了" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        categoryItemArrayList = new ArrayList<HashMap<String,String>>();
-
-        gvSimpleAdapter = new SimpleAdapter(getActivity(),categoryItemArrayList,
-                R.layout.gv_category_item,new String[]{"itemTitle"},new int[]{R.id.tv_category_title});
-        mGridViewCategory.setAdapter(gvSimpleAdapter);
-        //添加消息处理
+        //分类点击事件
         mGridViewCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -142,60 +144,65 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
             }
         });
 
-//        gvSimpleAdapter.notifyDataSetChanged();
+        RoundedImageView iv_nourish =  (RoundedImageView)headView.findViewById(R.id.iv_nourish);
+        iv_nourish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        RoundedImageView iv_food_therapy =  (RoundedImageView)headView.findViewById(R.id.iv_food_therapy);
+        iv_food_therapy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(view.getContext(), "点击了" + position, Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+
+    @OnClick(R.id.btn_top_search)
+    void onClickSearchButton(){
+
+    }
+
+    @Override
+    protected void processLogic() {
+        super.processLogic();
         mPresenter.loadCategoryField(this.getContext());
+        mPresenter.loadMonthRecipe(this.getContext());
+    }
+
+    private void initCategoryGridView(View view){
+        mGridViewCategory = view.findViewById(R.id.gridview_category);
+        categoryItemArrayList = new ArrayList<HashMap<String,String>>();
+        gvSimpleAdapter = new SimpleAdapter(getActivity(),categoryItemArrayList,
+                R.layout.gv_category_item,new String[]{"itemTitle"},new int[]{R.id.tv_category_title});
+        mGridViewCategory.setAdapter(gvSimpleAdapter);
+        //添加消息处理
+
     }
 
     private void initLRecylerView(){
-        mDataAdapter = new DataAdapter(getActivity());
-
-
-        String jsonFilePath = getResources().getString(R.string.month_json_path);
-        String monthJson = FileUtils.getJson(this.getActivity(),jsonFilePath);
-
-        Gson gson = new Gson();
-        List<MonthRecipe> dataList = (List<MonthRecipe>)gson .fromJson(monthJson,
-                new TypeToken<List<MonthRecipe>>(){}.getType());
-
-        mDataAdapter.addAll(dataList);
-        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
+        mMonthRecipeMonthRecipeDataAdapter = new MonthRecipeDataAdapter(getActivity());
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mMonthRecipeMonthRecipeDataAdapter);
         mRecyclerView.setAdapter(mLRecyclerViewAdapter);
-
-//        DividerDecoration divider = new DividerDecoration.Builder(getActivity())
-//                .setHeight(R.dimen.default_divider_height)
-//                .setPadding(R.dimen.default_divider_padding)
-//                .setColorResource(R.color.colorAccent)
-//                .build();
-//        //mRecyclerView.setHasFixedSize(true);
-//        mRecyclerView.addItemDecoration(divider);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-//        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
-//        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
-
-
     }
 
-    void loadTopBanner(BGABanner banner){
-
-        String[] topBannerTips = getResources().getStringArray(R.array.home_banner_labels);
-        String[] topBannerImgs = getResources().getStringArray(R.array.home_banner_img);
-//        TypedArray topBannerImgArray = getResources().obtainTypedArray(R.array.home_banner_img);
-//        int[] topBannerImgArray = getResources().getIntArray(R.array.home_banner_img);
+    void initTopBanner(BGABanner banner){
         banner.setAutoPlayAble(topBannerTips.length > 1);
-
         banner.setAdapter(HomeFragment.this);
         banner.setData(Arrays.asList(topBannerImgs), Arrays.asList(topBannerTips));
-// Bitmap 的宽高在 maxWidth maxHeight 和 minWidth minHeight 之间
-//        BGALocalImageSize localImageSize = new BGALocalImageSize(720, 1280, 320, 640);
-// 设置数据源
-//        banner.setData(localImageSize, ImageView.ScaleType.CENTER_CROP,
-//                R.drawable.uoko_guide_background_1,
-//                R.drawable.uoko_guide_background_2,
-//                R.drawable.uoko_guide_background_3);
-
-
     }
 
 
@@ -213,15 +220,7 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
     }
 
     @Override
-    public void onBannerItemClick(BGABanner banner, ImageView itemView, @Nullable String model, int position) {
-
-    }
-
-    @Override
     public void updateCategory(String[] aryCategory) {
-        //        String[] gvCategorys = getResources().getStringArray(R.array.gv_category);
-        //生成动态数组，并且转入数据
-//        ArrayList<HashMap<String ,String>> listItemArrayList=new ArrayList<HashMap<String,String>>();
         for(int i=0; i<aryCategory.length; i++){
             HashMap<String, String> map=new HashMap<String,String>();
             map.put("itemTitle", aryCategory[i]);
@@ -233,7 +232,8 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
 
     @Override
     public void updateMonthRecipeMenu(List<MonthRecipe> monthRecipes) {
-
+        mMonthRecipeMonthRecipeDataAdapter.setDataList(monthRecipes);
+        mLRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override

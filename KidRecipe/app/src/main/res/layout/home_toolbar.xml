@@ -14,12 +14,12 @@
         android:theme="?attr/actionBarTheme" >
 
         <com.phillipcalvin.iconbutton.IconButton
-            android:id="@+id/search"
+            android:id="@+id/btn_top_search"
 
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:drawableLeft="@drawable/search"
-            android:text="搜索菜谱123123"
+            android:text="搜索菜谱、食材"
             android:background="@drawable/flatbutton"
             app:iconPadding="10dp"
             android:layout_margin="16dp"
