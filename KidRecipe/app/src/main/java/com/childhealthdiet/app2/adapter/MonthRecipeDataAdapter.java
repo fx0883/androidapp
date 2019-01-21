@@ -1,12 +1,15 @@
 package com.childhealthdiet.app2.adapter;
 
 import android.content.Context;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.childhealthdiet.app2.R;
 import com.childhealthdiet.app2.model.bean.MonthRecipe;
 import com.childhealthdiet.app2.ui.base.SuperViewHolder;
 import com.childhealthdiet.app2.ui.base.adapter.ListBaseAdapter;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 
 /**
@@ -33,6 +36,33 @@ public class MonthRecipeDataAdapter extends ListBaseAdapter<MonthRecipe> {
 
         TextView numberText = holder.getView(R.id.recipeNumber);
         numberText.setText(item.subTitle+"篇菜谱");
+
+        RoundedImageView iv1 = holder.getView(R.id.iv_month_recipe_item1);
+        RoundedImageView iv2 = holder.getView(R.id.iv_month_recipe_item2);
+        RoundedImageView iv3 = holder.getView(R.id.iv_month_recipe_item3);
+        RoundedImageView iv4 = holder.getView(R.id.iv_month_recipe_item4);
+
+
+//        String defaultRecipeUrl = "file:///android_asset/image/defaultrecipe";
+
+
+//        Picasso.with(recipeViewHolder.itemView.getContext())
+//                .load(recipeUrl)
+//                .into(recipeViewHolder.ivRecipe);
+
+        Glide.with(mContext)
+                .load("file:///android_asset/recipeimage/"+item.images.get(0))
+                .into(iv1);
+
+        Glide.with(mContext)
+                .load("file:///android_asset/recipeimage/"+item.images.get(1))
+                .into(iv2);
+        Glide.with(mContext)
+                .load("file:///android_asset/recipeimage/"+item.images.get(2))
+                .into(iv3);
+        Glide.with(mContext)
+                .load("file:///android_asset/recipeimage/"+item.images.get(3))
+                .into(iv4);
     }
 
     @Override

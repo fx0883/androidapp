@@ -43,7 +43,7 @@
     android:layout_marginRight="10dp"
     >
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/ivrecipe_item1"
+        android:id="@+id/iv_month_recipe_item1"
         android:layout_width="wrap_content"
         android:layout_weight="1"
         android:layout_height="60dp"
@@ -55,7 +55,7 @@
         app:riv_mutate_background="true" />
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/ivrecipe_item2"
+        android:id="@+id/iv_month_recipe_item2"
         android:layout_width="wrap_content"
         android:layout_weight="1"
         android:layout_height="60dp"
@@ -67,7 +67,7 @@
         app:riv_mutate_background="true" />
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/ivrecipe_item3"
+        android:id="@+id/iv_month_recipe_item3"
         android:layout_width="wrap_content"
         android:layout_weight="1"
         android:layout_height="60dp"
@@ -79,7 +79,7 @@
         app:riv_mutate_background="true" />
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/ivrecipe_item4"
+        android:id="@+id/iv_month_recipe_item4"
         android:layout_width="wrap_content"
         android:layout_weight="1"
         android:layout_height="60dp"
