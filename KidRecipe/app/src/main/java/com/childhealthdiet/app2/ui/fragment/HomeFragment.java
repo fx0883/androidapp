@@ -17,7 +17,9 @@ import com.childhealthdiet.app2.adapter.MonthRecipeDataAdapter;
 import com.childhealthdiet.app2.model.bean.MonthRecipe;
 import com.childhealthdiet.app2.presenter.FragmentHomePresenter;
 import com.childhealthdiet.app2.presenter.contract.FragmentHomeContract;
+import com.childhealthdiet.app2.ui.activitys.RecipeKeywordListActivity;
 import com.childhealthdiet.app2.ui.base.BaseMVPFragment;
+import com.childhealthdiet.app2.ui.categorys.RECIPETYPE;
 import com.childhealthdiet.app2.utils.FileUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -66,10 +68,6 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
 
     String[] topBannerTips;
     String[] topBannerImgs;
-
-//    List<MonthRecipe> mMonthRecipeList;
-
-//    private OnFragmentInteractionListener mListener;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -164,7 +162,9 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(view.getContext(), "点击了" + position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(view.getContext(), "点击了" + position, Toast.LENGTH_SHORT).show();
+                RecipeKeywordListActivity.startActivity(getContext(),RECIPETYPE.Month,mMonthRecipeMonthRecipeDataAdapter.getDataList().get(position));
+
             }
 
         });
@@ -251,49 +251,5 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
 
     }
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_home, container, false);
-//    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

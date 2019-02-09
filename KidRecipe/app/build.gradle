@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 27
@@ -21,7 +22,11 @@ android {
         targetCompatibility = '1.8'
     }
 }
-
+//greendao{
+//    schemaVersion 3
+//    daoPackage 'com.childhealthdiet.app2.model.gen'
+//    targetGenDir 'src/main/java'
+//}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -49,4 +54,7 @@ dependencies {
     //    implementation project(':niceimageview')
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'org.kie.modules:com-google-code-gson:6.5.0.Final'
+    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'net.zetetic:android-database-sqlcipher:4.0.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

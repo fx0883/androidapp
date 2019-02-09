@@ -1,7 +1,6 @@
 package com.childhealthdiet.app2.adapter;
 
 import android.content.Context;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -24,7 +23,7 @@ public class MonthRecipeDataAdapter extends ListBaseAdapter<MonthRecipe> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.recipe_item_layout;
+        return R.layout.month_recipe_item_layout;
     }
 
     @Override
@@ -42,18 +41,9 @@ public class MonthRecipeDataAdapter extends ListBaseAdapter<MonthRecipe> {
         RoundedImageView iv3 = holder.getView(R.id.iv_month_recipe_item3);
         RoundedImageView iv4 = holder.getView(R.id.iv_month_recipe_item4);
 
-
-//        String defaultRecipeUrl = "file:///android_asset/image/defaultrecipe";
-
-
-//        Picasso.with(recipeViewHolder.itemView.getContext())
-//                .load(recipeUrl)
-//                .into(recipeViewHolder.ivRecipe);
-
         Glide.with(mContext)
                 .load("file:///android_asset/recipeimage/"+item.images.get(0))
                 .into(iv1);
-
         Glide.with(mContext)
                 .load("file:///android_asset/recipeimage/"+item.images.get(1))
                 .into(iv2);

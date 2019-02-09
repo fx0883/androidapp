@@ -14,6 +14,8 @@ import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
+import com.childhealthdiet.app2.R;
+
 /**
  * Created by PC on 2016/9/8.
  */
@@ -43,6 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param toolbar
      */
     protected void setUpToolbar(Toolbar toolbar){
+
     }
 
     protected void initData(Bundle savedInstanceState){
@@ -79,13 +82,17 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    private void initToolbar(){
-        //更严谨是通过反射判断是否存在Toolbar
-//        mToolbar = ButterKnife.findById(this, R.id.toolbar);
+//    private void initToolbar(){
+//        //更严谨是通过反射判断是否存在Toolbar
+//        mToolbar = ButterKnife.findById(this,R.id.toolbar);
 //        if (mToolbar != null){
 //            supportActionBar(mToolbar);
 //            setUpToolbar(mToolbar);
 //        }
+//    }
+
+    protected void initToolbar(){
+
     }
 
 
