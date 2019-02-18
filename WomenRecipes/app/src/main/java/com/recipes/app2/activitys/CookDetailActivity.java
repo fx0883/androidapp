@@ -7,6 +7,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -39,12 +40,13 @@ import com.qq.e.comm.util.AdError;
 import java.util.Random;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.google.android.gms.ads.AdRequest.ERROR_CODE_INTERNAL_ERROR;
 
-public class CookDetailActivity extends BaseSwipeBackActivity {
-
+//public class CookDetailActivity extends BaseSwipeBackActivity {
+public class CookDetailActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
     @BindView(R.id.toolbar_layout)
@@ -78,11 +80,20 @@ public class CookDetailActivity extends BaseSwipeBackActivity {
 
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cook_detail);
+        ButterKnife.bind(this);
+//        this.setupView();
+        this.init(savedInstanceState);
+    }
+
+//    @Override
     protected int getLayoutId(){
         return R.layout.activity_cook_detail;
     }
 
-    @Override
+//    @Override
     protected void init(Bundle savedInstanceState){
 
         StatusBarUtil.setImmersiveStatusBar(this);
@@ -113,7 +124,8 @@ public class CookDetailActivity extends BaseSwipeBackActivity {
 
 
         cookDetailAdapter = new CookDetailAdapter(this, data, isShowCollection);
-        recyclerList.setLayoutManager(new LinearLayoutManager(getContext()));
+//        recyclerList.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerList.setLayoutManager(new LinearLayoutManager(this));
         recyclerList.setAdapter(cookDetailAdapter);
 
 

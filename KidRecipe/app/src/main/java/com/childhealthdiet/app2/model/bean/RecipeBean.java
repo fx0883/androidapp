@@ -139,7 +139,7 @@ public void setMaterial(String material) {
     this.material = material;
 }
 public Boolean getCollect() {
-    return this.collect;
+    return this.collect!=null && this.collect;
 }
 public void setCollect(Boolean collect) {
     this.collect = collect;

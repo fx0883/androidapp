@@ -7,5 +7,6 @@ package com.childhealthdiet.app2.ui.categorys;
 public enum RECIPETYPE {
     None,
     Month,
+    Keyword,
     Category;
 }

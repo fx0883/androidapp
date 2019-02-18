@@ -24,7 +24,14 @@ public class RecipeModelImpl implements RecipeModel {
 
     @Override
     public List<RecipeBean> searchRecipeBeanbyKeyword(Context context,String keyword){
-        return null;
+        RecipeBeanDao recipeBeanDao = DaoDbHelper.getInstance().getSession().getRecipeBeanDao();
+        return recipeBeanDao.queryBuilder().whereOr(RecipeBeanDao.Properties.Name.like("%"+keyword+"%"),
+                RecipeBeanDao.Properties.Ingredients.like("%"+keyword+"%"),
+                RecipeBeanDao.Properties.Eattime.like("%"+keyword+"%"),
+                RecipeBeanDao.Properties.Prompt.like("%"+keyword+"%"),
+                RecipeBeanDao.Properties.Type.like("%"+keyword+"%"),
+                RecipeBeanDao.Properties.Practice.like("%"+keyword+"%"),
+                RecipeBeanDao.Properties.Material.like("%"+keyword+"%")).list();
     }
 
 //    RecipeBeanDao.Properties.Month.eq(hashMapCondition.get("value"))
@@ -35,4 +42,11 @@ public class RecipeModelImpl implements RecipeModel {
     }
 
 
+    @Override
+    public RecipeBean getRecipeById(Context context,long id){
+        RecipeBeanDao recipeBeanDao = DaoDbHelper.getInstance().getSession().getRecipeBeanDao();
+//        List<RecipeBean> recipeBeans = recipeBeanDao.queryBuilder().where(RecipeBeanDao.Properties.Id.eq(strID)).list();
+        return recipeBeanDao.load(id);
+
+    }
 }

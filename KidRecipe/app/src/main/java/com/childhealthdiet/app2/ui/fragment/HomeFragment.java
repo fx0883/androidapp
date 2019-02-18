@@ -1,5 +1,6 @@
 package com.childhealthdiet.app2.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,9 +19,11 @@ import com.childhealthdiet.app2.model.bean.MonthRecipe;
 import com.childhealthdiet.app2.presenter.FragmentHomePresenter;
 import com.childhealthdiet.app2.presenter.contract.FragmentHomeContract;
 import com.childhealthdiet.app2.ui.activitys.RecipeKeywordListActivity;
+import com.childhealthdiet.app2.ui.activitys.RecipeSearchActivity;
 import com.childhealthdiet.app2.ui.base.BaseMVPFragment;
 import com.childhealthdiet.app2.ui.categorys.RECIPETYPE;
 import com.childhealthdiet.app2.utils.FileUtils;
+import com.czp.searchmlist.demo;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
@@ -36,6 +39,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bingoogolapple.bgabanner.BGABanner;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter> implements  BGABanner.Adapter<ImageView, String>,FragmentHomeContract.View {
@@ -172,7 +178,11 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
 
     @OnClick(R.id.btn_top_search)
     void onClickSearchButton(){
+//        Intent intent  =new Intent(this.getContext(),RecipeSearchActivity.class);
+//        this.getContext().startActivity(intent);
 
+
+        startActivityForResult(new Intent(this.getContext(), RecipeSearchActivity.class), 1);
     }
 
     @Override
@@ -248,6 +258,63 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
 
     @Override
     public void complete() {
+
+    }
+
+
+    /**
+     * 为了得到传回的数据，必须在前面的Activity中（指MainActivity类）重写onActivityResult方法
+     * <p>
+     * <p>
+     * <p>
+     * requestCode 请求码，即调用startActivityForResult()传递过去的值
+     * <p>
+     * resultCode 结果码，结果码用于标识返回数据来自哪个新Activity
+     */
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+
+            case 1:
+
+//                if (data != null) {
+//                    String searchStr = data.getExtras().getString("searchKey");
+//                    tvTitle.setText("关键字"+searchStr+"的搜索结果");
+////                    searchStr = "鱼";
+//                    disposables.add(RecipeService.getInstance().searchRecipeObservable(searchStr)
+//                            .subscribeOn(Schedulers.io())
+//                            .observeOn(AndroidSchedulers.mainThread())
+//                            .subscribeWith(new DisposableObserver<List<RecipeBean>>() {
+//                                @Override
+//                                public void onComplete() {
+//                                    disposables.clear();
+//                                }
+//
+//                                @Override
+//                                public void onError(Throwable e) {
+//                                    disposables.clear();
+//                                }
+//
+//                                @Override
+//                                public void onNext(List<RecipeBean> recipes) {
+//                                    recipeListAdapter.updateRecipe(recipes);
+//
+//                                }
+//                            }));
+//                }
+
+
+            case 2:
+
+                //来自按钮2的请求，作相应业务处理
+
+        }
+
+
+        //得到新Activity 关闭后返回的数据
+
 
     }
 

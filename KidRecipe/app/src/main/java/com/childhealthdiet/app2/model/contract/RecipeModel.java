@@ -10,4 +10,6 @@ public interface RecipeModel {
     List<RecipeBean> loadRecipeBeanbyKeywords(Context context,String[] keywords);
     List<RecipeBean> searchRecipeBeanbyKeyword(Context context,String keyword);
     List<RecipeBean> loadRecipeBeanbyMonth(Context context,String keyword);
+
+    RecipeBean getRecipeById(Context context,long id);
 }

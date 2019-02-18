@@ -7,4 +7,24 @@
     <string name="month_json_path">file/month.json</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="transition_cook_detail_imgv_bg">transition_cook_detail_imgv_bg</string>
+    <string name="transition_cook_detail_content">transition_cook_detail_content</string>
+
+
+    <string name="ingredients">用料</string>
+    <string name="methods">做法</string>
+
+    <string name="hint">小贴士</string>】
+
+
+    <string name="feedbackEmail">fx0883@qq.com</string>
+    <string name="feedbackBody"></string>
+    <string name="feedbackTitle">对%s的反馈</string>
+
+
+    <string name="gdtslogan">GDTslogan</string>
+    <string name="click_to_skip">点击跳过</string>
+    <string name="title_activity_recipe_search">RecipeSearchActivity</string>
 </resources>

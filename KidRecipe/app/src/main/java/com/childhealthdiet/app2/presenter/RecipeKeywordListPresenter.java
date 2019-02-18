@@ -33,10 +33,6 @@ public class RecipeKeywordListPresenter extends RxPresenter<RecipeKeywordListCon
                 Single.create(new SingleOnSubscribe<List<RecipeBean>>() {
                     @Override
                     public void subscribe(SingleEmitter<List<RecipeBean>> emitter) throws Exception {
-//                        SimpleModelImpl simpleModel = new SimpleModelImpl();
-//                        MonthRecipeModel monthRecipeModelImpl = new MonthRecipeModelImpl();
-//                        emitter.onSuccess(monthRecipeModelImpl.loadMonthRecipe(context));
-
                         RecipeModel recipeModelImpl = new RecipeModelImpl();
                         emitter.onSuccess(recipeModelImpl.loadRecipeBeanbyMonth(context,strKey));
                     }
@@ -54,18 +50,19 @@ public class RecipeKeywordListPresenter extends RxPresenter<RecipeKeywordListCon
     @Override
     public void loadRecipeByKeyword(Context context,String strKey) {
         Disposable disposable =
-                Single.create(new SingleOnSubscribe<String[]>() {
+                Single.create(new SingleOnSubscribe<List<RecipeBean>>() {
                     @Override
-                    public void subscribe(SingleEmitter<String[]> emitter) throws Exception {
-                        SimpleModel simpleModel = new SimpleModelImpl();
-                        emitter.onSuccess(simpleModel.loadCategoryField(context));
+                    public void subscribe(SingleEmitter<List<RecipeBean>> emitter) throws Exception {
+                        RecipeModel recipeModel = new RecipeModelImpl();
+                        List<RecipeBean> recipeBeans = recipeModel.searchRecipeBeanbyKeyword(context,strKey);
+                        emitter.onSuccess(recipeBeans);
                     }
                 }).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<String[]>() {
+                        .subscribe(new Consumer<List<RecipeBean>>() {
                             @Override
-                            public void accept(String[] strCategorys) throws Exception {
-//                                RecipeKeywordListPresenter.this.getView().updateCategory(strCategorys);
+                            public void accept(List<RecipeBean> recipeBeans) throws Exception {
+                                RecipeKeywordListPresenter.this.getView().updateRecipe(recipeBeans);
                             }
                         });
         addDisposable(disposable);

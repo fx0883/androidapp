@@ -33,8 +33,11 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
     private static final String DATA_KEY = "data_Key";
     private static final String RECIPE_TYPE_KEY = "recipe_Type_Key";
 
+    private static final String KEYWORD_KEY = "keyword_key";
+
 
     private MonthRecipe mMonthRecipe = null;
+    private String mKeyword = null;
     private RECIPETYPE mRecipeType = RECIPETYPE.None;
     @BindView(R.id.recipelist_recycler_view)
     LRecyclerView mRecyclerView;
@@ -52,6 +55,13 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
         Intent intent  =new Intent(context,RecipeKeywordListActivity.class);
         intent.putExtra(RECIPE_TYPE_KEY,recipetype.ordinal());
         intent.putExtra(DATA_KEY,monthRecipe);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, RECIPETYPE recipetype, String strKey){
+        Intent intent  =new Intent(context,RecipeKeywordListActivity.class);
+        intent.putExtra(RECIPE_TYPE_KEY,recipetype.ordinal());
+        intent.putExtra(KEYWORD_KEY,strKey);
         context.startActivity(intent);
     }
 
@@ -105,6 +115,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 case Category:
 
                     break;
+                case Keyword:
+                    mKeyword = savedInstanceState.getString(KEYWORD_KEY);
+                    break;
                 default:
                     break;
             }
@@ -119,6 +132,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                     mMonthRecipe = getIntent().getParcelableExtra(DATA_KEY);
                 case Category:
 
+                    break;
+                case Keyword:
+                    mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
                     break;
                 default:
                     break;
@@ -141,7 +157,8 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(view.getContext(), "点击了" + position, Toast.LENGTH_SHORT).show();
-
+                long recipeId = mRecipeListDataAdapter.getDataList().get(position).getId();
+                RecipeDetailActivity.startActivity(RecipeKeywordListActivity.this,view,recipeId);
             }
 
         });
@@ -161,6 +178,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 mPresenter.loadRecipeBeanbyMonth(this,mMonthRecipe.getKey());
             case Category:
 
+                break;
+            case Keyword:
+                mPresenter.loadRecipeByKeyword(this,mKeyword);
                 break;
             default:
                 break;
@@ -186,7 +206,22 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
     protected void initToolbar(){
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
-        mToolbarTitle.setText(mMonthRecipe.getTitle());
+
+        switch (mRecipeType) {
+            case None:
+                break;
+            case Month:
+                mToolbarTitle.setText(mMonthRecipe.getTitle());
+            case Category:
+
+                break;
+            case Keyword:
+                mToolbarTitle.setText("关键字"+mKeyword+"的搜索结果");
+                break;
+            default:
+                break;
+        }
+
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

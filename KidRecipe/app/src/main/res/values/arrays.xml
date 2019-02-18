@@ -13,13 +13,13 @@
     </array>
 
     <array name="gv_category">
-        <item>益智</item>
-        <item>增高</item>
-        <item>开胃</item>
-        <item>健齿</item>
-        <item>咳嗽</item>
-        <item>便秘</item>
         <item>感冒</item>
+        <item>咳嗽</item>
+        <item>贫血</item>
+        <item>积食</item>
+        <item>肺炎</item>
+        <item>腹泻</item>
+        <item>便秘</item>
         <item>更多</item>
     </array>
     
