@@ -2,6 +2,8 @@ package com.czp.searchmlist;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
@@ -13,9 +15,11 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,10 +30,10 @@ import java.util.Random;
 /**
  * Created by liuyunming on 2016/7/6.
  */
-public class mSearchLayout extends LinearLayout{
+public class mSearchLayout extends LinearLayout {
 
-    private  String msearch_hint;
-    private  int msearch_baground;
+    private String msearch_hint;
+    private int msearch_baground;
     Context context;
     private ImageView ib_searchtext_delete;
     private EditText et_searchtext_search;
@@ -41,13 +45,20 @@ public class mSearchLayout extends LinearLayout{
     //历史搜索
     private selfSearchGridView gridviewolddata;
     private SearchOldDataAdapter OldDataAdapter;
-    private ArrayList<String> OldDataList =new ArrayList<String>();
+    private ArrayList<String> OldDataList = new ArrayList<String>();
     //热门搜索
     FlowLayout hotflowLayout;
 
-    private String backtitle="取消",searchtitle="搜索";
+    private String backtitle = "取消", searchtitle = "搜索";
     private OnClickListener TextViewItemListener;
-    private int countOldDataSize=15;//默认搜索记录的条数， 正确的是传入进来的条数
+    private int countOldDataSize = 15;//默认搜索记录的条数， 正确的是传入进来的条数
+
+
+    //modify by fx
+    // 数据库变量
+    // 用于存放历史搜索记录
+    private RecordSQLiteOpenHelper helper;
+    private SQLiteDatabase db;
 
 
     public mSearchLayout(Context context) {
@@ -62,7 +73,7 @@ public class mSearchLayout extends LinearLayout{
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.searchmlist);
         msearch_hint = ta.getString(R.styleable.searchmlist_search_hint);
-        msearch_baground = ta.getResourceId(R.styleable.searchmlist_search_baground,R.drawable.search_baground_shap);
+        msearch_baground = ta.getResourceId(R.styleable.searchmlist_search_baground, R.drawable.search_baground_shap);
         ta.recycle();
 
 
@@ -76,15 +87,13 @@ public class mSearchLayout extends LinearLayout{
     }
 
 
+    private void InitView() {
+
+        backtitle = getResources().getString(R.string.search_cancel);
+        searchtitle = getResources().getString(R.string.search_verify);
 
 
-    private void  InitView(){
-
-        backtitle=getResources().getString(R.string.search_cancel);
-        searchtitle=getResources().getString(R.string.search_verify);
-
-
-        searchview =(LinearLayout)LayoutInflater.from(context).inflate(R.layout.msearchlayout, null);
+        searchview = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.msearchlayout, null);
         //把获得的view加载到这个控件中
         addView(searchview);
         //把两个按钮从布局文件中找到
@@ -97,13 +106,10 @@ public class mSearchLayout extends LinearLayout{
         //清除历史记录
         tvclearolddata = (TextView) searchview.findViewById(R.id.tvclearolddata);
 
-        gridviewolddata=  (selfSearchGridView)searchview.findViewById(R.id.gridviewolddata);
+        gridviewolddata = (selfSearchGridView) searchview.findViewById(R.id.gridviewolddata);
         gridviewolddata.setSelector(new ColorDrawable(Color.TRANSPARENT));//去除背景点击效果
 
-        hotflowLayout =  (FlowLayout)searchview.findViewById(R.id.id_flowlayouthot);
-
-
-
+        hotflowLayout = (FlowLayout) searchview.findViewById(R.id.id_flowlayouthot);
 
 
         setLinstener();
@@ -124,16 +130,17 @@ public class mSearchLayout extends LinearLayout{
                                       int after) {
             // TODO Auto-generated method stub
         }
+
         //当文本改变时候的操作
         @Override
         public void onTextChanged(CharSequence s, int start, int before,
                                   int count) {
             // TODO Auto-generated method stub
             //如果编辑框中文本的长度大于0就显示删除按钮否则不显示
-            if(s.length() > 0){
+            if (s.length() > 0) {
                 ib_searchtext_delete.setVisibility(View.VISIBLE);
                 bt_text_search_back.setText(searchtitle);
-            }else{
+            } else {
                 ib_searchtext_delete.setVisibility(View.GONE);
                 bt_text_search_back.setText(backtitle);
             }
@@ -173,14 +180,13 @@ public class mSearchLayout extends LinearLayout{
         });
 
 
-
         bt_text_search_back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 String searchtext = et_searchtext_search.getText().toString().trim();
                 if (bt_text_search_back.getText().toString().equals(searchtitle)) {
 //                    Toast.makeText(context, "点击button搜索" + searchtext, Toast.LENGTH_SHORT).show();
-                        executeSearch_and_NotifyDataSetChanged(searchtext);
+                    executeSearch_and_NotifyDataSetChanged(searchtext);
                 } else {
 //                    Toast.makeText(context, "点击button  返回", Toast.LENGTH_SHORT).show();
                     if (sCBlistener != null)
@@ -190,12 +196,12 @@ public class mSearchLayout extends LinearLayout{
         });
 
 
-
         tvclearolddata.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(context, "清除历史搜索记录", Toast.LENGTH_SHORT).show();
-                if(sCBlistener!=null) {
+                if (sCBlistener != null) {
+                    mSearchLayout.this.deleteData();
                     OldDataList.clear();
                     OldDataAdapter.notifyDataSetChanged();
                     sCBlistener.ClearOldData();
@@ -204,12 +210,10 @@ public class mSearchLayout extends LinearLayout{
         });
 
 
-
-
-        TextViewItemListener = new OnClickListener(){
+        TextViewItemListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                String string = ((TextView)v).getText().toString();
+                String string = ((TextView) v).getText().toString();
 
 //                Toast.makeText(context, "Item点击"+string, Toast.LENGTH_SHORT).show();
 
@@ -219,12 +223,11 @@ public class mSearchLayout extends LinearLayout{
         };
 
 
-
         gridviewolddata.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(context, "历史记录点击"+OldDataList.get(position), Toast.LENGTH_SHORT).show();
-                if(sCBlistener!=null){
+                if (sCBlistener != null) {
                     sCBlistener.Search(OldDataList.get(position).trim());
                 }
             }
@@ -234,70 +237,66 @@ public class mSearchLayout extends LinearLayout{
 
 
     /**
-     *
-     * @param olddatalist  历史搜索数据集合
-     * @param hotdata  热门搜索数据集合
-     * @param sCb  事件处理监听
+     * @param olddatalist 历史搜索数据集合
+     * @param hotdata     热门搜索数据集合
+     * @param sCb         事件处理监听
      */
-    public void initData(List<String> olddatalist,List<String> hotdata,setSearchCallBackListener sCb){
+    public void initData(List<String> olddatalist, List<String> hotdata, setSearchCallBackListener sCb) {
 
         SetCallBackListener(sCb);
 
         hotflowLayout.removeAllViews();
+        loaddb();
         OldDataList.clear();
-        if(olddatalist!=null)
+//        if (olddatalist != null)
+//            OldDataList.addAll(olddatalist);
+        olddatalist = queryData("");
         OldDataList.addAll(olddatalist);
-
 
 //        countOldDataSize = OldDataList.size();
 
-        OldDataAdapter = new SearchOldDataAdapter(context,OldDataList);
+        OldDataAdapter = new SearchOldDataAdapter(context, OldDataList);
         gridviewolddata.setAdapter(OldDataAdapter);
 
 
-
         LayoutInflater mInflater = LayoutInflater.from(context);
-        for (int i = 0; i < hotdata.size(); i++)
-        {
-            TextView tv = (TextView) mInflater.inflate(R.layout.suosou_item,hotflowLayout, false);
+        for (int i = 0; i < hotdata.size(); i++) {
+            TextView tv = (TextView) mInflater.inflate(R.layout.suosou_item, hotflowLayout, false);
             tv.setText(hotdata.get(i));
             tv.setOnClickListener(TextViewItemListener);
-            tv.getBackground().setLevel(MyRandom(1,5));
+            tv.getBackground().setLevel(MyRandom(1, 5));
             hotflowLayout.addView(tv);
         }
     }
 
 
-
-    private void executeSearch_and_NotifyDataSetChanged(String str){
-        if(sCBlistener!=null&&(!str.equals(""))){
+    private void executeSearch_and_NotifyDataSetChanged(String str) {
+        if (sCBlistener != null && (!str.equals(""))) {
             if (OldDataList.size() > 0 && OldDataList.get(0).equals(str)) {
-            }
-            else
-            {
-                if (OldDataList.size() == countOldDataSize&&OldDataList.size()>0)
+            } else {
+                if (OldDataList.size() == countOldDataSize && OldDataList.size() > 0)
                     OldDataList.remove(OldDataList.size() - 1);
-                OldDataList.add(0, str);//把最新的添加到前面
-                OldDataAdapter.notifyDataSetChanged();
+//                OldDataList.add(0, str);//把最新的添加到前面
+//                OldDataAdapter.notifyDataSetChanged();
                 sCBlistener.SaveOldData(OldDataList);
+                this.insertKeyword(str);
             }
             sCBlistener.Search(str);
         }
     }
 
 
-
-
     /**
      * 生成随机数
-     * @param max  最大值
-     * @param min   最小值
+     *
+     * @param max 最大值
+     * @param min 最小值
      * @return
      */
-    public int MyRandom(int min,int max){
+    public int MyRandom(int min, int max) {
 
         Random random = new Random();
-        int s = random.nextInt(max)%(max-min+1) + min;
+        int s = random.nextInt(max) % (max - min + 1) + min;
         return s;
     }
 
@@ -308,10 +307,10 @@ public class mSearchLayout extends LinearLayout{
     /**
      * @author liuyunming
      */
-    public interface setSearchCallBackListener{
+    public interface setSearchCallBackListener {
 
         /**
-         * @param str  搜索关键字
+         * @param str 搜索关键字
          */
         public void Search(String str);
 
@@ -333,12 +332,125 @@ public class mSearchLayout extends LinearLayout{
     }
 
     private setSearchCallBackListener sCBlistener;
+
     /**
      * 设置接口回调
-     * @param sCb   setCallBackListener接口
+     *
+     * @param sCb setCallBackListener接口
      */
-    private void SetCallBackListener(setSearchCallBackListener sCb){
-        sCBlistener=sCb;
+    private void SetCallBackListener(setSearchCallBackListener sCb) {
+        sCBlistener = sCb;
     }
+
+
+    //modify by fx
+    private void loaddb() {
+        // 2. 实例化数据库SQLiteOpenHelper子类对象
+        helper = new RecordSQLiteOpenHelper(context);
+
+        // 3. 第1次进入时查询所有的历史搜索记录
+        queryData("");
+    }
+
+    private void insertKeyword(String keyword){
+        boolean hasData = hasData(keyword.trim());
+        // 3. 若存在，则不保存；若不存在，则将该搜索字段保存（插入）到数据库，并作为历史搜索记录
+        if (!hasData) {
+            insertData(keyword.trim());
+        }
+        else{
+            deleteData(keyword.trim());
+            insertData(keyword.trim());
+        }
+
+        OldDataList.clear();
+        List<String> keywords = queryData("");
+        OldDataList.addAll(keywords);
+        OldDataAdapter.notifyDataSetChanged();
+    }
+
+    private void clearKeyword(){
+        deleteData();
+        OldDataList.clear();
+        OldDataAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 关注1
+     * 模糊查询数据 & 显示到ListView列表上
+     */
+    private List<String> queryData(String tempName) {
+
+        // 1. 模糊搜索
+        Cursor cursor = helper.getReadableDatabase().rawQuery(
+                "select id as _id,name from records where name like '%" + tempName + "%' order by id desc ", null);
+//        // 2. 创建adapter适配器对象 & 装入模糊搜索的结果
+//        adapter = new SimpleCursorAdapter(context, android.R.layout.simple_list_item_1, cursor, new String[] { "name" },
+//                new int[] { android.R.id.text1 }, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+//        // 3. 设置适配器
+//        listView.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+//
+//        System.out.println(cursor.getCount());
+//        // 当输入框为空 & 数据库中有搜索记录时，显示 "删除搜索记录"按钮
+//        if (tempName.equals("") && cursor.getCount() != 0){
+//            tv_clear.setVisibility(VISIBLE);
+//        }
+//        else {
+//            tv_clear.setVisibility(INVISIBLE);
+//        };
+
+        List<String> namelist = new ArrayList<String>();
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {//游标是否向下移动
+                String strItem = cursor.getString(cursor.getColumnIndex("name"));
+                namelist.add(strItem);
+            }
+        //关闭cursor
+            cursor.close();
+        }
+        return  namelist;
+    }
+
+    /**
+     * 关注2：清空数据库
+     */
+    private void deleteData() {
+
+        db = helper.getWritableDatabase();
+        db.execSQL("delete from records");
+        db.close();
+    }
+
+    /**
+     * 关注3
+     * 检查数据库中是否已经有该搜索记录
+     */
+    private boolean hasData(String tempName) {
+        // 从数据库中Record表里找到name=tempName的id
+        Cursor cursor = helper.getReadableDatabase().rawQuery(
+                "select id as _id,name from records where name =?", new String[]{tempName});
+        //  判断是否有下一个
+        return cursor.moveToNext();
+    }
+
+
+    private void deleteData(String tempName) {
+        // 从数据库中Record表里找到name=tempName的id
+        db = helper.getWritableDatabase();
+        db.execSQL("delete from records where name =?", new String[]{tempName});
+        db.close();
+    }
+
+    /**
+     * 关注4
+     * 插入数据到数据库，即写入搜索字段到历史搜索记录
+     */
+    private void insertData(String tempName) {
+        db = helper.getWritableDatabase();
+        db.execSQL("insert into records(name) values('" + tempName + "')");
+        db.close();
+    }
+
 
 }
