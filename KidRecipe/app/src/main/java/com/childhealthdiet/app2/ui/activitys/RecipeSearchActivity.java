@@ -47,7 +47,7 @@ public class RecipeSearchActivity extends BaseActivity {
         SimpleModel simpleModel = new SimpleModelImpl();
 //        shareData = "澳洲美食,长沙美食,韩国料理,日本料理,舌尖上的中国,意大利餐,山西菜";
 //        List<String> skills = Arrays.asList(shareData.split(","));
-        this.skills = simpleModel.loadFieldByKey(this,R.array.supplier_product);
+        this.skills = simpleModel.loadFieldByKey(this,R.array.city_hot);
 
 //        String shareHotData ="粤菜,浙菜,苏菜,苏菜,苏菜";
 //        List<String> skillHots = Arrays.asList(shareHotData.split(","));

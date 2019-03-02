@@ -17,5 +17,7 @@ public interface RecipeDetailContract {
 
     interface Presenter extends BaseContract.BasePresenter<View>{
         void getRecipeById(Context context,long id);
+        void updateRecipeBeanData(Context context,RecipeBean recipeBean);
+
     }
 }

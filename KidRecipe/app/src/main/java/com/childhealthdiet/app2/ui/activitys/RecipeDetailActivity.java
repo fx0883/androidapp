@@ -254,7 +254,7 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
         Glide.with(this).load(recipeUrl).into(this.imgvBg);
         getSupportActionBar().setTitle(recipeBean.getName());
         toolbarLayout.setTitle(recipeBean.getName());
-        cookDetailAdapter = new RecipeDetailAdapter(this, recipeBean, isShowCollection);
+        cookDetailAdapter = new RecipeDetailAdapter(this, recipeBean,isShowCollection);
 //        recyclerList.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerList.setLayoutManager(new LinearLayoutManager(this));
         recyclerList.setAdapter(cookDetailAdapter);
@@ -268,6 +268,12 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
     @Override
     public void complete() {
 
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        mPresenter.updateRecipeBeanData(this,this.cookDetailAdapter.srcData);
     }
 
     @Override

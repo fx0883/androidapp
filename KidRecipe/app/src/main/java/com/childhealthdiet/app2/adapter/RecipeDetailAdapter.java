@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,6 +23,8 @@ import com.childhealthdiet.app2.R;
 import com.childhealthdiet.app2.RecipeApplication;
 import com.childhealthdiet.app2.model.bean.CookRecipeMethod;
 import com.childhealthdiet.app2.model.bean.RecipeBean;
+import com.childhealthdiet.app2.presenter.RecipeDetailPresenter;
+import com.childhealthdiet.app2.presenter.contract.RecipeDetailContract;
 import com.childhealthdiet.app2.ui.components.Utils;
 
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ import butterknife.ButterKnife;
 public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapter.ItemViewHolder>{
 
     private Context context;
-    private RecipeBean srcData;
+    public RecipeBean srcData;
     private List<CookDetailStruct> datas;
 
     private String sumary;
@@ -46,13 +49,15 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
     private ArrayList<CookRecipeMethod> cookRecipeMethods;
     private boolean isShowCollection;
 
-//    private Gson gson;
-//    private GlideUtil glideUtil;
+//    private RecipeDetailContract.Presenter mRecipedetailpresenter;
+
 
     public RecipeDetailAdapter(Context context, RecipeBean data, boolean isShowCollection) {
+//        public RecipeDetailAdapter(Context context, RecipeBean data, RecipeDetailContract.Presenter recipedetailpresenter, boolean isShowCollection) {
         this.context = context;
         this.srcData = data;
         this.isShowCollection = isShowCollection;
+//        this.mRecipedetailpresenter = recipedetailpresenter;
 
         sumary = data.getPrompt();
         sumary = sumary.replaceAll("<br>","");
@@ -204,35 +209,82 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
                 holderView.textIngredientsContent3.setText(ingredientsDatas.get(2));
             }
 
-            if(RecipeApplication.getApplication().isCollectMode) {
-                holderView.imgButtonCollect.setVisibility(View.GONE);
+//            if(RecipeApplication.getApplication().isCollectMode) {
+//                holderView.imgButtonCollect.setVisibility(View.GONE);
+//            }
+//            else{
+//                holderView.imgButtonCollect.setVisibility(View.VISIBLE);
+//            }
+
+//            if(srcData.getCollect())
+//            {
+//                holderView.imgButtonCollect.setImageDrawable(ContextCompat.getDrawable(context,R.mipmap.shoucanghuang));
+//            }
+//            else
+//            {
+//                holderView.imgButtonCollect.setImageDrawable(ContextCompat.getDrawable(context,R.mipmap.shoucangbai));
+//            }
+
+            if(srcData.getMonth() != null){
+                holderView.tvSubTitle.setText(srcData.getMonth()+"个月宝宝食谱");
             }
-            else{
-                holderView.imgButtonCollect.setVisibility(View.VISIBLE);
+            else if(srcData.getType() != null){
+                holderView.tvSubTitle.setText(srcData.getType());
             }
 
             if(srcData.getCollect())
             {
-                holderView.imgButtonCollect.setImageDrawable(ContextCompat.getDrawable(context,R.mipmap.shoucanghuang));
+                holderView.btn_collect.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryGray));
+                holderView.btn_collect.setText("已收藏");
+                holderView.btn_collect.setTextColor(context.getResources().getColor(R.color.black_text));
             }
             else
             {
-                holderView.imgButtonCollect.setImageDrawable(ContextCompat.getDrawable(context,R.mipmap.shoucangbai));
+                holderView.btn_collect.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
+                holderView.btn_collect.setText("收藏");
+                holderView.btn_collect.setTextColor(context.getResources().getColor(R.color.lightgray));
+            }
+
+
+            if(srcData.getBasket())
+            {
+                holderView.btn_shopping_cart.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryGray));
+                holderView.btn_shopping_cart.setText("已加入购物清单");
+                holderView.btn_shopping_cart.setTextColor(context.getResources().getColor(R.color.black_text));
+            }
+            else
+            {
+                holderView.btn_shopping_cart.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
+                holderView.btn_shopping_cart.setText("加入购物清单");
+                holderView.btn_shopping_cart.setTextColor(context.getResources().getColor(R.color.lightgray));
             }
 
 
 
-            holderView.imgButtonCollect.setOnClickListener(new View.OnClickListener() {
+//            holderView.imgButtonCollect.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    srcData.setCollect(!srcData.getCollect());
+//                    notifyDataSetChanged();
+//                }
+//            });
+
+            holderView.btn_collect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     srcData.setCollect(!srcData.getCollect());
-
-//                    RecipeApplication.getApplication().daoSession.getRecipeBeanDao().update(srcData);
-
-//                    RecipeService.getInstance().updateRecipe(srcData);
                     notifyDataSetChanged();
                 }
             });
+
+            holderView.btn_shopping_cart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    srcData.setBasket(!srcData.getBasket());
+                    notifyDataSetChanged();
+                }
+            });
+
 
             return ;
         }
@@ -336,6 +388,9 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
 
     public class HeaderItemViewHolder extends ItemViewHolder{
 
+        @BindView(R.id.text_subTitle)
+        public TextView tvSubTitle;
+
         @BindView(R.id.text_ingredients)
         public TextView textIngredients;
 
@@ -356,6 +411,11 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
 
         @BindView(R.id.recipe_collect)
         public ImageButton imgButtonCollect;
+
+        @BindView(R.id.btn_collect)
+        public Button btn_collect;
+        @BindView(R.id.btn_shopping_cart)
+        public Button btn_shopping_cart;
 
         public HeaderItemViewHolder(View itemView){
             super(itemView);

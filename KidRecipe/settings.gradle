@@ -1,1 +1,1 @@
-include ':app',':searchmlist'
+include ':app',':searchmlist',':searchview'

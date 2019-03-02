@@ -4,10 +4,55 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/text_subTitle"
+        android:text="一月食谱"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black_text"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <Button
+            android:id="@+id/btn_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/lightgray"
+            android:text="收藏"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="@dimen/dp_18"/>
+
+        <Button
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/btn_shopping_cart"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/lightgray"
+            android:background="@color/colorPrimaryDark"
+            android:text="加入购物清单"
+            android:textSize="@dimen/dp_18"/>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+
+
+
 
         <TextView
             android:id="@+id/text_ingredients"
@@ -17,7 +62,7 @@
             android:layout_margin="8dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimaryDark"/>
 
         <!--<ImageView-->
             <!--android:id="@+id/imgv_search"-->
@@ -31,6 +76,7 @@
 
         <android.support.v7.widget.AppCompatImageButton
 
+            android:visibility="gone"
             android:id="@+id/recipe_collect"
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -40,6 +86,8 @@
             android:background="@color/transparent"
             android:scaleType="centerCrop"
             android:src="@mipmap/shoucangbai" />
+
+
 
         <!--<android.support.v7.widget.AppCompatImageButton-->
 
@@ -163,6 +211,6 @@
         android:layout_margin="8dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="@color/colorPrimaryDark"/>
 
 </LinearLayout>

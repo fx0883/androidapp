@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activitys.RecipeKeywordListActivity" />
+        <activity android:name=".ui.activitys.BasketActivity" />
         <activity
             android:name=".ui.activitys.RecipeDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />

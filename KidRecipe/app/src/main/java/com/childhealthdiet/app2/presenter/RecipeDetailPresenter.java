@@ -47,6 +47,11 @@ public class RecipeDetailPresenter extends RxPresenter<RecipeDetailContract.View
                         });
         addDisposable(disposable);
     }
+    @Override
+    public void updateRecipeBeanData(Context context,RecipeBean recipeBean){
+        RecipeModel recipeModelImpl = new RecipeModelImpl();
+        recipeModelImpl.updateRecipe(recipeBean);
+    }
 
 
 //    public void loadRecipeByKeyword(Context context,String strKey) {

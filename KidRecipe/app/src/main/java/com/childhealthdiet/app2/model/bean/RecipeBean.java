@@ -145,7 +145,7 @@ public void setCollect(Boolean collect) {
     this.collect = collect;
 }
 public Boolean getBasket() {
-    return this.basket;
+    return this.basket!=null && this.basket;
 }
 public void setBasket(Boolean basket) {
     this.basket = basket;

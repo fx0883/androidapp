@@ -17,5 +17,6 @@ public interface RecipeKeywordListContract {
     interface Presenter extends BaseContract.BasePresenter<View>{
         void loadRecipeBeanbyMonth(Context context,String strKey);
         void loadRecipeByKeyword(Context context,String strKey);
+        void filterByKeyword(Context context,List<Long> ids,String strKey);
     }
 }

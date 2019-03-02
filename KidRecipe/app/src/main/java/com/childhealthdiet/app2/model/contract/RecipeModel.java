@@ -11,5 +11,15 @@ public interface RecipeModel {
     List<RecipeBean> searchRecipeBeanbyKeyword(Context context,String keyword);
     List<RecipeBean> loadRecipeBeanbyMonth(Context context,String keyword);
 
+    List<RecipeBean> filterRecipeBeanbyKeyword(Context context,List<Long> ids,String keyword);
+
     RecipeBean getRecipeById(Context context,long id);
+
+    void updateRecipe(RecipeBean recipeBean);
+
+    List<RecipeBean> getBasketRecipeBean();
+
+    void updateRecipes(RecipeBean[] recipeBeans);
+
+    public List<RecipeBean> getColletRecipeBean();
 }

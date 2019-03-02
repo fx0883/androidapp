@@ -1,0 +1,24 @@
+[
+  {
+    "key":"collect",
+    "name":"收藏",
+    "picture":"file:///android_asset/image/collect.png",
+    "jumpClassName":"收藏",
+    "jumpingParam":"收藏"
+  },
+  {
+    "key":"basket",
+    "name":"菜篮子",
+    "picture":"file:///android_asset/image/basket.png",
+    "jumpClassName":"file:///android_asset/image/breakfast.jpeg",
+    "jumpingParam":"收藏"
+  },
+  {
+    "key":"feedback",
+    "name":"反馈",
+    "picture":"file:///android_asset/image/feedback.png",
+    "jumpClassName":"file:///android_asset/image/breakfast.jpeg",
+    "jumpingParam":"收藏"
+  }
+]
+

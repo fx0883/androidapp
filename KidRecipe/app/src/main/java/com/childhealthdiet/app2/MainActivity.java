@@ -53,12 +53,15 @@ public class MainActivity extends BaseActivity {
                             case R.id.navigation_category:
                                 viewPager.setCurrentItem(1);
                                 break;
-                            case R.id.navigation_basket:
+                            case R.id.navigation_mine:
                                 viewPager.setCurrentItem(2);
                                 break;
-                            case R.id.navigation_mine:
-                                viewPager.setCurrentItem(3);
-                                break;
+//                            case R.id.navigation_basket:
+//                                viewPager.setCurrentItem(2);
+//                                break;
+//                            case R.id.navigation_mine:
+//                                viewPager.setCurrentItem(3);
+//                                break;
                         }
                         return false;
                     }
@@ -112,9 +115,11 @@ public class MainActivity extends BaseActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new HomeFragment());
         adapter.addFragment(new CategoryFragment());
-        adapter.addFragment(new BasketFragment());
         adapter.addFragment(new MineFragment());
+//        adapter.addFragment(new BasketFragment());
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(adapter);
+
     }
 
 //    @Override

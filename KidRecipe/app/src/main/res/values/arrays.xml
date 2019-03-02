@@ -22,32 +22,38 @@
         <item>便秘</item>
         <item>更多</item>
     </array>
-    
-    <array name="supplier_product">
-        <item>全部</item>
-        <item>粮油</item>
-        <item>衣服</item>
-        <item>图书</item>
-        <item>电子产品</item>
-        <item>酒水饮料</item>
-        <item>水果</item>
-    </array>
-    <array name="supplier_sort">
-        <item>综合排序</item>
-        <item>配送费最低</item>
-    </array>
-    <array name="supplier_activity">
-        <item>优惠活动</item>
-        <item>特价活动</item>
-        <item>免配送费</item>
-        <item>可在线支付</item>
+
+
+    <array name="all_categorys_name">
+        <item>月龄</item>
+        <item>健康食谱</item>
+        <item>食疗</item>
+        <item>其他</item>
     </array>
 
-    <array name="city_categories">
-        <item>定位城市</item>
-        <item>最近浏览城市</item>
-        <item>热门城市</item>
+
+    <array name="all_categorys">
+        <item>@array/city_hot</item>
+        <item>@array/city_hot</item>
+        <item>@array/gv_jiankang</item>
+        <item>@array/city_hot</item>
     </array>
+
+
+
+
+
+    <array name="gv_jiankang">
+        <item>感冒</item>
+        <item>咳嗽</item>
+        <item>贫血</item>
+        <item>积食</item>
+        <item>肺炎</item>
+        <item>腹泻</item>
+        <item>便秘</item>
+        <item>更多</item>
+    </array>
+
 
 
     <array name="city_hot">
@@ -70,5 +76,48 @@
     </array>
 
 
+    <string-array name="query_suggestions">
+        <item>牛肉</item>
+        <item>感冒</item>
+        <item>iOS</item>
+        <item>SCALA</item>
+        <item>Ruby</item>
+        <item>JavaScript</item>
+        <item>C#</item>
+        <item>Python</item>
+        <item>C</item>
+        <item>C++</item>
+        <item>PHP</item>
+        <item>Go</item>
+        <item>Perl</item>
+        <item>Bash</item>
+        <item>Lua</item>
+        <item>R</item>
+        <item>TCL</item>
+        <item>Haskell</item>
+        <item>Objective C</item>
+        <item>Swift</item>
+        <item>Kotlin</item>
+        <item>jQuery</item>
+        <item>Development</item>
+        <item>Web</item>
+        <item>Ajax</item>
+        <item>Test</item>
+        <item>Testing</item>
+        <item>CookBook</item>
+        <item>Beagle</item>
+        <item>VMware</item>
+        <item>Less.js</item>
+        <item>IDE</item>
+        <item>Arduino</item>
+        <item>Xamarin</item>
+        <item>UI</item>
+        <item>Microsoft</item>
+        <item>Application</item>
+        <item>Development</item>
+        <item>JUnit</item>
+        <item>SQL</item>
+        <item>Beagle</item>
+    </string-array>
 
 </resources>

@@ -176,20 +176,17 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
         });
     }
 
-    @OnClick(R.id.btn_top_search)
-    void onClickSearchButton(){
-//        Intent intent  =new Intent(this.getContext(),RecipeSearchActivity.class);
-//        this.getContext().startActivity(intent);
-
-
-        startActivityForResult(new Intent(this.getContext(), RecipeSearchActivity.class), 1);
-    }
 
     @Override
     protected void processLogic() {
         super.processLogic();
         mPresenter.loadCategoryField(this.getContext());
         mPresenter.loadMonthRecipe(this.getContext());
+    }
+
+    @OnClick(R.id.btn_top_search)
+    void onClickSearchButton(){
+        startActivityForResult(new Intent(this.getContext(), RecipeSearchActivity.class), 1);
     }
 
     private void initCategoryGridView(View view){
