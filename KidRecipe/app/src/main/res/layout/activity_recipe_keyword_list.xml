@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:orientation="vertical"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--tools:context=".ui.activitys.RecipeKeywordListActivity">-->
+<!--android:orientation="vertical"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--tools:context=".ui.activitys.RecipeKeywordListActivity">-->
 <!--</LinearLayout>-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
@@ -24,4 +24,44 @@
 
     <include
         layout="@layout/recipelist_toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/llBatchManagement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_rect_round_gray"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvSelectAll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="全选"
+            android:textColor="@color/gray"/>
+
+        <TextView
+            android:id="@+id/tvDelete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="删除"
+            android:textColor="@color/gray"/>
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="取消"
+            android:textColor="@color/gray"/>
+    </LinearLayout>
 </FrameLayout>

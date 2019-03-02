@@ -87,4 +87,46 @@ public class RecipeKeywordListPresenter extends RxPresenter<RecipeKeywordListCon
                         });
         addDisposable(disposable);
     }
+    @Override
+    public void loadCollectRecipe(){
+        Disposable disposable =
+                Single.create(new SingleOnSubscribe<List<RecipeBean>>() {
+                    @Override
+                    public void subscribe(SingleEmitter<List<RecipeBean>> emitter) throws Exception {
+                        RecipeModel recipeModel = new RecipeModelImpl();
+                        List<RecipeBean> recipeBeans = recipeModel.getColletRecipeBean();
+                        emitter.onSuccess(recipeBeans);
+                    }
+                }).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<List<RecipeBean>>() {
+                            @Override
+                            public void accept(List<RecipeBean> recipeBeans) throws Exception {
+                                RecipeKeywordListPresenter.this.getView().updateRecipe(recipeBeans);
+                            }
+                        });
+        addDisposable(disposable);
+    }
+
+    @Override
+    public void deleteCollectRecipe(List<RecipeBean> recipeBeans){
+        Disposable disposable =
+                Single.create(new SingleOnSubscribe<List<RecipeBean>>() {
+                    @Override
+                    public void subscribe(SingleEmitter<List<RecipeBean>> emitter) throws Exception {
+                        RecipeModel recipeModel = new RecipeModelImpl();
+                        recipeModel.deleteCollectRecipe(recipeBeans);
+                        List<RecipeBean> recipeBeans2 = recipeModel.getColletRecipeBean();
+                        emitter.onSuccess(recipeBeans2);
+                    }
+                }).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<List<RecipeBean>>() {
+                            @Override
+                            public void accept(List<RecipeBean> recipeBeans2) throws Exception {
+                                RecipeKeywordListPresenter.this.getView().updateRecipe(recipeBeans2);
+                            }
+                        });
+        addDisposable(disposable);
+    }
 }

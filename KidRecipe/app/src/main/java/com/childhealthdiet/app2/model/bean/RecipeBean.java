@@ -38,8 +38,25 @@ public class RecipeBean {
     private Boolean basket;
     private Boolean bedit;
 
+    public Boolean getShowCheckBox() {
+        return showCheckBox;
+    }
+
+    public void setShowCheckBox(Boolean showCheckBox) {
+        this.showCheckBox = showCheckBox;
+    }
+
     @Transient
     public Boolean showCheckBox = false;
+
+    public Boolean getCanDelete() {
+        return isCanDelete;
+    }
+
+    public void setCanDelete(Boolean canDelete) {
+        isCanDelete = canDelete;
+    }
+
     @Transient
     public Boolean isCanDelete = false;
 @Generated(hash = 2062217939)

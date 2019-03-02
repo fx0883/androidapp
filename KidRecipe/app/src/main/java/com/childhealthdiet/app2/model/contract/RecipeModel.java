@@ -21,5 +21,7 @@ public interface RecipeModel {
 
     void updateRecipes(RecipeBean[] recipeBeans);
 
-    public List<RecipeBean> getColletRecipeBean();
+    List<RecipeBean> getColletRecipeBean();
+
+    void deleteCollectRecipe(List<RecipeBean> recipeBeans);
 }

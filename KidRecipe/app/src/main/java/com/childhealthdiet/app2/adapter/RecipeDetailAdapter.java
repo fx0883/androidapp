@@ -49,15 +49,15 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
     private ArrayList<CookRecipeMethod> cookRecipeMethods;
     private boolean isShowCollection;
 
-//    private RecipeDetailContract.Presenter mRecipedetailpresenter;
+    private RecipeDetailContract.Presenter mRecipedetailpresenter;
 
 
-    public RecipeDetailAdapter(Context context, RecipeBean data, boolean isShowCollection) {
-//        public RecipeDetailAdapter(Context context, RecipeBean data, RecipeDetailContract.Presenter recipedetailpresenter, boolean isShowCollection) {
+//    public RecipeDetailAdapter(Context context, RecipeBean data, boolean isShowCollection) {
+        public RecipeDetailAdapter(Context context, RecipeBean data, RecipeDetailContract.Presenter recipedetailpresenter, boolean isShowCollection) {
         this.context = context;
         this.srcData = data;
         this.isShowCollection = isShowCollection;
-//        this.mRecipedetailpresenter = recipedetailpresenter;
+        this.mRecipedetailpresenter = recipedetailpresenter;
 
         sumary = data.getPrompt();
         sumary = sumary.replaceAll("<br>","");
@@ -209,21 +209,6 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
                 holderView.textIngredientsContent3.setText(ingredientsDatas.get(2));
             }
 
-//            if(RecipeApplication.getApplication().isCollectMode) {
-//                holderView.imgButtonCollect.setVisibility(View.GONE);
-//            }
-//            else{
-//                holderView.imgButtonCollect.setVisibility(View.VISIBLE);
-//            }
-
-//            if(srcData.getCollect())
-//            {
-//                holderView.imgButtonCollect.setImageDrawable(ContextCompat.getDrawable(context,R.mipmap.shoucanghuang));
-//            }
-//            else
-//            {
-//                holderView.imgButtonCollect.setImageDrawable(ContextCompat.getDrawable(context,R.mipmap.shoucangbai));
-//            }
 
             if(srcData.getMonth() != null){
                 holderView.tvSubTitle.setText(srcData.getMonth()+"个月宝宝食谱");
@@ -274,6 +259,8 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
                 public void onClick(View v) {
                     srcData.setCollect(!srcData.getCollect());
                     notifyDataSetChanged();
+                    mRecipedetailpresenter.updateRecipeBeanData(RecipeDetailAdapter.this.context,srcData);
+
                 }
             });
 
@@ -282,6 +269,8 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
                 public void onClick(View v) {
                     srcData.setBasket(!srcData.getBasket());
                     notifyDataSetChanged();
+                    mRecipedetailpresenter.updateRecipeBeanData(RecipeDetailAdapter.this.context,srcData);
+
                 }
             });
 

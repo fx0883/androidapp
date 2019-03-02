@@ -18,5 +18,7 @@ public interface RecipeKeywordListContract {
         void loadRecipeBeanbyMonth(Context context,String strKey);
         void loadRecipeByKeyword(Context context,String strKey);
         void filterByKeyword(Context context,List<Long> ids,String strKey);
+        void loadCollectRecipe();
+        void deleteCollectRecipe(List<RecipeBean> recipeBeans);
     }
 }

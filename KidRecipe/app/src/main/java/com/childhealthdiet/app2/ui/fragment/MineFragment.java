@@ -23,6 +23,7 @@ import com.childhealthdiet.app2.ui.activitys.RecipeDetailActivity;
 import com.childhealthdiet.app2.ui.activitys.RecipeKeywordListActivity;
 import com.childhealthdiet.app2.ui.base.BaseFragment;
 import com.childhealthdiet.app2.ui.base.BaseMVPFragment;
+import com.childhealthdiet.app2.ui.categorys.RECIPETYPE;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
@@ -120,11 +121,23 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(view.getContext(), "点击了" + position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(view.getContext(), "点击了" + position, Toast.LENGTH_SHORT).show();
 //                long recipeId = mMineDataAdapter.getDataList().get(position).getId();
 //                RecipeDetailActivity.startActivity(RecipeKeywordListActivity.this,view,recipeId);
+                List<MineItem> mineItems = MineFragment.this.mMineDataAdapter.getDataList();
+                String strKey = mineItems.get(position).getKey();
+                switch (strKey)
+                {
+                    case "collect":
+                        RecipeKeywordListActivity.startActivity(MineFragment.this.getContext(),RECIPETYPE.Collect);
+                        break;
+                    case "basket":
+                        BasketActivity.startActivity(MineFragment.this.getContext());
+                        break;
+                    case "feedback":
+                        break;
+                }
 
-                BasketActivity.startActivity(MineFragment.this.getContext());
             }
 
         });

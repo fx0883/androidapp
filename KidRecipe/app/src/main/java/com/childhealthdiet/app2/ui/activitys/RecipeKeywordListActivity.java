@@ -1,20 +1,24 @@
 package com.childhealthdiet.app2.ui.activitys;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.childhealthdiet.app2.R;
+import com.childhealthdiet.app2.RecipeApplication;
 import com.childhealthdiet.app2.adapter.MonthRecipeDataAdapter;
 import com.childhealthdiet.app2.adapter.RecipeListDataAdapter;
 import com.childhealthdiet.app2.model.bean.MonthRecipe;
@@ -25,6 +29,7 @@ import com.childhealthdiet.app2.ui.base.BaseMVPActivity;
 import com.childhealthdiet.app2.ui.categorys.RECIPETYPE;
 import com.childhealthdiet.app2.utils.RecycleViewDivider;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
+import com.github.jdsjlzx.interfaces.OnItemLongClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -33,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordListContract.Presenter>
         implements RecipeKeywordListContract.View {
@@ -61,6 +67,21 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
     @BindView(R.id.search_view)
     MaterialSearchView searchView;
 
+    @BindView(R.id.llBatchManagement)
+    LinearLayout llBatchManagement;
+
+    @BindView(R.id.tvSelectAll)
+    TextView tvSelectAll;
+
+
+
+    private boolean mIsCollectModel = false;
+
+
+    public boolean ismIsCollectModel() {
+        return mIsCollectModel;
+    }
+
     public static void startActivity(Context context, RECIPETYPE recipetype, MonthRecipe monthRecipe){
         Intent intent  =new Intent(context,RecipeKeywordListActivity.class);
         intent.putExtra(RECIPE_TYPE_KEY,recipetype.ordinal());
@@ -72,6 +93,12 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
         Intent intent  =new Intent(context,RecipeKeywordListActivity.class);
         intent.putExtra(RECIPE_TYPE_KEY,recipetype.ordinal());
         intent.putExtra(KEYWORD_KEY,strKey);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, RECIPETYPE recipetype){
+        Intent intent  =new Intent(context,RecipeKeywordListActivity.class);
+        intent.putExtra(RECIPE_TYPE_KEY,recipetype.ordinal());
         context.startActivity(intent);
     }
 
@@ -128,6 +155,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 case Keyword:
                     mKeyword = savedInstanceState.getString(KEYWORD_KEY);
                     break;
+                case Collect:
+                    collectMode(true);
+                    break;
                 default:
                     break;
             }
@@ -145,6 +175,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                     break;
                 case Keyword:
                     mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
+                    break;
+                case Collect:
+                    collectMode(true);
                     break;
                 default:
                     break;
@@ -166,11 +199,22 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(view.getContext(), "点击了" + position, Toast.LENGTH_SHORT).show();
+                if (RecipeKeywordListActivity.this.isVisible(RecipeKeywordListActivity.this.llBatchManagement)) //批量管理时，屏蔽点击事件
+                    return;
                 long recipeId = mRecipeListDataAdapter.getDataList().get(position).getId();
                 RecipeDetailActivity.startActivity(RecipeKeywordListActivity.this,view,recipeId);
             }
 
+        });
+
+        mLRecyclerViewAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(View view, int position) {
+                if (!RecipeKeywordListActivity.this.ismIsCollectModel()) {
+                    return;
+                }
+                showBatchManagementLayout();
+            }
         });
     }
     /**
@@ -191,6 +235,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 break;
             case Keyword:
                 mPresenter.loadRecipeByKeyword(this,mKeyword);
+                break;
+            case Collect:
+                mPresenter.loadCollectRecipe();
                 break;
             default:
                 break;
@@ -227,6 +274,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 break;
             case Keyword:
                 mToolbarTitle.setText("关键字"+mKeyword+"的搜索结果");
+                break;
+            case Collect:
+                mToolbarTitle.setText("我的收藏");
                 break;
             default:
                 break;
@@ -304,21 +354,13 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
         }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == MaterialSearchView.REQUEST_VOICE && resultCode == RESULT_OK) {
-//            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-//            if (matches != null && matches.size() > 0) {
-//                String searchWrd = matches.get(0);
-//                if (!TextUtils.isEmpty(searchWrd)) {
-//                    searchView.setQuery(searchWrd, false);
-//                }
-//            }
-//
-//            return;
-//        }
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(mRecipeType==RECIPETYPE.Collect){
+            this.processLogic();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     void filterRecipe(String filterWord){
         if(mRecipeListDataAdapter.getDataList() != null && mRecipeListDataAdapter.getDataList().size()>0){
@@ -330,5 +372,149 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
             mPresenter.filterByKeyword(this,ids,filterWord);
         }
 
+    }
+
+    @OnClick(R.id.tvSelectAll)
+    public void onClickSelectAll() {
+        Boolean isDealChk = false;
+        String strShowText = "";
+        if (tvSelectAll.getText().equals("全选")) {
+            isDealChk = true;
+            strShowText = "全不选";
+        } else {
+            isDealChk = false;
+            strShowText = "全选";
+        }
+        for (RecipeBean bean : mRecipeListDataAdapter.getDataList()) {
+            bean.setCanDelete(isDealChk);
+        }
+        mLRecyclerViewAdapter.notifyDataSetChanged();
+        tvSelectAll.setText(strShowText);
+    }
+
+        @Override
+    protected void onStop(){
+        super.onStop();
+        if(this.ismIsCollectModel()){
+            cancelShowChk();
+        }
+    }
+
+    @OnClick(R.id.tvDelete)
+    public void onClickDelete() {
+        showNormalDialog();
+
+    }
+
+    @OnClick(R.id.tvCancel)
+    public void onClickCancel() {
+//        for (RecipeBean bean : recipeListAdapter.recipes) {
+//            bean.setShowCheckBox(false);
+////            bean.isCanDelete(false);
+//            bean.setIsCanDelete(false);
+//        }
+//        recipeListAdapter.notifyDataSetChanged();
+//        hideBatchManagementLayout();
+//        toggle.setDrawerIndicatorEnabled(true);
+        cancelShowChk();
+    }
+
+    public void cancelShowChk(){
+        for (RecipeBean bean : mRecipeListDataAdapter.getDataList()) {
+            bean.setShowCheckBox(false);
+            bean.setCanDelete(false);
+        }
+        mLRecyclerViewAdapter.notifyDataSetChanged();
+        hideBatchManagementLayout();
+    }
+
+    private void showNormalDialog() {
+        /* @setIcon 设置对话框图标
+         * @setTitle 设置对话框标题
+         * @setMessage 设置对话框消息提示
+         * setXXX方法返回Dialog对象，因此可以链式设置属性
+         */
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(RecipeKeywordListActivity.this);
+//    normalDialog.setIcon(R.drawable.icon_dialog);
+        normalDialog.setTitle("提示");
+        normalDialog.setMessage("你确定要点删除这些吗?");
+        normalDialog.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+//                        recipeListAdapter.deleteRecipes();
+                        RecipeKeywordListActivity.this.mPresenter.deleteCollectRecipe
+                                (RecipeKeywordListActivity.this.mRecipeListDataAdapter.getDataList());
+                        hideBatchManagementLayout();
+                        dialog.dismiss();
+                    }
+                });
+        normalDialog.setNegativeButton("取消",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+
+                        dialog.dismiss();
+                    }
+                });
+        // 显示
+        normalDialog.show();
+
+    }
+
+    /**
+     * 显示批量管理布局
+     */
+    private void showBatchManagementLayout() {
+        visible(llBatchManagement);
+        for (RecipeBean bean : mRecipeListDataAdapter.getDataList()) {
+            bean.showCheckBox = true;
+        }
+        mLRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 显示批量管理布局
+     */
+    private void hideBatchManagementLayout() {
+        gone(llBatchManagement);
+        for (RecipeBean bean : mRecipeListDataAdapter.getDataList()) {
+            bean.showCheckBox = false;
+        }
+        mLRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+
+    protected void gone(final View... views) {
+        if (views != null && views.length > 0) {
+            for (View view : views) {
+                if (view != null) {
+                    view.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    protected void visible(final View... views) {
+        if (views != null && views.length > 0) {
+            for (View view : views) {
+                if (view != null) {
+                    view.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+    }
+
+    private void collectMode(boolean isCollectModel) {
+//        RecipeApplication.getApplication().isCollectMode = isCollectModel;
+//        imvSearch.setVisibility(isCollectModel ? View.GONE : View.VISIBLE);
+        mIsCollectModel = isCollectModel;
+    }
+    protected boolean isVisible(View view) {
+        return view.getVisibility() == View.VISIBLE;
     }
 }

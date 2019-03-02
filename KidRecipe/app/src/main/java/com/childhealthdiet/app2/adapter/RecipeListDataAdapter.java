@@ -1,6 +1,8 @@
 package com.childhealthdiet.app2.adapter;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +44,20 @@ public class RecipeListDataAdapter extends ListBaseAdapter<RecipeBean> {
         Glide.with(mContext)
                 .load("file:///android_asset/recipeimage/"+item.getPicture())
                 .into(imvRecipe);
+
+
+        CheckBox chk = holder.getView(R.id.chkRecipeItem);
+        chk.setVisibility(item.getShowCheckBox()?View.VISIBLE:View.GONE);
+
+        chk.setChecked(item.isCanDelete);
+
+        chk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+//                CookDetailActivity.startActivity(activity, recipeViewHolder.ivRecipe, recipes.get(position), true);
+                item.isCanDelete = chk.isChecked();
+            }
+        });
     }
 
     @Override

@@ -8,5 +8,6 @@ public enum RECIPETYPE {
     None,
     Month,
     Keyword,
-    Category;
+    Category,
+    Collect;
 }

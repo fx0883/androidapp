@@ -93,6 +93,19 @@ public class RecipeModelImpl implements RecipeModel {
     public List<RecipeBean> getColletRecipeBean(){
         RecipeBeanDao recipeBeanDao = DaoDbHelper.getInstance().getSession().getRecipeBeanDao();
         QueryBuilder qb = recipeBeanDao.queryBuilder();
-        return qb.where(RecipeBeanDao.Properties.Basket.eq(true)).list();
+        return qb.where(RecipeBeanDao.Properties.Collect.eq(true)).list();
+    }
+    @Override
+    public void deleteCollectRecipe(List<RecipeBean> recipeBeans) {
+        if(recipeBeans != null){
+            RecipeBeanDao recipeBeanDao = DaoDbHelper.getInstance().getSession().getRecipeBeanDao();
+            for(RecipeBean itemRecipe : recipeBeans) {//其内部实质上还是调用了迭代器遍历方式，这种循环方式还有其他限制，不建议使用。
+                if(itemRecipe.isCanDelete){
+                    itemRecipe.setCollect(false);
+                    itemRecipe.setShowCheckBox(false);
+                    recipeBeanDao.update(itemRecipe);
+                }
+            }
+        }
     }
 }
