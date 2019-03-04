@@ -14,7 +14,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.childhealthdiet.app2.R;
+import com.childhealthdiet.app2.RxBus;
 import com.childhealthdiet.app2.adapter.MonthRecipeDataAdapter;
+import com.childhealthdiet.app2.event.ChangeTabEvent;
 import com.childhealthdiet.app2.model.bean.MonthRecipe;
 import com.childhealthdiet.app2.presenter.FragmentHomePresenter;
 import com.childhealthdiet.app2.presenter.contract.FragmentHomeContract;
@@ -145,6 +147,18 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(getActivity(),name[position],Toast.LENGTH_LONG).show();
+
+                if(position == categoryItemArrayList.size()-1){
+                    RxBus.getInstance().post(new ChangeTabEvent(1));
+                }
+                else {
+                    HashMap<String, String> map = categoryItemArrayList.get(position);
+                    String strKey = map.get("itemText");
+                    RecipeKeywordListActivity.startActivity(HomeFragment.this.getContext(),RECIPETYPE.Symptoms,strKey);
+                }
+
+
+
             }
         });
 

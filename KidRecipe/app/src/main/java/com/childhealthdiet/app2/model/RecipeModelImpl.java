@@ -35,7 +35,8 @@ public class RecipeModelImpl implements RecipeModel {
                 RecipeBeanDao.Properties.Prompt.like("%"+keyword+"%"),
                 RecipeBeanDao.Properties.Type.like("%"+keyword+"%"),
                 RecipeBeanDao.Properties.Practice.like("%"+keyword+"%"),
-                RecipeBeanDao.Properties.Material.like("%"+keyword+"%")).list();
+                RecipeBeanDao.Properties.Material.like("%"+keyword+"%"),
+                RecipeBeanDao.Properties.Symptoms.like("%"+keyword+"%")).list();
     }
 
 
@@ -51,7 +52,8 @@ public class RecipeModelImpl implements RecipeModel {
                         RecipeBeanDao.Properties.Prompt.like("%"+keyword+"%"),
                         RecipeBeanDao.Properties.Type.like("%"+keyword+"%"),
                         RecipeBeanDao.Properties.Practice.like("%"+keyword+"%"),
-                        RecipeBeanDao.Properties.Material.like("%"+keyword+"%"))
+                        RecipeBeanDao.Properties.Material.like("%"+keyword+"%"),
+                        RecipeBeanDao.Properties.Symptoms.like("%"+keyword+"%"))
         ).list();
     }
 
@@ -108,4 +110,13 @@ public class RecipeModelImpl implements RecipeModel {
             }
         }
     }
+
+    @Override
+    public List<RecipeBean> getSymptomsRecipeBean(String strSymptoms){
+        RecipeBeanDao recipeBeanDao = DaoDbHelper.getInstance().getSession().getRecipeBeanDao();
+        QueryBuilder qb = recipeBeanDao.queryBuilder();
+        return qb.where(RecipeBeanDao.Properties.Symptoms.like("%"+strSymptoms+"%")).list();
+    }
+
+
 }

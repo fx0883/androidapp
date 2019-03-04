@@ -9,5 +9,6 @@ public enum RECIPETYPE {
     Month,
     Keyword,
     Category,
-    Collect;
+    Collect,
+    Symptoms;
 }

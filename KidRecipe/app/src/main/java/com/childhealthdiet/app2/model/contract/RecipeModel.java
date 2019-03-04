@@ -24,4 +24,6 @@ public interface RecipeModel {
     List<RecipeBean> getColletRecipeBean();
 
     void deleteCollectRecipe(List<RecipeBean> recipeBeans);
+
+    List<RecipeBean> getSymptomsRecipeBean(String strSymptoms);
 }

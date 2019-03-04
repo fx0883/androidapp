@@ -20,5 +20,6 @@ public interface RecipeKeywordListContract {
         void filterByKeyword(Context context,List<Long> ids,String strKey);
         void loadCollectRecipe();
         void deleteCollectRecipe(List<RecipeBean> recipeBeans);
+        void loadSymptomsRecipeBean(String strSymptoms);
     }
 }

@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.childhealthdiet.app2.adapter.ViewPagerAdapter;
+import com.childhealthdiet.app2.event.ChangeTabEvent;
 import com.childhealthdiet.app2.ui.base.BaseActivity;
 import com.childhealthdiet.app2.ui.fragment.BasketFragment;
 import com.childhealthdiet.app2.ui.fragment.CategoryFragment;
@@ -22,6 +23,8 @@ import com.childhealthdiet.app2.ui.fragment.MineFragment;
 import com.childhealthdiet.app2.utils.BottomNavigationViewHelper;
 
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends BaseActivity {
 
@@ -101,6 +104,22 @@ public class MainActivity extends BaseActivity {
 
         setupViewPager(viewPager);
 
+        initEvent();
+
+    }
+
+    private void initEvent(){
+        Disposable tabDisp = RxBus.getInstance()
+                .toObservable(ChangeTabEvent.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        event -> {
+//                            //使用Toast提示
+//                            ToastUtils.show(event.message);
+                            MainActivity.this.viewPager.setCurrentItem(event.tabIndex);
+                        }
+                );
+        addDisposable(tabDisp);
     }
 
     @Override

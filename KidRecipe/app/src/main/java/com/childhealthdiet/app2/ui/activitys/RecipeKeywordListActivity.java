@@ -158,6 +158,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 case Collect:
                     collectMode(true);
                     break;
+                case Symptoms:
+                    mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
+                    break;
                 default:
                     break;
             }
@@ -178,6 +181,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                     break;
                 case Collect:
                     collectMode(true);
+                    break;
+                case Symptoms:
+                    mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
                     break;
                 default:
                     break;
@@ -239,6 +245,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
             case Collect:
                 mPresenter.loadCollectRecipe();
                 break;
+            case Symptoms:
+                mPresenter.loadSymptomsRecipeBean(mKeyword);
+                break;
             default:
                 break;
         }
@@ -277,6 +286,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 break;
             case Collect:
                 mToolbarTitle.setText("我的收藏");
+                break;
+            case Symptoms:
+                mToolbarTitle.setText(mKeyword + "食谱");
                 break;
             default:
                 break;
