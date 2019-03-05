@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="home_banner_labels">
-        <item>早餐</item>
-        <item>中餐</item>
-        <item>晚餐</item>
+        <item>营养丰富的早餐</item>
+        <item>丰盛的中餐</item>
+        <item>美味的晚餐</item>
     </array>
 
     <array name="home_banner_img">

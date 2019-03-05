@@ -26,4 +26,9 @@ public interface RecipeModel {
     void deleteCollectRecipe(List<RecipeBean> recipeBeans);
 
     List<RecipeBean> getSymptomsRecipeBean(String strSymptoms);
+
+    List<RecipeBean> getEattimeRecipeBean(String strEatTime);
+
+    List<RecipeBean> getTypeRecipeBean(String strTypeName);
+
 }

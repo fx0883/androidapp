@@ -119,4 +119,19 @@ public class RecipeModelImpl implements RecipeModel {
     }
 
 
+    @Override
+    public List<RecipeBean> getEattimeRecipeBean(String strEatTime){
+        RecipeBeanDao recipeBeanDao = DaoDbHelper.getInstance().getSession().getRecipeBeanDao();
+        QueryBuilder qb = recipeBeanDao.queryBuilder();
+        return qb.where(RecipeBeanDao.Properties.Eattime.like("%"+strEatTime+"%")).list();
+    }
+
+    @Override
+    public List<RecipeBean> getTypeRecipeBean(String strTypeName){
+        RecipeBeanDao recipeBeanDao = DaoDbHelper.getInstance().getSession().getRecipeBeanDao();
+        QueryBuilder qb = recipeBeanDao.queryBuilder();
+        return qb.where(RecipeBeanDao.Properties.Type.like("%"+strTypeName+"%")).list();
+    }
+
+
 }

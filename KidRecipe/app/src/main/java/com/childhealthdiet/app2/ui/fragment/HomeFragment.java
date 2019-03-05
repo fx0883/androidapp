@@ -136,9 +136,13 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
     protected void initClick() {
         super.initClick();
         mHomeTopBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
+
             @Override
             public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
 //                Toast.makeText(banner.getContext(), "点击了" + position, Toast.LENGTH_SHORT).show();
+                String[] strs = {"早餐","午餐","晚餐"};
+                RecipeKeywordListActivity.startActivity(HomeFragment.this.getContext(),RECIPETYPE.Eattime,strs[position]);
+
             }
         });
 
@@ -166,7 +170,7 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
         iv_nourish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                RecipeKeywordListActivity.startActivity(HomeFragment.this.getContext(),RECIPETYPE.Type,"营养进补");
             }
         });
 
@@ -174,7 +178,7 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
         iv_food_therapy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                RecipeKeywordListActivity.startActivity(HomeFragment.this.getContext(),RECIPETYPE.Type,"健康食疗");
             }
         });
 

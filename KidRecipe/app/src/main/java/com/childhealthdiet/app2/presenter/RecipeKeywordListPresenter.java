@@ -151,4 +151,48 @@ public class RecipeKeywordListPresenter extends RxPresenter<RecipeKeywordListCon
                         });
         addDisposable(disposable);
     }
+
+
+    @Override
+    public void loadEattimeRecipeBean(String strEatTime){
+        Disposable disposable =
+                Single.create(new SingleOnSubscribe<List<RecipeBean>>() {
+                    @Override
+                    public void subscribe(SingleEmitter<List<RecipeBean>> emitter) throws Exception {
+                        RecipeModel recipeModel = new RecipeModelImpl();
+                        List<RecipeBean> recipeBeans = recipeModel.getEattimeRecipeBean(strEatTime);
+                        emitter.onSuccess(recipeBeans);
+                    }
+                }).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<List<RecipeBean>>() {
+                            @Override
+                            public void accept(List<RecipeBean> recipeBeans) throws Exception {
+                                RecipeKeywordListPresenter.this.getView().updateRecipe(recipeBeans);
+                            }
+                        });
+        addDisposable(disposable);
+    }
+
+
+    @Override
+    public void loadTypeRecipeBean(String strType){
+        Disposable disposable =
+                Single.create(new SingleOnSubscribe<List<RecipeBean>>() {
+                    @Override
+                    public void subscribe(SingleEmitter<List<RecipeBean>> emitter) throws Exception {
+                        RecipeModel recipeModel = new RecipeModelImpl();
+                        List<RecipeBean> recipeBeans = recipeModel.getTypeRecipeBean(strType);
+                        emitter.onSuccess(recipeBeans);
+                    }
+                }).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<List<RecipeBean>>() {
+                            @Override
+                            public void accept(List<RecipeBean> recipeBeans) throws Exception {
+                                RecipeKeywordListPresenter.this.getView().updateRecipe(recipeBeans);
+                            }
+                        });
+        addDisposable(disposable);
+    }
 }

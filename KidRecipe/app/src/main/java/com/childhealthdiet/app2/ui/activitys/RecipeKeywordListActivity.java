@@ -161,6 +161,12 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 case Symptoms:
                     mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
                     break;
+                case Eattime:
+                    mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
+                    break;
+                case Type:
+                    mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
+                    break;
                 default:
                     break;
             }
@@ -183,6 +189,12 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                     collectMode(true);
                     break;
                 case Symptoms:
+                    mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
+                    break;
+                case Eattime:
+                    mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
+                    break;
+                case Type:
                     mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
                     break;
                 default:
@@ -248,6 +260,12 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
             case Symptoms:
                 mPresenter.loadSymptomsRecipeBean(mKeyword);
                 break;
+            case Eattime:
+                mPresenter.loadEattimeRecipeBean(mKeyword);
+                break;
+            case Type:
+                mPresenter.loadTypeRecipeBean(mKeyword);
+                break;
             default:
                 break;
         }
@@ -289,6 +307,12 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 break;
             case Symptoms:
                 mToolbarTitle.setText(mKeyword + "食谱");
+                break;
+            case Eattime:
+                mToolbarTitle.setText(mKeyword + "食谱");
+                break;
+            case Type:
+                mToolbarTitle.setText(mKeyword);
                 break;
             default:
                 break;

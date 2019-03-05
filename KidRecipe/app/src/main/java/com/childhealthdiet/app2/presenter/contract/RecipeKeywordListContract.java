@@ -21,5 +21,7 @@ public interface RecipeKeywordListContract {
         void loadCollectRecipe();
         void deleteCollectRecipe(List<RecipeBean> recipeBeans);
         void loadSymptomsRecipeBean(String strSymptoms);
+        void loadEattimeRecipeBean(String strEatTime);
+        void loadTypeRecipeBean(String strType);
     }
 }

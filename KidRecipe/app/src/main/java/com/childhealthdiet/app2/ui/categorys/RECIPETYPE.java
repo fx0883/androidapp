@@ -10,5 +10,7 @@ public enum RECIPETYPE {
     Keyword,
     Category,
     Collect,
+    Eattime,
+    Type,
     Symptoms;
 }
