@@ -120,10 +120,19 @@ public class RecipeModelImpl implements RecipeModel {
 
 
     @Override
-    public List<RecipeBean> getEattimeRecipeBean(String strEatTime){
+    public List<RecipeBean> getEattimeRecipeBean(String strEatTime,String strMonth){
         RecipeBeanDao recipeBeanDao = DaoDbHelper.getInstance().getSession().getRecipeBeanDao();
         QueryBuilder qb = recipeBeanDao.queryBuilder();
-        return qb.where(RecipeBeanDao.Properties.Eattime.like("%"+strEatTime+"%")).list();
+        if(strMonth.equals("")){
+            return qb.where(RecipeBeanDao.Properties.Eattime.like("%"+strEatTime+"%"))
+                    .orderAsc(RecipeBeanDao.Properties.Month).list();
+        }
+        else {
+            return qb.where(
+                    qb.and(RecipeBeanDao.Properties.Month.eq(strMonth),
+                            RecipeBeanDao.Properties.Eattime.like("%"+strEatTime+"%"))).list();
+        }
+
     }
 
     @Override
@@ -133,5 +142,10 @@ public class RecipeModelImpl implements RecipeModel {
         return qb.where(RecipeBeanDao.Properties.Type.like("%"+strTypeName+"%")).list();
     }
 
-
+    @Override
+    public List<RecipeBean> getIngredientsRecipeBean(String strIngredients){
+        RecipeBeanDao recipeBeanDao = DaoDbHelper.getInstance().getSession().getRecipeBeanDao();
+        QueryBuilder qb = recipeBeanDao.queryBuilder();
+        return qb.where(RecipeBeanDao.Properties.Ingredients.like("%"+strIngredients+"%")).list();
+    }
 }

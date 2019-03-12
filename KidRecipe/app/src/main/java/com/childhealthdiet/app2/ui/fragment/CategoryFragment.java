@@ -135,8 +135,7 @@ public class CategoryFragment extends BaseMVPFragment<CategorysContract.Presente
         mRecyclerView.setAdapter(mLRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
-                //禁用下拉刷新功能
+        //禁用下拉刷新功能
         mRecyclerView.setPullRefreshEnabled(false);
         //禁用自动加载更多功能
         mRecyclerView.setLoadMoreEnabled(false);

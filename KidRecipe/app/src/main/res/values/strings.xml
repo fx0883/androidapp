@@ -30,4 +30,8 @@
     <string name="gdtslogan">GDTslogan</string>
     <string name="click_to_skip">点击跳过</string>
     <string name="title_activity_recipe_search">RecipeSearchActivity</string>
+
+
+    <string name="nickname_key">nikename_key</string>>
+    <string name="birthday_key">birthday_key</string>>
 </resources>

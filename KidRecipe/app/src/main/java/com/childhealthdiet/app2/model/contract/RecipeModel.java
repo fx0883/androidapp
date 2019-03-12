@@ -27,8 +27,10 @@ public interface RecipeModel {
 
     List<RecipeBean> getSymptomsRecipeBean(String strSymptoms);
 
-    List<RecipeBean> getEattimeRecipeBean(String strEatTime);
+    List<RecipeBean> getEattimeRecipeBean(String strEatTime,String strMonth);
 
     List<RecipeBean> getTypeRecipeBean(String strTypeName);
+
+    List<RecipeBean> getIngredientsRecipeBean(String strIngredients);
 
 }

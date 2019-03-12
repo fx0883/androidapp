@@ -12,5 +12,6 @@ public enum RECIPETYPE {
     Collect,
     Eattime,
     Type,
+    Ingredients,
     Symptoms;
 }
