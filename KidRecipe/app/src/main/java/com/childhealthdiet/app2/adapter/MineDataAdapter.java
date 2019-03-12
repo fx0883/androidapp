@@ -1,6 +1,7 @@
 package com.childhealthdiet.app2.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -8,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.childhealthdiet.app2.R;
 import com.childhealthdiet.app2.model.bean.MineItem;
 import com.childhealthdiet.app2.model.bean.RecipeBean;
+import com.childhealthdiet.app2.presenter.contract.FragmentHomeContract;
 import com.childhealthdiet.app2.ui.base.SuperViewHolder;
 import com.childhealthdiet.app2.ui.base.adapter.ListBaseAdapter;
 
@@ -39,6 +41,10 @@ public class MineDataAdapter extends ListBaseAdapter<MineItem> {
         Glide.with(mContext)
                 .load(item.getPicture())
                 .into(imvitem);
+        View lineView = holder.getView(R.id.mine_item_line);
+        if(position == mDataList.size()-1){
+            lineView.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
