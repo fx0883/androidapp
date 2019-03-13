@@ -8,15 +8,15 @@
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/iv_mine_icon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/dp_16"
         android:scaleType="centerCrop"
         android:src="@drawable/lunch"
         app:riv_border_color="@color/colorPrimaryGray"
         app:riv_border_width="5dip"
-        app:riv_corner_radius="30dp"
+        app:riv_corner_radius="36dp"
         app:riv_mutate_background="true"
         android:layout_alignParentLeft="true" />
 

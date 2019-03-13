@@ -59,9 +59,12 @@
         android:ems="10"
         android:hint="请输入昵称"
         android:inputType="textPersonName"
+        android:background="@null"
         app:layout_constraintBottom_toBottomOf="@+id/tv_nickname"
         app:layout_constraintStart_toEndOf="@+id/tv_nickname"
-        app:layout_constraintTop_toTopOf="@+id/tv_nickname" />
+        app:layout_constraintTop_toTopOf="@+id/tv_nickname"
+        android:textCursorDrawable="@drawable/custom_cursor"
+        />
 
 
 

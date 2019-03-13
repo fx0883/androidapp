@@ -131,7 +131,8 @@ public class RecipeModelImpl implements RecipeModel {
         else {
             return qb.where(
                     qb.and(RecipeBeanDao.Properties.Month.eq(strMonth),
-                            RecipeBeanDao.Properties.Eattime.like("%"+strEatTime+"%"))).list();
+                            RecipeBeanDao.Properties.Eattime.like("%"+strEatTime+"%")))
+                            .orderAsc(RecipeBeanDao.Properties.Month).list();
         }
 
     }

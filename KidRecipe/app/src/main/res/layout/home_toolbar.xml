@@ -16,14 +16,15 @@
         <com.phillipcalvin.iconbutton.IconButton
             android:id="@+id/btn_top_search"
 
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="32dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/flatbutton"
             android:drawableLeft="@drawable/search"
             android:text="搜索菜谱、食材"
-            android:background="@drawable/flatbutton"
-            app:iconPadding="10dp"
-            android:layout_margin="16dp"
-            style="?android:attr/borderlessButtonStyle"/>
+            android:textColor="@color/dimgrey"
+            app:iconPadding="10dp" />
 
     </android.support.v7.widget.Toolbar>
 

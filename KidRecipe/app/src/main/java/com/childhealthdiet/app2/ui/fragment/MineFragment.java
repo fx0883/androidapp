@@ -37,6 +37,7 @@ import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import org.w3c.dom.Text;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -163,6 +164,7 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
                         BasketActivity.startActivity(MineFragment.this.getContext());
                         break;
                     case "feedback":
+                        MineFragment.this.sendEmail();
                         break;
                 }
 
@@ -239,6 +241,25 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
 
             this.tvKidAge.setText(kidinfo.getAge());
         }
+    }
+
+    public void sendEmail() {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        // i.setType("text/plain"); //模拟器请使用这行
+        i.setType("message/rfc822"); // 真机上使用这行
+        i.putExtra(Intent.EXTRA_EMAIL,
+                new String[]{getString(R.string.feedbackEmail)});
+
+        String txtTitle = getResources().getString(R.string.feedbackTitle);
+        txtTitle = String.format(txtTitle, getString( R.string.app_name));
+
+
+        i.putExtra(Intent.EXTRA_SUBJECT, txtTitle);
+        i.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedbackBody));
+        ArrayList<Uri> uris = new ArrayList<>();
+        i.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+        startActivity(Intent.createChooser(i,
+                "选择email程序."));
     }
 
 }

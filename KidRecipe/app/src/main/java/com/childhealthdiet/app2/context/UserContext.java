@@ -49,8 +49,13 @@ public class UserContext {
     }
 
     public void setmKidinfo(Context context,String strNickName,String strBirthday) {
-        SPUtils.put(context,nicknameKey,strNickName);
-        SPUtils.put(context,birthdayKey,strBirthday);
+        if(!strNickName.equals("")){
+            SPUtils.put(context,nicknameKey,strNickName);
+        }
+        if(!strBirthday.equals("")){
+            SPUtils.put(context,birthdayKey,strBirthday);
+        }
+
     }
 
 

@@ -137,7 +137,7 @@ public class BasketActivity extends BaseMVPActivity<BasketContract.Presenter>
         //禁用自动加载更多功能
         mRecyclerView.setLoadMoreEnabled(false);
 
-        mRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
+//        mRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
 //        mRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
     }
 

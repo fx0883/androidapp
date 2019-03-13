@@ -144,7 +144,7 @@ public class KidEidtActivity extends BaseActivity {
     private void saveData() {
 
         UserContext.getInstance().setmKidinfo(this,this.editTextNickname.getText().toString(),
-                this.btnKidAge.getText().toString()=="请输入出生日期"?"":this.btnKidAge.getText().toString());
+                this.btnKidAge.getText().toString().equals("请输入出生日期")?"":this.btnKidAge.getText().toString());
     }
 
     @Override

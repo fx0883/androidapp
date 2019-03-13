@@ -8,7 +8,7 @@
   },
   {
     "key":"basket",
-    "name":"菜篮子",
+    "name":"购物车",
     "picture":"file:///android_asset/image/basket.png",
     "jumpClassName":"file:///android_asset/image/breakfast.jpeg",
     "jumpingParam":"收藏"

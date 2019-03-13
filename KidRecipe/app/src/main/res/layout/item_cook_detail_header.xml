@@ -127,9 +127,9 @@
 
         <View
             android:id="@+id/view_circle1"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="2dp"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            android:layout_marginTop="8dp"
             android:background="@drawable/shape_circle_orange">
         </View>
 
@@ -156,9 +156,9 @@
 
         <View
             android:id="@+id/view_circle2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="2dp"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            android:layout_marginTop="8dp"
             android:background="@drawable/shape_circle_orange">
         </View>
 
@@ -184,9 +184,9 @@
 
         <View
             android:id="@+id/view_circle3"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="2dp"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            android:layout_marginTop="8dp"
             android:background="@drawable/shape_circle_orange">
         </View>
 

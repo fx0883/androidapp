@@ -13,9 +13,11 @@ android:paddingTop="@dimen/dp_10">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="名字"
+        android:layout_marginLeft="@dimen/dp_36"
         android:layout_gravity="left"
         tools:layout_editor_absoluteY="5dp"
         android:layout_weight="10"
+        android:textSize="18sp"
         />
 
 
@@ -28,6 +30,8 @@ android:paddingTop="@dimen/dp_10">
             android:layout_gravity="left"
             tools:layout_editor_absoluteY="5dp"
             android:layout_weight="10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_36"
             />
 
     <TextView
@@ -39,12 +43,15 @@ android:paddingTop="@dimen/dp_10">
         android:layout_gravity="right"
         tools:layout_editor_absoluteY="5dp"
         android:layout_weight="10"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_10"
         />
 
     <View
+
         android:layout_width="match_parent"
         android:layout_height="1dip"
-        android:background="#FF909090"/>
+        android:background="#d7d6d6"/>
 </LinearLayout>
 
 

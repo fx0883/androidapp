@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KidRecipe</string>
+    <string name="app_name">宝宝食谱</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -34,4 +34,9 @@
 
     <string name="nickname_key">nikename_key</string>>
     <string name="birthday_key">birthday_key</string>>
+
+
+    <string name="recommend">推荐</string>>
+    <string name="category">分类</string>>
+    <string name="mine">我的</string>>
 </resources>
