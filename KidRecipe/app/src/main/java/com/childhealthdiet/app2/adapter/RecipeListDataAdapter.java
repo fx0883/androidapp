@@ -37,6 +37,10 @@ public class RecipeListDataAdapter extends ListBaseAdapter<RecipeBean> {
         TextView titleText = holder.getView(R.id.tv_title);
         titleText.setText(item.getName());
 
+        TextView tvMonth = holder.getView(R.id.tv_month);
+        String strMonth = item.getMonth() != null ? item.getMonth()+"个月":(item.getSymptoms() != null?item.getSymptoms():"");
+        tvMonth.setText(strMonth);
+
         TextView tvContent = holder.getView(R.id.tv_content);
         tvContent.setText(item.getPrompt());
 

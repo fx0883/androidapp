@@ -102,7 +102,7 @@ public void setIngredients(String ingredients) {
     this.ingredients = ingredients;
 }
 public String getPractice() {
-    return this.practice;
+    return  this.practice.replaceAll("<br>","");
 }
 public void setPractice(String practice) {
     this.practice = practice;

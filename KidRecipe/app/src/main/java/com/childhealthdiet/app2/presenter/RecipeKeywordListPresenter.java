@@ -2,9 +2,14 @@ package com.childhealthdiet.app2.presenter;
 
 import android.content.Context;
 
+import com.childhealthdiet.app2.context.Kidinfo;
+import com.childhealthdiet.app2.context.UserContext;
+import com.childhealthdiet.app2.model.MonthRecipeModelImpl;
 import com.childhealthdiet.app2.model.RecipeModelImpl;
 import com.childhealthdiet.app2.model.SimpleModelImpl;
+import com.childhealthdiet.app2.model.bean.MonthRecipe;
 import com.childhealthdiet.app2.model.bean.RecipeBean;
+import com.childhealthdiet.app2.model.contract.MonthRecipeModel;
 import com.childhealthdiet.app2.model.contract.RecipeModel;
 import com.childhealthdiet.app2.model.contract.SimpleModel;
 import com.childhealthdiet.app2.presenter.contract.RecipeKeywordListContract;
@@ -153,14 +158,72 @@ public class RecipeKeywordListPresenter extends RxPresenter<RecipeKeywordListCon
     }
 
 
+    private String getMonthKey(Context context,int intMonth){
+        String strRet = "";
+        MonthRecipeModel monthRecipeModel = new MonthRecipeModelImpl();
+
+        List<MonthRecipe> monthRecipes = monthRecipeModel.loadMonthRecipe(context);
+        for (int i=0;i<monthRecipes.size();i++){
+            MonthRecipe itemMonthRecipe = monthRecipes.get(i);
+//            int intmonth = this.convertStrtoint(strMonth);
+            if(intMonth < 4 || intMonth > 72){
+                break;
+            }
+            if(itemMonthRecipe.getKey().indexOf("-")>0){
+                String startMonth = itemMonthRecipe.getKey().split("-")[0];
+                String endMonth = itemMonthRecipe.getKey().split("-")[1];
+
+                int intStartMonth = this.convertStrtoint(startMonth);
+                int intEndMonth = this.convertStrtoint(endMonth);
+                if(intMonth>=intStartMonth && intMonth<=intEndMonth){
+                    strRet = itemMonthRecipe.getKey();
+                    break;
+                }
+            }
+            else{
+                String curMonth = itemMonthRecipe.getKey();
+                int intcurMonth = this.convertStrtoint(curMonth);
+                if(intMonth == intcurMonth){
+                    strRet = itemMonthRecipe.getKey();
+                    break;
+                }
+            }
+        }
+        return  strRet;
+    }
+
+    private int convertStrtoint(String strValue){
+        int b=0;
+        try {
+            b = Integer.valueOf(strValue).intValue();
+        }
+        catch (NumberFormatException e)
+        {
+            e.printStackTrace();
+        }
+        return b;
+    }
+
+
     @Override
-    public void loadEattimeRecipeBean(String strEatTime){
+    public void loadEattimeRecipeBean(Context context,String strEatTime){
+        Kidinfo kidinfo = UserContext.getInstance().getmKidinfo(context);
+        int intMonth =0;
+        try{
+            intMonth = kidinfo.getMonthAge();
+        }
+        catch (Exception e){
+
+        }
+
+        String strMonthKey = this.getMonthKey(context,intMonth);
+
         Disposable disposable =
                 Single.create(new SingleOnSubscribe<List<RecipeBean>>() {
                     @Override
                     public void subscribe(SingleEmitter<List<RecipeBean>> emitter) throws Exception {
                         RecipeModel recipeModel = new RecipeModelImpl();
-                        List<RecipeBean> recipeBeans = recipeModel.getEattimeRecipeBean(strEatTime);
+                        List<RecipeBean> recipeBeans = recipeModel.getEattimeRecipeBean(strEatTime,strMonthKey);
                         emitter.onSuccess(recipeBeans);
                     }
                 }).subscribeOn(Schedulers.io())
@@ -183,6 +246,27 @@ public class RecipeKeywordListPresenter extends RxPresenter<RecipeKeywordListCon
                     public void subscribe(SingleEmitter<List<RecipeBean>> emitter) throws Exception {
                         RecipeModel recipeModel = new RecipeModelImpl();
                         List<RecipeBean> recipeBeans = recipeModel.getTypeRecipeBean(strType);
+                        emitter.onSuccess(recipeBeans);
+                    }
+                }).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<List<RecipeBean>>() {
+                            @Override
+                            public void accept(List<RecipeBean> recipeBeans) throws Exception {
+                                RecipeKeywordListPresenter.this.getView().updateRecipe(recipeBeans);
+                            }
+                        });
+        addDisposable(disposable);
+    }
+
+    @Override
+    public void loadIngredientsRecipeBean(String strIngredients){
+        Disposable disposable =
+                Single.create(new SingleOnSubscribe<List<RecipeBean>>() {
+                    @Override
+                    public void subscribe(SingleEmitter<List<RecipeBean>> emitter) throws Exception {
+                        RecipeModel recipeModel = new RecipeModelImpl();
+                        List<RecipeBean> recipeBeans = recipeModel.getIngredientsRecipeBean(strIngredients);
                         emitter.onSuccess(recipeBeans);
                     }
                 }).subscribeOn(Schedulers.io())

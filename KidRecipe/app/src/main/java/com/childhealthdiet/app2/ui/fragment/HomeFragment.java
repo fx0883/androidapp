@@ -17,6 +17,7 @@ import com.childhealthdiet.app2.R;
 import com.childhealthdiet.app2.RxBus;
 import com.childhealthdiet.app2.adapter.MonthRecipeDataAdapter;
 import com.childhealthdiet.app2.event.ChangeTabEvent;
+import com.childhealthdiet.app2.model.bean.KeyValueBean;
 import com.childhealthdiet.app2.model.bean.MonthRecipe;
 import com.childhealthdiet.app2.presenter.FragmentHomePresenter;
 import com.childhealthdiet.app2.presenter.contract.FragmentHomeContract;
@@ -187,7 +188,10 @@ public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter
             @Override
             public void onItemClick(View view, int position) {
 //                Toast.makeText(view.getContext(), "点击了" + position, Toast.LENGTH_SHORT).show();
-                RecipeKeywordListActivity.startActivity(getContext(),RECIPETYPE.Month,mMonthRecipeMonthRecipeDataAdapter.getDataList().get(position));
+
+                MonthRecipe monthRecipe =  mMonthRecipeMonthRecipeDataAdapter.getDataList().get(position);
+                KeyValueBean keyValueBean = new KeyValueBean(monthRecipe.getKey(),monthRecipe.getTitle());
+                RecipeKeywordListActivity.startActivity(getContext(),RECIPETYPE.Month,keyValueBean);
 
             }
 

@@ -21,7 +21,8 @@
             android:textSize="@dimen/dp_22"
             android:layout_gravity="center"
             android:text="TextView"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/dp_16"/>
 
         <TextView
             android:id="@+id/recipeNumber"
@@ -29,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="TextView"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="@dimen/dp_14"
             android:layout_marginTop="5dp"/>
 
@@ -37,8 +38,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="16dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     >
@@ -88,7 +89,8 @@
         android:scaleType="centerCrop"
         android:src="@drawable/lunch"
         app:riv_corner_radius="10dp"
-        app:riv_mutate_background="true" />
+        app:riv_mutate_background="true"
+/>
 
 </LinearLayout>
 

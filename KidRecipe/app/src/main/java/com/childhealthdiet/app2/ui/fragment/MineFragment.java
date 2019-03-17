@@ -1,6 +1,7 @@
 package com.childhealthdiet.app2.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,17 +9,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.childhealthdiet.app2.R;
 import com.childhealthdiet.app2.adapter.CategoryRecipeDataAdapter;
 import com.childhealthdiet.app2.adapter.MineDataAdapter;
+import com.childhealthdiet.app2.context.Kidinfo;
+import com.childhealthdiet.app2.context.UserContext;
 import com.childhealthdiet.app2.model.bean.MineItem;
 import com.childhealthdiet.app2.model.bean.RecipeCategory;
 import com.childhealthdiet.app2.presenter.MinePresenter;
 import com.childhealthdiet.app2.presenter.contract.CategorysContract;
 import com.childhealthdiet.app2.presenter.contract.MineContract;
 import com.childhealthdiet.app2.ui.activitys.BasketActivity;
+import com.childhealthdiet.app2.ui.activitys.KidEidtActivity;
 import com.childhealthdiet.app2.ui.activitys.RecipeDetailActivity;
 import com.childhealthdiet.app2.ui.activitys.RecipeKeywordListActivity;
 import com.childhealthdiet.app2.ui.base.BaseFragment;
@@ -28,6 +34,10 @@ import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 
+import org.w3c.dom.Text;
+
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,8 +53,10 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
     private String mParam1;
     private String mParam2;
 
-//    private OnFragmentInteractionListener mListener;
-
+    View headView;
+    TextView tvKidNickname;
+    TextView tvKidAge;
+    Button btnEdit;
 
     @BindView(R.id.mine_recycler_view)
     LRecyclerView mRecyclerView;
@@ -111,12 +123,29 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
     @Override
     protected void initWidget(Bundle savedInstanceState) {
         super.initWidget(savedInstanceState);
+
+        headView = LayoutInflater.from(getActivity()).inflate(R.layout.mine_header_view,null);
+        tvKidNickname = headView.findViewById(R.id.tv_kid_nickname);
+        tvKidAge = headView.findViewById(R.id.tv_kid_age);
+//        mHomeTopBanner = headView.findViewById(R.id.home_top_banner);
+//        initTopBanner(mHomeTopBanner);
+        btnEdit = headView.findViewById(R.id.btn_eidt_mine);
+
+
         initLRecylerView();
+        mLRecyclerViewAdapter.addHeaderView(headView);
     }
 
     @Override
     protected void initClick() {
         super.initClick();
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                KidEidtActivity.startActivity(MineFragment.this);
+            }
+        });
 
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -135,6 +164,7 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
                         BasketActivity.startActivity(MineFragment.this.getContext());
                         break;
                     case "feedback":
+                        MineFragment.this.sendEmail();
                         break;
                 }
 
@@ -148,6 +178,12 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
     protected void processLogic() {
         super.processLogic();
         mPresenter.getMineItems(this.getContext());
+
+        try {
+            loadKidinfo();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -170,6 +206,60 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
         mRecyclerView.setPullRefreshEnabled(false);
         //禁用自动加载更多功能
         mRecyclerView.setLoadMoreEnabled(false);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+
+            case 10030:
+                try {
+                    loadKidinfo();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+
+            case 2:
+
+                //来自按钮2的请求，作相应业务处理
+
+        }
+
+
+
+    }
+
+    private void loadKidinfo() throws ParseException {
+        Kidinfo kidinfo = UserContext.getInstance().getmKidinfo(this.getContext());
+        if(!kidinfo.getNickName().equals("")){
+            this.tvKidNickname.setText(kidinfo.getNickName());
+        }
+        if(!kidinfo.getBirthdate().equals("")){
+
+            this.tvKidAge.setText(kidinfo.getAge());
+        }
+    }
+
+    public void sendEmail() {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        // i.setType("text/plain"); //模拟器请使用这行
+        i.setType("message/rfc822"); // 真机上使用这行
+        i.putExtra(Intent.EXTRA_EMAIL,
+                new String[]{getString(R.string.feedbackEmail)});
+
+        String txtTitle = getResources().getString(R.string.feedbackTitle);
+        txtTitle = String.format(txtTitle, getString( R.string.app_name));
+
+
+        i.putExtra(Intent.EXTRA_SUBJECT, txtTitle);
+        i.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedbackBody));
+        ArrayList<Uri> uris = new ArrayList<>();
+        i.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+        startActivity(Intent.createChooser(i,
+                "选择email程序."));
     }
 
 }

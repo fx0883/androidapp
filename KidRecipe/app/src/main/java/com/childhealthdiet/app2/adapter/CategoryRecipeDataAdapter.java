@@ -8,10 +8,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.childhealthdiet.app2.R;
+import com.childhealthdiet.app2.model.bean.KeyValueBean;
 import com.childhealthdiet.app2.model.bean.MonthRecipe;
 import com.childhealthdiet.app2.model.bean.RecipeCategory;
+import com.childhealthdiet.app2.ui.activitys.RecipeKeywordListActivity;
 import com.childhealthdiet.app2.ui.base.SuperViewHolder;
 import com.childhealthdiet.app2.ui.base.adapter.ListBaseAdapter;
+import com.childhealthdiet.app2.ui.categorys.RECIPETYPE;
+import com.childhealthdiet.app2.ui.fragment.HomeFragment;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -44,7 +48,7 @@ public class CategoryRecipeDataAdapter extends ListBaseAdapter<RecipeCategory> {
 
         final LayoutInflater mInflater = LayoutInflater.from(mContext);
         TagFlowLayout mFlowLayout = (TagFlowLayout) holder.getView(R.id.id_categorys_flowlayout);
-        mFlowLayout.setMaxSelectCount(3);
+//        mFlowLayout.setMaxSelectCount(3);
         mFlowLayout.setAdapter(new TagAdapter<RecipeCategory.CategoryName>(item.categorys)
         {
 
@@ -69,8 +73,28 @@ public class CategoryRecipeDataAdapter extends ListBaseAdapter<RecipeCategory> {
             @Override
             public boolean onTagClick(View view, int p, FlowLayout parent)
             {
-                Toast.makeText(mContext, mDataList.get(position).categorys.get(p).key, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, mDataList.get(position).categorys.get(p).key, Toast.LENGTH_SHORT).show();
                 //view.setVisibility(View.GONE);
+                String strKey = item.categorys.get(p).key;
+                switch (position){
+                    case 0:
+                        RecipeKeywordListActivity.startActivity(mContext,RECIPETYPE.Eattime,strKey);
+                        break;
+                    case 1:
+                        KeyValueBean keyValueBean = new KeyValueBean(strKey,item.categorys.get(p).name+"宝宝食谱");
+                        RecipeKeywordListActivity.startActivity(mContext,RECIPETYPE.Month,keyValueBean);
+                        break;
+                    case 2:
+                    case 3:
+                        RecipeKeywordListActivity.startActivity(mContext,RECIPETYPE.Symptoms,strKey);
+                        break;
+
+                    case 4:
+                    case 5:
+                    case 6:
+                        RecipeKeywordListActivity.startActivity(mContext,RECIPETYPE.Ingredients,strKey);
+                        break;
+                }
                 return true;
             }
         });

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iv_mine_icon"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="@dimen/dp_16"
+        android:scaleType="centerCrop"
+        android:src="@drawable/lunch"
+        app:riv_border_color="@color/colorPrimaryGray"
+        app:riv_border_width="5dip"
+        app:riv_corner_radius="36dp"
+        app:riv_mutate_background="true"
+        android:layout_alignParentLeft="true" />
+
+
+    <LinearLayout
+        android:id="@+id/mine_head_linearLayount_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_16"
+        android:layout_toRightOf = "@id/iv_mine_icon"
+        >
+
+
+        <TextView
+            android:id="@+id/tv_kid_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="宝宝昵称"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_kid_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textSize="16sp"
+            android:text="输入宝宝的生日可以更准确的推荐菜谱哦" />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_eidt_mine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:layout_gravity="right|center_vertical"
+        android:text="编辑"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/dp_16"
+        android:layout_alignParentRight="true"
+     />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/colorPrimaryGray"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

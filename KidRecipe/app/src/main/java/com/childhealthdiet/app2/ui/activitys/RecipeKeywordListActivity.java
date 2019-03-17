@@ -21,8 +21,10 @@ import com.childhealthdiet.app2.R;
 import com.childhealthdiet.app2.RecipeApplication;
 import com.childhealthdiet.app2.adapter.MonthRecipeDataAdapter;
 import com.childhealthdiet.app2.adapter.RecipeListDataAdapter;
+import com.childhealthdiet.app2.model.bean.KeyValueBean;
 import com.childhealthdiet.app2.model.bean.MonthRecipe;
 import com.childhealthdiet.app2.model.bean.RecipeBean;
+import com.childhealthdiet.app2.model.bean.RecipeCategory;
 import com.childhealthdiet.app2.presenter.RecipeKeywordListPresenter;
 import com.childhealthdiet.app2.presenter.contract.RecipeKeywordListContract;
 import com.childhealthdiet.app2.ui.base.BaseMVPActivity;
@@ -49,7 +51,7 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
     private static final String KEYWORD_KEY = "keyword_key";
 
 
-    private MonthRecipe mMonthRecipe = null;
+//    private MonthRecipe mMonthRecipe = null;
     private String mKeyword = null;
     private RECIPETYPE mRecipeType = RECIPETYPE.None;
     @BindView(R.id.recipelist_recycler_view)
@@ -73,7 +75,7 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
     @BindView(R.id.tvSelectAll)
     TextView tvSelectAll;
 
-
+    private KeyValueBean mKeyValueBean = null;
 
     private boolean mIsCollectModel = false;
 
@@ -82,10 +84,17 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
         return mIsCollectModel;
     }
 
-    public static void startActivity(Context context, RECIPETYPE recipetype, MonthRecipe monthRecipe){
+//    public static void startActivity(Context context, RECIPETYPE recipetype, MonthRecipe monthRecipe){
+//        Intent intent  =new Intent(context,RecipeKeywordListActivity.class);
+//        intent.putExtra(RECIPE_TYPE_KEY,recipetype.ordinal());
+//        intent.putExtra(DATA_KEY,monthRecipe);
+//        context.startActivity(intent);
+//    }
+
+    public static void startActivity(Context context, RECIPETYPE recipetype, KeyValueBean keyValueBean){
         Intent intent  =new Intent(context,RecipeKeywordListActivity.class);
         intent.putExtra(RECIPE_TYPE_KEY,recipetype.ordinal());
-        intent.putExtra(DATA_KEY,monthRecipe);
+        intent.putExtra(DATA_KEY,keyValueBean);
         context.startActivity(intent);
     }
 
@@ -148,7 +157,7 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 case None:
                     break;
                 case Month:
-                    mMonthRecipe = savedInstanceState.getParcelable(DATA_KEY);
+                    mKeyValueBean = savedInstanceState.getParcelable(DATA_KEY);
                 case Category:
 
                     break;
@@ -167,6 +176,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 case Type:
                     mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
                     break;
+                case Ingredients:
+                    mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
+                    break;
                 default:
                     break;
             }
@@ -178,7 +190,7 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 case None:
                     break;
                 case Month:
-                    mMonthRecipe = getIntent().getParcelableExtra(DATA_KEY);
+                    mKeyValueBean = getIntent().getParcelableExtra(DATA_KEY);
                 case Category:
 
                     break;
@@ -195,6 +207,9 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                     mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
                     break;
                 case Type:
+                    mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
+                    break;
+                case Ingredients:
                     mKeyword = getIntent().getStringExtra(KEYWORD_KEY);
                     break;
                 default:
@@ -247,7 +262,7 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
             case None:
                 break;
             case Month:
-                mPresenter.loadRecipeBeanbyMonth(this,mMonthRecipe.getKey());
+                mPresenter.loadRecipeBeanbyMonth(this,mKeyValueBean.getKey());
             case Category:
 
                 break;
@@ -261,10 +276,13 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 mPresenter.loadSymptomsRecipeBean(mKeyword);
                 break;
             case Eattime:
-                mPresenter.loadEattimeRecipeBean(mKeyword);
+                mPresenter.loadEattimeRecipeBean(this,mKeyword);
                 break;
             case Type:
                 mPresenter.loadTypeRecipeBean(mKeyword);
+                break;
+            case Ingredients:
+                mPresenter.loadIngredientsRecipeBean(mKeyword);
                 break;
             default:
                 break;
@@ -295,7 +313,7 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
             case None:
                 break;
             case Month:
-                mToolbarTitle.setText(mMonthRecipe.getTitle());
+                mToolbarTitle.setText(mKeyValueBean.getValue());
             case Category:
 
                 break;
@@ -306,13 +324,22 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
                 mToolbarTitle.setText("我的收藏");
                 break;
             case Symptoms:
-                mToolbarTitle.setText(mKeyword + "食谱");
+                if(mKeyword.indexOf("食谱") > 0) {
+                    mToolbarTitle.setText(mKeyword);
+                }
+                else{
+                    mToolbarTitle.setText(mKeyword + "食谱");
+                }
+
                 break;
             case Eattime:
                 mToolbarTitle.setText(mKeyword + "食谱");
                 break;
             case Type:
                 mToolbarTitle.setText(mKeyword);
+                break;
+            case Ingredients:
+                mToolbarTitle.setText("包含"+mKeyword + "的食谱");
                 break;
             default:
                 break;
