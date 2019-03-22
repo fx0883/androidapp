@@ -11,6 +11,7 @@
     <!-- 注意：如需要这个Logo区域，建议开发者使用自己的Logo资源，而不是联盟的Logo资源@drawable/gdt_splash_logo，资源规格可参照@drawable/gdt_splash_logo -->
     <ImageView
         android:id="@+id/app_logo"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -32,7 +32,7 @@ dependencies {
     // (see https://github.com/ReactiveX/RxJava/releases for latest 2.x.x version)
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
     implementation project(':searchview')
-    implementation files('libs/GDTUnionSDK.TBS.4.20.580.min.jar')
+//    implementation files('libs/GDTUnionSDK.TBS.4.20.580.min.jar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
