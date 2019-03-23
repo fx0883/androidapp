@@ -4,7 +4,7 @@ apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.Recipes.app2"
+        applicationId "com.mihwapp.womanrecipe"
         minSdkVersion 22
         targetSdkVersion 27
         versionCode 22

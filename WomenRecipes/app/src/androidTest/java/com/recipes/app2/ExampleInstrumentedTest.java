@@ -1,4 +1,4 @@
-package com.Recipes.app2;
+package com.mihwapp.womanrecipe;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.Recipes.app2", appContext.getPackageName());
+        assertEquals("com.mihwapp.womanrecipe", appContext.getPackageName());
     }
 }

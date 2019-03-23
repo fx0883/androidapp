@@ -1,4 +1,4 @@
-package com.Recipes.app2;
+package com.mihwapp.womanrecipe;
 
 import org.junit.Test;
 
