@@ -1,33 +1,14 @@
 package com.Recipes.app2.activitys;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.provider.Settings;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.Recipes.app2.Constants;
-import com.Recipes.app2.MainActivity;
-import com.qq.e.ads.splash.SplashAD;
-import com.qq.e.ads.splash.SplashADListener;
-import com.qq.e.comm.util.AdError;
-
-import java.util.ArrayList;
-import java.util.List;
 import com.Recipes.app2.R;
 
 

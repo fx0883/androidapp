@@ -1,18 +1,12 @@
-package com.Recipes.app2;
+package com.Recipes.app2.activitys;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,9 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.etsy.android.grid.StaggeredGridView;
-import com.Recipes.app2.activitys.CookDetailActivity;
-import com.Recipes.app2.activitys.SearchActivity;
+import com.Recipes.app2.R;
+import com.Recipes.app2.RecipeApplication;
 import com.Recipes.app2.model.bean.DaoSession;
 import com.Recipes.app2.model.bean.RecipeBean;
 import com.Recipes.app2.model.bean.RecipeBeanDao;
@@ -40,15 +33,12 @@ import com.Recipes.app2.view.adapters.RecipeListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
