@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -49,11 +50,31 @@
     <!-- 开发者可以把自家App设计开屏图片摆放在这里，本示例中放置了一张静态图片。然后在onADPresent回调中再把这个图片隐藏起来。 !-->
     <!-- 注意1：直接将此图盖在广告容器的上面即可，始终不要将广告容器splash_container的设为invisible，否则将不会展示广告无法计费，返回错误码600。-->
     <!-- 注意2：建议开发者使用自己的开屏图片资源，而不是联盟的@drawable/splash_holder，资源规格可参照@drawable/splash_holder -->
-    <ImageView
-        android:id="@+id/splash_holder"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/app_logo"
-        android:scaleType="fitXY"
-        android:src="@drawable/splash_holder" />
+        android:background="@color/colorAccent">
+
+        <ImageView
+            android:id="@+id/splash_holder"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/splash_holder" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/splash_holder"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="@string/app_name"
+            android:textColor="@color/lightgray"
+            android:textSize="24sp"
+            app:fontFamily="sans-serif-light" />
+    </RelativeLayout>
+
 </RelativeLayout>

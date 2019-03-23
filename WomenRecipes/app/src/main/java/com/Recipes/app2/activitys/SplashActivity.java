@@ -49,7 +49,7 @@ public class SplashActivity extends Activity {
       public void run() {
         goMainScreen();
       }
-    }, 3000);
+    }, 2000);
   }
 
   private void goMainScreen() {
