@@ -7,74 +7,74 @@
         <item
             android:id="@+id/nav_early_month"
             android:layout_width="wrap_content"
-            android:icon="@android:drawable/ic_menu_month"
-            android:title="孕早期食谱" />
+            android:icon="@drawable/ic_cookbook"
+            android:title="孕期1～3个月" />
 
         <item
             android:id="@+id/nav_one_month"
-            android:title="怀孕第一个月"
+            android:title="第一个月"
             android:visible="false" />
 
         <item
             android:id="@+id/nav_two_month"
-            android:title="怀孕第二个月"
+            android:title="第二个月"
             android:visible="false" />
 
         <item
             android:id="@+id/nav_three_month"
-            android:title="怀孕第三个月"
+            android:title="第三个月"
             android:visible="false" />
 
 
         <item
             android:id="@+id/nav_middle_month"
-            android:icon="@android:drawable/ic_menu_month"
-            android:title="孕期中食谱" />
+            android:icon="@drawable/ic_cookbook"
+            android:title="孕期4~6个月" />
 
         <item
             android:id="@+id/nav_four_month"
-            android:title="怀孕第四个月"
+            android:title="第四个月"
             android:visible="false" />
 
         <item
             android:id="@+id/nav_five_month"
-            android:title="怀孕第五个月"
+            android:title="第五个月"
             android:visible="false" />
 
         <item
             android:id="@+id/nav_six_month"
-            android:title="怀孕第六个月"
+            android:title="第六个月"
             android:visible="false" />
 
 
         <item
             android:id="@+id/nav_late_month"
-            android:icon="@android:drawable/ic_menu_month"
-            android:title="孕晚期食谱" />
+            android:icon="@drawable/ic_cookbook"
+            android:title="孕期7～10个月" />
 
         <item
             android:id="@+id/nav_seven_month"
-            android:title="怀孕第七个月"
+            android:title="第七个月"
             android:visible="false" />
 
         <item
             android:id="@+id/nav_eight_month"
-            android:title="怀孕第八个月"
+            android:title="第八个月"
             android:visible="false" />
 
         <item
             android:id="@+id/nav_nine_month"
-            android:title="怀孕第九个月"
+            android:title="第九个月"
             android:visible="false" />
         <item
             android:id="@+id/nav_ten_month"
-            android:title="怀孕第十个月"
+            android:title="第十个月"
             android:visible="false" />
 
 
         <item
             android:id="@+id/nav_function_recipe"
-            android:icon="@android:drawable/ic_input_get"
+            android:icon="@drawable/ic_question_book"
             android:title="功能性食谱" />
 
         <item
@@ -98,8 +98,8 @@
 
         <item
             android:id="@+id/nav_collect"
-            android:icon="@android:drawable/btn_star_big_on"
-            android:title="我的收藏" />
+            android:icon="@drawable/ic_heart"
+            android:title="喜欢的食谱" />
 
 
     </group>
@@ -123,8 +123,8 @@
 
         <item
             android:id="@+id/nav_send"
-            android:icon="@drawable/ic_menu_send"
-            android:title="反馈" />
+            android:icon="@drawable/ic_paper_plane"
+            android:title="用户反馈" />
     </group>
 
 
