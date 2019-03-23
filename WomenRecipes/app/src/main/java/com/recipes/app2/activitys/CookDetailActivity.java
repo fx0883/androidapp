@@ -69,28 +69,12 @@ public class CookDetailActivity extends AppCompatActivity {
     @BindView(R.id.bannerContainer)
     ViewGroup bannerContainer;
 
-    BannerView bv = null;
-
-    AdView adView = null;
-
-    final int tryloadadMaxTimes = 5;
-
-    int tryloadadTime = 0;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cook_detail);
         ButterKnife.bind(this);
-//        this.setupView();
         this.init(savedInstanceState);
-    }
-
-//    @Override
-    protected int getLayoutId(){
-        return R.layout.activity_cook_detail;
     }
 
 //    @Override
@@ -113,51 +97,14 @@ public class CookDetailActivity extends AppCompatActivity {
 
         String recipeUrl = "file:///android_asset/recipesImage/" + data.getPhoto();
 
-
-//        Picasso.with(this)
-//                .load(recipeUrl)
-//                .into(this.imgvBg);
         Glide.with(this).load(recipeUrl).into(this.imgvBg);
 
-
-        getSupportActionBar().setTitle(data.getName());
-
+        toolbarLayout.setTitle(data.getName());
 
         cookDetailAdapter = new CookDetailAdapter(this, data, isShowCollection);
-//        recyclerList.setLayoutManager(new LinearLayoutManager(getContext()));
+
         recyclerList.setLayoutManager(new LinearLayoutManager(this));
         recyclerList.setAdapter(cookDetailAdapter);
-
-
-        loadads();
-//        imbtnShare.setTranslationY(-50);
-    }
-
-
-    private void loadads(){
-
-        if(this.adView != null || this.bv != null)
-        {
-            bannerContainer.removeAllViews();
-        }
-
-        if(tryloadadTime>=tryloadadMaxTimes){
-            return;
-        }
-        tryloadadTime++;
-        int min=0;
-        int max=99;
-        Random random = new Random();
-        int num = random.nextInt(max)%(max-min+1) + min;
-
-        if(num<=80){
-            this.getBanner().loadAD();
-        }
-        else{
-            getAdView();
-        }
-
-//        getAdView();
     }
 
     @OnClick(R.id.btnShare)
@@ -197,110 +144,5 @@ public class CookDetailActivity extends AppCompatActivity {
                         );
 
         activity.startActivityForResult(intent, 10029, options.toBundle());
-    }
-    private String getPosID() {
-
-        return Constants.BannerPosID;
-    }
-
-    AdView getAdView(){
-        adView = new AdView(CookDetailActivity.this);
-
-        adView.setAdUnitId(ConstantsAdmob.BannerPosID);
-//        recyclerViewItems.add(i, adView);
-
-
-
-
-        // Set an AdListener on the AdView to wait for the previous banner ad
-        // to finish loading before loading the next ad in the items list.
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                tryloadadTime = 0;
-                super.onAdLoaded();
-                // The previous banner ad loaded successfully, call this method again to
-                // load the next ad in the items list.
-//                loadBannerAd(index + ITEMS_PER_AD);
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // The previous banner ad failed to load. Call this method again to load
-                // the next ad in the items list.
-                Log.e("MainActivity", "The previous banner ad failed to load. Attempting to"
-                        + " load the next banner ad in the items list.");
-//                loadBannerAd(index + ITEMS_PER_AD);
-                loadads();
-//                ERROR_CODE_INTERNAL_ERROR
-            }
-        });
-
-        // Load the banner ad.
-        adView.setAdSize(AdSize.BANNER);
-        adView.loadAd(new AdRequest.Builder().build());
-        bannerContainer.addView(adView);
-
-        return adView;
-
-    }
-
-
-    private BannerView getBanner() {
-
-        String posId = getPosID();
-
-        this.bv = new BannerView(this, ADSize.BANNER, Constants.APPID,posId);
-        // 注意：如果开发者的banner不是始终展示在屏幕中的话，请关闭自动刷新，否则将导致曝光率过低。
-        // 并且应该自行处理：当banner广告区域出现在屏幕后，再手动loadAD。
-        bv.setRefresh(30);
-        bv.setADListener(new AbstractBannerADListener() {
-
-            @Override
-            public void onNoAD(AdError error) {
-                tryloadadTime = 0;
-                Log.i(
-                        "AD_DEMO",
-                        String.format("Banner onNoAD，eCode = %d, eMsg = %s", error.getErrorCode(),
-                                error.getErrorMsg()));
-                loadads();
-            }
-
-            @Override
-            public void onADReceiv() {
-
-                Log.i("AD_DEMO", "ONBannerReceive");
-            }
-        });
-        bannerContainer.addView(bv);
-        return this.bv;
-    }
-
-    @Override
-    protected void onResume() {
-        if(adView!=null){
-            adView.resume();
-        }
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-
-        if(adView!=null){
-            adView.pause();
-        }
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if(adView!=null){
-            adView.destroy();
-        }
-        if(bv!=null) {
-            bv.destroy();
-        }
-        super.onDestroy();
     }
 }

@@ -1,89 +1,73 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
-
-
-
-
-<android.support.design.widget.CoordinatorLayout
-
-    android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_above="@+id/bannerContainer">
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+
+    <android.support.design.widget.CoordinatorLayout
+
+        android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        >
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bannerContainer">
 
-
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleGravity="center_horizontal"
-            app:expandedTitleMarginTop="220dp"
-            app:expandedTitleTextAppearance="@style/textToolbarTitle"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            android:layout_height="280dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
 
-
-            <RelativeLayout
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleGravity="left|bottom"
+                app:titleEnabled="true"
+                app:expandedTitleTextAppearance="@style/textToolbarTitle"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <ImageView
-                    android:id="@+id/imgv_bg"
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:transitionName="@string/transition_cook_detail_imgv_bg"/>
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imgv_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:transitionName="@string/transition_cook_detail_imgv_bg" />
 
 
-
-            </RelativeLayout>
-
+                </RelativeLayout>
 
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                />
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
 
-    </android.support.design.widget.AppBarLayout>
-
+        </android.support.design.widget.AppBarLayout>
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
             android:background="@color/lightgray"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            />
+            android:overScrollMode="never"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-
-
-
-
-
-    <!--<android.support.v7.widget.RecyclerView-->
+        <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/recyclerview_list"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
@@ -91,19 +75,17 @@
         <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
 
 
-
-
-
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <FrameLayout
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="16dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="16dp"
         android:visibility="gone">
+
         <ImageButton
             android:id="@+id/btnShare"
             android:layout_width="24dp"
@@ -111,8 +93,7 @@
 
             android:background="@color/transparent"
             android:scaleType="centerCrop"
-            android:src="@drawable/fenxiang"
-            />
+            android:src="@drawable/fenxiang" />
 
     </FrameLayout>
 
@@ -122,8 +103,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal"
-        >
-    </RelativeLayout>
+        android:gravity="center_horizontal"></RelativeLayout>
 
 </RelativeLayout>
