@@ -2,9 +2,11 @@ package com.Recipes.app2.activitys;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
@@ -284,7 +286,7 @@ public class MainActivity extends AppCompatActivity
 
 
     private void setupViews(List<RecipeBean> recipes) {
-        recipeListView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recipeListView.setLayoutManager(new GridLayoutManager(this, 3));
         recipeListAdapter = new RecipeListAdapter(recipes);
         recipeListAdapter.activity = this;
         recipeListAdapter.onLongClickListener = this;
@@ -292,7 +294,7 @@ public class MainActivity extends AppCompatActivity
         recipeListView.setAdapter(recipeListAdapter);
 
         //设置item之间的间隔
-        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(2);
         recipeListView.addItemDecoration(decoration);
 
 
@@ -409,7 +411,7 @@ public class MainActivity extends AppCompatActivity
 
                 if (data != null) {
                     String searchStr = data.getExtras().getString("searchKey");
-                    tvTitle.setText("关键字"+searchStr+"的搜索结果");
+                    tvTitle.setText("'"+searchStr+"' 的搜索结果");
 //                    searchStr = "鱼";
                     disposables.add(RecipeService.getInstance().searchRecipeObservable(searchStr)
                             .subscribeOn(Schedulers.io())
@@ -557,53 +559,53 @@ public class MainActivity extends AppCompatActivity
 
 
     String getTitleText(int id){
-        String strRet = "孕妇营养食谱";
+        String strRet = getString(R.string.app_name);
         switch (id) {
             case R.id.nav_one_month:
-                strRet="怀孕第一个月食谱大全";
+                strRet="第一个月食谱";
                 break;
             case R.id.nav_two_month:
-                strRet="怀孕第二个月食谱大全";
+                strRet="第二个月食谱";
                 break;
             case R.id.nav_three_month:
-                strRet="怀孕第三个月食谱大全";
+                strRet="第三个月食谱";
                 break;
             case R.id.nav_four_month:
-                strRet="怀孕第四个月食谱大全";
+                strRet="第四个月食谱";
                 break;
             case R.id.nav_five_month:
-                strRet="怀孕第五个月食谱大全";
+                strRet="第五个月食谱";
                 break;
             case R.id.nav_six_month:
-                strRet="怀孕第六个月食谱大全";
+                strRet="第六个月食谱";
                 break;
             case R.id.nav_seven_month:
-                strRet="怀孕第七个月食谱大全";
+                strRet="第七个月食谱";
                 break;
             case R.id.nav_eight_month:
-                strRet="怀孕第八个月食谱大全";
+                strRet="第八个月食谱";
                 break;
             case R.id.nav_nine_month:
-                strRet="怀孕第九个月食谱大全";
+                strRet="第九个月食谱";
                 break;
             case R.id.nav_ten_month:
-                strRet="怀孕第十个月食谱大全";
+                strRet="第十个月食谱";
                 break;
             case R.id.nav_morning_sickness_recipe:
-                strRet="缓解孕吐食谱大全";
+                strRet="缓解孕吐食谱";
                 break;
             case R.id.nav_enrichtheblood_recipe:
-                strRet="补血食谱大全";
+                strRet="补血食谱";
                 break;
             case R.id.nav_vitamin_recipe:
-                strRet="孕妇补维生素食谱大全";
+                strRet="补维生素食谱";
                 break;
             case R.id.nav_advantage_recipe:
-                strRet="优生食谱大全";
+                strRet="优生食谱";
                 break;
 
             case R.id.nav_collect:
-                strRet="我的收藏";
+                strRet="我喜欢的食谱";
                 break;
         }
         return strRet;

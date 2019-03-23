@@ -1,10 +1,13 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/spacing_medium"
     android:background="@drawable/clickable"
-    android:padding="@dimen/spacing_medium">
+    app:cardBackgroundColor="@color/lightOrange"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
+    android:padding="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +16,7 @@
         <ImageView
             android:id="@+id/recipe_image"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="120dp"
             android:scaleType="centerCrop"
             android:src="@drawable/recipe" />
 
@@ -23,10 +26,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/recipe_image"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
             android:padding="@dimen/spacing_medium"
-            android:textSize="@dimen/text_size_medium"
-            android:textStyle="normal"
-            android:gravity="center"/>
+            android:text="菜名"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="13dp"
+            android:textStyle="normal" />
 
         <CheckBox
             android:id="@+id/chkRecipeItem"

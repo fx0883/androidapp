@@ -11,6 +11,7 @@
 
     <color name="deep_orange">#FFA726</color>
     <color name="lightgray">#fafaf5</color>
+    <color name="lightOrange">#FAE0CB</color>
     <color name="black">#484432</color>
     <color name="dark_gray">#7b7769</color>
     <color name="gray">#a3a090</color>
@@ -24,6 +25,7 @@
     <color name="colorPrimary">#FC7070</color>
     <color name="colorPrimaryDark">#CF4449</color>
     <color name="colorAccent">#F56464</color>
+    <color name="colorLightAccent">#ECECEC</color>
     <color name="status_bar">@color/deep_orange</color>
     <color name="navigation_bar">@android:color/black</color>
 
