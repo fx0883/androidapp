@@ -21,9 +21,9 @@
     <color name="base">@color/lightgray</color>
     <color name="accent">@color/orange</color>
 
-    <color name="colorPrimary">#EE696E</color>
-    <color name="colorPrimaryDark">#EE696E</color>
-    <color name="colorAccent">#EE696E</color>
+    <color name="colorPrimary">#FC7070</color>
+    <color name="colorPrimaryDark">#CF4449</color>
+    <color name="colorAccent">#F56464</color>
     <color name="status_bar">@color/deep_orange</color>
     <color name="navigation_bar">@android:color/black</color>
 

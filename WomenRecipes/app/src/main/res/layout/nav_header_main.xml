@@ -24,16 +24,19 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/nav_header_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="10sp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textColor="@color/lightgray" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="sans-serif-black"
         android:text="@string/nav_header_subtitle"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/lightgray" />
 </LinearLayout>
