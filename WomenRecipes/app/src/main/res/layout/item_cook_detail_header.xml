@@ -18,7 +18,7 @@
             android:layout_margin="8dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/black"/>
 
         <!--<ImageView-->
             <!--android:id="@+id/imgv_search"-->
@@ -80,21 +80,21 @@
 
         <View
             android:id="@+id/view_circle1"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/shape_circle_orange">
-        </View>
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_circle_orange"/>
 
         <TextView
             android:id="@+id/text_ingredients_content1"
             android:text="ingredients content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@+id/view_circle1"
-            android:textSize="18sp"
-            android:textColor="@color/black_alpha_30"/>
+            android:textSize="16sp"
+            android:textColor="@color/black_text"/>
 
     </RelativeLayout>
 
@@ -109,11 +109,10 @@
 
         <View
             android:id="@+id/view_circle2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/shape_circle_orange">
-        </View>
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_circle_orange"/>
 
         <TextView
             android:id="@+id/text_ingredients_content2"
@@ -122,8 +121,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@+id/view_circle2"
-            android:textSize="18sp"
-            android:textColor="@color/black_alpha_30"/>
+            android:textSize="16sp"
+            android:textColor="@color/black_text"/>
 
     </RelativeLayout>
 
@@ -137,11 +136,10 @@
 
         <View
             android:id="@+id/view_circle3"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/shape_circle_orange">
-        </View>
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_circle_orange"/>
 
         <TextView
             android:id="@+id/text_ingredients_content3"
@@ -150,20 +148,26 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@+id/view_circle3"
-            android:textSize="18sp"
-            android:textColor="@color/black_alpha_30"/>
+            android:textSize="16sp"
+            android:textColor="@color/black_text"/>
 
 
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/lightgray2"
+        android:layout_margin="8dp"/>
     <TextView
         android:text="@string/methods"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="8dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="@color/black"/>
 
 </LinearLayout>
