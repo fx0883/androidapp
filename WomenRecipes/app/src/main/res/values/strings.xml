@@ -22,4 +22,9 @@
 
     <string name="gdtslogan">企鹅萌萌哒</string>
     <string name="click_to_skip">点击无视</string>
+
+    <string name="ask_rating_title">找到您喜欢的菜谱了吗？</string>
+    <string name="ask_rating">如果觉得这款App还不错，是否介意花点时间给我们一个好评呢？</string>
+    <string name="ok_sure">好的</string>
+    <string name="not_now">再用用看</string>
 </resources>

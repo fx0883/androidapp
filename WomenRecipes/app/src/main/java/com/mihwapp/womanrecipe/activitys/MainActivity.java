@@ -4,6 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +23,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.mihwapp.womanrecipe.R;
 import com.mihwapp.womanrecipe.RecipeApplication;
 import com.mihwapp.womanrecipe.model.bean.DaoSession;
@@ -109,8 +116,52 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            showAppRatingDialog();
         }
+    }
+
+    private static final String KEY_hasRateTheApp = "KEY_hasRateTheApp";
+    private static final String appStoreUrl = "https://play.google.com/store/apps/details?id=com.mihwapp.womanrecipe";
+
+    private void setHasRateTheApp(Boolean hasRateTheApp) {
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(KEY_hasRateTheApp, hasRateTheApp).apply();
+
+    }
+
+    private Boolean hasRateTheApp() {
+        return PreferenceManager.getDefaultSharedPreferences(this).getBoolean(KEY_hasRateTheApp, false);
+    }
+
+    private void showAppRatingDialog() {
+        if (hasRateTheApp()) {
+            MainActivity.super.onBackPressed();
+            return;
+        }
+
+        new MaterialStyledDialog.Builder(this)
+
+                .setStyle(Style.HEADER_WITH_ICON)
+                .setTitle("找到喜欢的菜谱了吗？")
+                .setDescription(getString(R.string.ask_rating))
+                .setIcon(R.mipmap.ic_launcher)
+                .setPositiveText(getString(R.string.ok_sure))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(appStoreUrl)));
+                        setHasRateTheApp(true);
+                    }
+                })
+                .setNegativeText(R.string.not_now)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.cancel();
+                        MainActivity.super.onBackPressed();
+                    }
+                })
+                .setCancelable(true)
+                .show();
     }
 
     @OnClick(R.id.imgv_search)
@@ -181,6 +232,11 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_send:
                 this.sendEmail();
+                break;
+
+            case R.id.nav_rate:
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(appStoreUrl)));
+                setHasRateTheApp(true);
                 break;
         }
 
