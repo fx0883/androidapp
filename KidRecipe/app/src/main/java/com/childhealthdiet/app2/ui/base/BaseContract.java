@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.ui.base;
+package com.ChildHealthDiet.app2.ui.base;
 
 /**
  * Created by newbiechen on 17-4-26.

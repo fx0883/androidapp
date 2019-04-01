@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.ui.base.adapter;
+package com.ChildHealthDiet.app2.ui.base.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.childhealthdiet.app2.ui.base.SuperViewHolder;
+import com.ChildHealthDiet.app2.ui.base.SuperViewHolder;
 
 import java.util.ArrayList;
 import java.util.Collection;

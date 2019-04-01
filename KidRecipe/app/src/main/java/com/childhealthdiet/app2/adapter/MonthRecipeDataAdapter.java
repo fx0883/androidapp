@@ -1,13 +1,13 @@
-package com.childhealthdiet.app2.adapter;
+package com.ChildHealthDiet.app2.adapter;
 
 import android.content.Context;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.model.bean.MonthRecipe;
-import com.childhealthdiet.app2.ui.base.SuperViewHolder;
-import com.childhealthdiet.app2.ui.base.adapter.ListBaseAdapter;
+import com.ChildHealthDiet.app2.R;
+import com.ChildHealthDiet.app2.model.bean.MonthRecipe;
+import com.ChildHealthDiet.app2.ui.base.SuperViewHolder;
+import com.ChildHealthDiet.app2.ui.base.adapter.ListBaseAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 

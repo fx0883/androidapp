@@ -1,12 +1,11 @@
-package com.childhealthdiet.app2.model.contract;
+package com.ChildHealthDiet.app2.model.contract;
 
 import android.content.Context;
 
-import com.childhealthdiet.app2.model.bean.MineItem;
-import com.childhealthdiet.app2.model.bean.RecipeCategory;
+import com.ChildHealthDiet.app2.model.bean.MineItem;
+import com.ChildHealthDiet.app2.model.bean.RecipeCategory;
 
 import java.util.List;
-import java.util.Map;
 
 public interface SimpleModel {
     String[] loadCategoryField(Context context);

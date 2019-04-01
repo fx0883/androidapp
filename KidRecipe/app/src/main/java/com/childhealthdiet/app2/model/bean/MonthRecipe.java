@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.model.bean;
+package com.ChildHealthDiet.app2.model.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

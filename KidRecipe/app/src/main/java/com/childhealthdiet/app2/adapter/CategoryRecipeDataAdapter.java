@@ -1,22 +1,17 @@
-package com.childhealthdiet.app2.adapter;
+package com.ChildHealthDiet.app2.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.model.bean.KeyValueBean;
-import com.childhealthdiet.app2.model.bean.MonthRecipe;
-import com.childhealthdiet.app2.model.bean.RecipeCategory;
-import com.childhealthdiet.app2.ui.activitys.RecipeKeywordListActivity;
-import com.childhealthdiet.app2.ui.base.SuperViewHolder;
-import com.childhealthdiet.app2.ui.base.adapter.ListBaseAdapter;
-import com.childhealthdiet.app2.ui.categorys.RECIPETYPE;
-import com.childhealthdiet.app2.ui.fragment.HomeFragment;
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.ChildHealthDiet.app2.R;
+import com.ChildHealthDiet.app2.model.bean.KeyValueBean;
+import com.ChildHealthDiet.app2.model.bean.RecipeCategory;
+import com.ChildHealthDiet.app2.ui.activitys.RecipeKeywordListActivity;
+import com.ChildHealthDiet.app2.ui.base.SuperViewHolder;
+import com.ChildHealthDiet.app2.ui.base.adapter.ListBaseAdapter;
+import com.ChildHealthDiet.app2.ui.categorys.RECIPETYPE;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;

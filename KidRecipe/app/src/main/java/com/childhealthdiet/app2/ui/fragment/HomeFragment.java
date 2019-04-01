@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.ui.fragment;
+package com.ChildHealthDiet.app2.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,28 +10,23 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.RxBus;
-import com.childhealthdiet.app2.adapter.MonthRecipeDataAdapter;
-import com.childhealthdiet.app2.event.ChangeTabEvent;
-import com.childhealthdiet.app2.model.bean.KeyValueBean;
-import com.childhealthdiet.app2.model.bean.MonthRecipe;
-import com.childhealthdiet.app2.presenter.FragmentHomePresenter;
-import com.childhealthdiet.app2.presenter.contract.FragmentHomeContract;
-import com.childhealthdiet.app2.ui.activitys.RecipeKeywordListActivity;
-import com.childhealthdiet.app2.ui.activitys.RecipeSearchActivity;
-import com.childhealthdiet.app2.ui.base.BaseMVPFragment;
-import com.childhealthdiet.app2.ui.categorys.RECIPETYPE;
-import com.childhealthdiet.app2.utils.FileUtils;
-import com.czp.searchmlist.demo;
+import com.ChildHealthDiet.app2.R;
+import com.ChildHealthDiet.app2.RxBus;
+import com.ChildHealthDiet.app2.adapter.MonthRecipeDataAdapter;
+import com.ChildHealthDiet.app2.event.ChangeTabEvent;
+import com.ChildHealthDiet.app2.model.bean.KeyValueBean;
+import com.ChildHealthDiet.app2.model.bean.MonthRecipe;
+import com.ChildHealthDiet.app2.presenter.FragmentHomePresenter;
+import com.ChildHealthDiet.app2.presenter.contract.FragmentHomeContract;
+import com.ChildHealthDiet.app2.ui.activitys.RecipeKeywordListActivity;
+import com.ChildHealthDiet.app2.ui.activitys.RecipeSearchActivity;
+import com.ChildHealthDiet.app2.ui.base.BaseMVPFragment;
+import com.ChildHealthDiet.app2.ui.categorys.RECIPETYPE;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -42,9 +37,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bingoogolapple.bgabanner.BGABanner;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class HomeFragment extends BaseMVPFragment<FragmentHomeContract.Presenter> implements  BGABanner.Adapter<ImageView, String>,FragmentHomeContract.View {

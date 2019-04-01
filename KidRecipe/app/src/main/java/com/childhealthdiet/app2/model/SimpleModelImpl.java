@@ -1,24 +1,17 @@
-package com.childhealthdiet.app2.model;
+package com.ChildHealthDiet.app2.model;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 
-import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.model.bean.MineItem;
-import com.childhealthdiet.app2.model.bean.MonthRecipe;
-import com.childhealthdiet.app2.model.bean.RecipeBean;
-import com.childhealthdiet.app2.model.bean.RecipeCategory;
-import com.childhealthdiet.app2.model.contract.SimpleModel;
-import com.childhealthdiet.app2.ui.base.BaseModel;
-import com.childhealthdiet.app2.utils.FileUtils;
+import com.ChildHealthDiet.app2.R;
+import com.ChildHealthDiet.app2.model.bean.MineItem;
+import com.ChildHealthDiet.app2.model.bean.RecipeCategory;
+import com.ChildHealthDiet.app2.model.contract.SimpleModel;
+import com.ChildHealthDiet.app2.utils.FileUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SimpleModelImpl implements SimpleModel {
 

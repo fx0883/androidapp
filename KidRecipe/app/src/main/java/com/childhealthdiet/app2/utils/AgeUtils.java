@@ -1,6 +1,5 @@
-package com.childhealthdiet.app2.utils;
+package com.ChildHealthDiet.app2.utils;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;

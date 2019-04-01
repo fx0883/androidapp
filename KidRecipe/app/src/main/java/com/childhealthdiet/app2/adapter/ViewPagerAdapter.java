@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.adapter;
+package com.ChildHealthDiet.app2.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

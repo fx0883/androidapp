@@ -13,7 +13,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="@dimen/dp_16"
         android:scaleType="centerCrop"
-        android:src="@drawable/lunch"
+        android:src="@drawable/kidpic"
         app:riv_border_color="@color/colorPrimaryGray"
         app:riv_border_width="5dip"
         app:riv_corner_radius="36dp"

@@ -1,12 +1,11 @@
-package com.childhealthdiet.app2.model;
+package com.ChildHealthDiet.app2.model;
 
 import android.content.Context;
 
-import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.model.bean.MonthRecipe;
-import com.childhealthdiet.app2.model.contract.MonthRecipeModel;
-import com.childhealthdiet.app2.ui.base.BaseModel;
-import com.childhealthdiet.app2.utils.FileUtils;
+import com.ChildHealthDiet.app2.R;
+import com.ChildHealthDiet.app2.model.bean.MonthRecipe;
+import com.ChildHealthDiet.app2.model.contract.MonthRecipeModel;
+import com.ChildHealthDiet.app2.utils.FileUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

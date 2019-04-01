@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.event;
+package com.ChildHealthDiet.app2.event;
 
 /**
  * Created by newbiechen on 17-5-5.

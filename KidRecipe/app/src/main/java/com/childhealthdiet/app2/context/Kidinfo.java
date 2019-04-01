@@ -1,10 +1,9 @@
-package com.childhealthdiet.app2.context;
+package com.ChildHealthDiet.app2.context;
 
-import com.childhealthdiet.app2.utils.AgeUtils;
+import com.ChildHealthDiet.app2.utils.AgeUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Kidinfo {
     private String nickName = "";

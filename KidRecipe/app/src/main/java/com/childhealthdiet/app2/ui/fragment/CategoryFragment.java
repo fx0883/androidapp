@@ -1,36 +1,20 @@
-package com.childhealthdiet.app2.ui.fragment;
+package com.ChildHealthDiet.app2.ui.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ImageView;
 
-import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.adapter.CategoryRecipeDataAdapter;
-import com.childhealthdiet.app2.adapter.MonthRecipeDataAdapter;
-import com.childhealthdiet.app2.model.bean.RecipeCategory;
-import com.childhealthdiet.app2.presenter.FragmentCategoryPresenter;
-import com.childhealthdiet.app2.presenter.contract.CategorysContract;
-import com.childhealthdiet.app2.presenter.contract.FragmentHomeContract;
-import com.childhealthdiet.app2.ui.activitys.RecipeKeywordListActivity;
-import com.childhealthdiet.app2.ui.base.BaseMVPFragment;
-import com.childhealthdiet.app2.ui.categorys.RECIPETYPE;
-import com.github.jdsjlzx.interfaces.OnItemClickListener;
+import com.ChildHealthDiet.app2.R;
+import com.ChildHealthDiet.app2.adapter.CategoryRecipeDataAdapter;
+import com.ChildHealthDiet.app2.model.bean.RecipeCategory;
+import com.ChildHealthDiet.app2.presenter.FragmentCategoryPresenter;
+import com.ChildHealthDiet.app2.presenter.contract.CategorysContract;
+import com.ChildHealthDiet.app2.ui.base.BaseMVPFragment;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
 import butterknife.BindView;
-import cn.bingoogolapple.bgabanner.BGABanner;
 
 
 public class CategoryFragment extends BaseMVPFragment<CategorysContract.Presenter> implements  CategorysContract.View {

@@ -1,19 +1,11 @@
-package com.childhealthdiet.app2.model;
+package com.ChildHealthDiet.app2.model;
 
 import android.content.Context;
 
-import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.model.bean.MonthRecipe;
-import com.childhealthdiet.app2.model.bean.RecipeBean;
-import com.childhealthdiet.app2.model.bean.RecipeBeanDao;
-import com.childhealthdiet.app2.model.contract.MonthRecipeModel;
-import com.childhealthdiet.app2.model.contract.RecipeModel;
-import com.childhealthdiet.app2.utils.FileUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.ChildHealthDiet.app2.model.bean.RecipeBean;
+import com.ChildHealthDiet.app2.model.bean.RecipeBeanDao;
+import com.ChildHealthDiet.app2.model.contract.RecipeModel;
 
-import org.apache.commons.lang3.StringUtils;
-import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.List;

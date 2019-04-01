@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.ui.base;
+package com.ChildHealthDiet.app2.ui.base;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;

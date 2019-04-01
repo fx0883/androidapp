@@ -1,10 +1,10 @@
-package com.childhealthdiet.app2.ui.components;
+package com.ChildHealthDiet.app2.ui.components;
 
 import android.content.Context;
 import android.util.TypedValue;
 
 
-import com.childhealthdiet.app2.RecipeApplication;
+import com.ChildHealthDiet.app2.RecipeApplication;
 
 /**
  * Created by Administrator on 2017/3/1.

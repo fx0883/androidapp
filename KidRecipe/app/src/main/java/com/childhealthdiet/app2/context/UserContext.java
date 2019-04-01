@@ -1,8 +1,8 @@
-package com.childhealthdiet.app2.context;
+package com.ChildHealthDiet.app2.context;
 
 import android.content.Context;
 
-import com.childhealthdiet.app2.utils.SPUtils;
+import com.ChildHealthDiet.app2.utils.SPUtils;
 
 public class UserContext {
     final String nicknameKey = "nicknameKey";

@@ -1,20 +1,18 @@
-package com.childhealthdiet.app2.presenter;
+package com.ChildHealthDiet.app2.presenter;
 
 import android.content.Context;
 
-import com.childhealthdiet.app2.context.Kidinfo;
-import com.childhealthdiet.app2.context.UserContext;
-import com.childhealthdiet.app2.model.MonthRecipeModelImpl;
-import com.childhealthdiet.app2.model.RecipeModelImpl;
-import com.childhealthdiet.app2.model.SimpleModelImpl;
-import com.childhealthdiet.app2.model.bean.MonthRecipe;
-import com.childhealthdiet.app2.model.bean.RecipeBean;
-import com.childhealthdiet.app2.model.contract.MonthRecipeModel;
-import com.childhealthdiet.app2.model.contract.RecipeModel;
-import com.childhealthdiet.app2.model.contract.SimpleModel;
-import com.childhealthdiet.app2.presenter.contract.RecipeKeywordListContract;
-import com.childhealthdiet.app2.ui.base.RxPresenter;
-import com.childhealthdiet.app2.ui.categorys.RECIPETYPE;
+import com.ChildHealthDiet.app2.context.Kidinfo;
+import com.ChildHealthDiet.app2.context.UserContext;
+import com.ChildHealthDiet.app2.model.MonthRecipeModelImpl;
+import com.ChildHealthDiet.app2.model.RecipeModelImpl;
+import com.ChildHealthDiet.app2.model.bean.MonthRecipe;
+import com.ChildHealthDiet.app2.model.bean.RecipeBean;
+import com.ChildHealthDiet.app2.model.contract.MonthRecipeModel;
+import com.ChildHealthDiet.app2.model.contract.RecipeModel;
+import com.ChildHealthDiet.app2.presenter.contract.RecipeKeywordListContract;
+import com.ChildHealthDiet.app2.ui.base.RxPresenter;
+import com.ChildHealthDiet.app2.ui.categorys.RECIPETYPE;
 
 import java.util.List;
 

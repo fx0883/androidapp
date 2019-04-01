@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2;
+package com.ChildHealthDiet.app2;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;

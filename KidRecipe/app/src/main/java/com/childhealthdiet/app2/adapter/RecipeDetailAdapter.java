@@ -1,7 +1,6 @@
-package com.childhealthdiet.app2.adapter;
+package com.ChildHealthDiet.app2.adapter;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -19,13 +18,11 @@ import android.widget.TextView;
 //import com.Recipes.app2.model.bean.RecipeBean;
 //import com.Recipes.app2.model.services.RecipeService;
 import com.bumptech.glide.Glide;
-import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.RecipeApplication;
-import com.childhealthdiet.app2.model.bean.CookRecipeMethod;
-import com.childhealthdiet.app2.model.bean.RecipeBean;
-import com.childhealthdiet.app2.presenter.RecipeDetailPresenter;
-import com.childhealthdiet.app2.presenter.contract.RecipeDetailContract;
-import com.childhealthdiet.app2.ui.components.Utils;
+import com.ChildHealthDiet.app2.R;
+import com.ChildHealthDiet.app2.model.bean.CookRecipeMethod;
+import com.ChildHealthDiet.app2.model.bean.RecipeBean;
+import com.ChildHealthDiet.app2.presenter.contract.RecipeDetailContract;
+import com.ChildHealthDiet.app2.ui.components.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

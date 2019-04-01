@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.model.update;
+package com.ChildHealthDiet.app2.model.update;
 
 import android.database.Cursor;
 import android.text.TextUtils;

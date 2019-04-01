@@ -1,6 +1,4 @@
-package com.childhealthdiet.app2.model.bean;
-
-import java.util.List;
+package com.ChildHealthDiet.app2.model.bean;
 
 public class MineItem {
     private String key;

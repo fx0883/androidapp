@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.utils;
+package com.ChildHealthDiet.app2.utils;
 
 import android.annotation.SuppressLint;
 import android.support.design.internal.BottomNavigationItemView;

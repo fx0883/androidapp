@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.utils;
+package com.ChildHealthDiet.app2.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

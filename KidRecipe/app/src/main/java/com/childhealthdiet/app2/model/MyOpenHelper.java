@@ -1,11 +1,11 @@
-package com.childhealthdiet.app2.model;
+package com.ChildHealthDiet.app2.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 
-import com.childhealthdiet.app2.model.bean.DaoMaster;
-import com.childhealthdiet.app2.model.update.Update2Helper;
+import com.ChildHealthDiet.app2.model.bean.DaoMaster;
+import com.ChildHealthDiet.app2.model.update.Update2Helper;
 
 import org.greenrobot.greendao.database.Database;
 

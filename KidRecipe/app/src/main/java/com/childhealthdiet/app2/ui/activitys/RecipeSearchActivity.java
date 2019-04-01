@@ -1,22 +1,15 @@
-package com.childhealthdiet.app2.ui.activitys;
+package com.ChildHealthDiet.app2.ui.activitys;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
-import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.model.SimpleModelImpl;
-import com.childhealthdiet.app2.model.contract.SimpleModel;
-import com.childhealthdiet.app2.ui.base.BaseActivity;
-import com.childhealthdiet.app2.ui.categorys.RECIPETYPE;
+import com.ChildHealthDiet.app2.R;
+import com.ChildHealthDiet.app2.model.SimpleModelImpl;
+import com.ChildHealthDiet.app2.model.contract.SimpleModel;
+import com.ChildHealthDiet.app2.ui.base.BaseActivity;
+import com.ChildHealthDiet.app2.ui.categorys.RECIPETYPE;
 import com.czp.searchmlist.mSearchLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,11 +40,11 @@ public class RecipeSearchActivity extends BaseActivity {
         SimpleModel simpleModel = new SimpleModelImpl();
 //        shareData = "澳洲美食,长沙美食,韩国料理,日本料理,舌尖上的中国,意大利餐,山西菜";
 //        List<String> skills = Arrays.asList(shareData.split(","));
-        this.skills = simpleModel.loadFieldByKey(this,R.array.city_hot);
+        this.skills = simpleModel.loadFieldByKey(this,R.array.gv_category);
 
 //        String shareHotData ="粤菜,浙菜,苏菜,苏菜,苏菜";
 //        List<String> skillHots = Arrays.asList(shareHotData.split(","));
-        this.skillHots = simpleModel.loadFieldByKey(this,R.array.gv_category);
+        this.skillHots = simpleModel.loadFieldByKey(this,R.array.hot_keyword);
 
     }
     /**

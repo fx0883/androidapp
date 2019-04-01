@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.ui.base;
+package com.ChildHealthDiet.app2.ui.base;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;

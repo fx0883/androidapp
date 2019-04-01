@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.ui.activitys;
+package com.ChildHealthDiet.app2.ui.activitys;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,30 +7,18 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.adapter.RecipeBasketDataAdapter;
-import com.childhealthdiet.app2.adapter.RecipeListDataAdapter;
-import com.childhealthdiet.app2.model.bean.MonthRecipe;
-import com.childhealthdiet.app2.model.bean.RecipeBean;
-import com.childhealthdiet.app2.presenter.BasketPresenter;
-import com.childhealthdiet.app2.presenter.RecipeKeywordListPresenter;
-import com.childhealthdiet.app2.presenter.contract.BasketContract;
-import com.childhealthdiet.app2.presenter.contract.RecipeKeywordListContract;
-import com.childhealthdiet.app2.ui.base.BaseMVPActivity;
-import com.childhealthdiet.app2.ui.categorys.RECIPETYPE;
-import com.childhealthdiet.app2.utils.RecycleViewDivider;
+import com.ChildHealthDiet.app2.R;
+import com.ChildHealthDiet.app2.adapter.RecipeBasketDataAdapter;
+import com.ChildHealthDiet.app2.model.bean.RecipeBean;
+import com.ChildHealthDiet.app2.presenter.BasketPresenter;
+import com.ChildHealthDiet.app2.presenter.contract.BasketContract;
+import com.ChildHealthDiet.app2.ui.base.BaseMVPActivity;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

@@ -1,40 +1,29 @@
-package com.childhealthdiet.app2.ui.fragment;
+package com.ChildHealthDiet.app2.ui.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.childhealthdiet.app2.R;
-import com.childhealthdiet.app2.adapter.CategoryRecipeDataAdapter;
-import com.childhealthdiet.app2.adapter.MineDataAdapter;
-import com.childhealthdiet.app2.context.Kidinfo;
-import com.childhealthdiet.app2.context.UserContext;
-import com.childhealthdiet.app2.model.bean.MineItem;
-import com.childhealthdiet.app2.model.bean.RecipeCategory;
-import com.childhealthdiet.app2.presenter.MinePresenter;
-import com.childhealthdiet.app2.presenter.contract.CategorysContract;
-import com.childhealthdiet.app2.presenter.contract.MineContract;
-import com.childhealthdiet.app2.ui.activitys.BasketActivity;
-import com.childhealthdiet.app2.ui.activitys.KidEidtActivity;
-import com.childhealthdiet.app2.ui.activitys.RecipeDetailActivity;
-import com.childhealthdiet.app2.ui.activitys.RecipeKeywordListActivity;
-import com.childhealthdiet.app2.ui.base.BaseFragment;
-import com.childhealthdiet.app2.ui.base.BaseMVPFragment;
-import com.childhealthdiet.app2.ui.categorys.RECIPETYPE;
+import com.ChildHealthDiet.app2.R;
+import com.ChildHealthDiet.app2.adapter.MineDataAdapter;
+import com.ChildHealthDiet.app2.context.Kidinfo;
+import com.ChildHealthDiet.app2.context.UserContext;
+import com.ChildHealthDiet.app2.model.bean.MineItem;
+import com.ChildHealthDiet.app2.presenter.MinePresenter;
+import com.ChildHealthDiet.app2.presenter.contract.MineContract;
+import com.ChildHealthDiet.app2.ui.activitys.BasketActivity;
+import com.ChildHealthDiet.app2.ui.activitys.KidEidtActivity;
+import com.ChildHealthDiet.app2.ui.activitys.RecipeKeywordListActivity;
+import com.ChildHealthDiet.app2.ui.base.BaseMVPFragment;
+import com.ChildHealthDiet.app2.ui.categorys.RECIPETYPE;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
-
-import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
-package com.childhealthdiet.app2.model.contract;
+package com.ChildHealthDiet.app2.model.contract;
 
 import android.content.Context;
 
-import com.childhealthdiet.app2.model.bean.MonthRecipe;
+import com.ChildHealthDiet.app2.model.bean.MonthRecipe;
 
 import java.util.List;
 

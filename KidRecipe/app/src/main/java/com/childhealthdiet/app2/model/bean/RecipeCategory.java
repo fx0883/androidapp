@@ -1,11 +1,6 @@
-package com.childhealthdiet.app2.model.bean;
+package com.ChildHealthDiet.app2.model.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class RecipeCategory {
     public String name;

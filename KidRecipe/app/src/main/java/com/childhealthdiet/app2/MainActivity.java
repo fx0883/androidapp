@@ -1,26 +1,20 @@
-package com.childhealthdiet.app2;
+package com.ChildHealthDiet.app2;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 
-import com.childhealthdiet.app2.adapter.ViewPagerAdapter;
-import com.childhealthdiet.app2.event.ChangeTabEvent;
-import com.childhealthdiet.app2.ui.base.BaseActivity;
-import com.childhealthdiet.app2.ui.fragment.BasketFragment;
-import com.childhealthdiet.app2.ui.fragment.CategoryFragment;
-import com.childhealthdiet.app2.ui.fragment.HomeFragment;
-import com.childhealthdiet.app2.ui.fragment.MineFragment;
-import com.childhealthdiet.app2.utils.BottomNavigationViewHelper;
+import com.ChildHealthDiet.app2.adapter.ViewPagerAdapter;
+import com.ChildHealthDiet.app2.event.ChangeTabEvent;
+import com.ChildHealthDiet.app2.ui.base.BaseActivity;
+import com.ChildHealthDiet.app2.ui.fragment.CategoryFragment;
+import com.ChildHealthDiet.app2.ui.fragment.HomeFragment;
+import com.ChildHealthDiet.app2.ui.fragment.MineFragment;
+import com.ChildHealthDiet.app2.utils.BottomNavigationViewHelper;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;

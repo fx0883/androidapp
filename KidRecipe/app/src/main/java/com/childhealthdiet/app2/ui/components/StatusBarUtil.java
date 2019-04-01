@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.ui.components;
+package com.ChildHealthDiet.app2.ui.components;
 
 import android.app.Activity;
 import android.content.Context;

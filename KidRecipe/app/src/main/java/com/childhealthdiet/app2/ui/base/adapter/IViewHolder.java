@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.ui.base.adapter;
+package com.ChildHealthDiet.app2.ui.base.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;

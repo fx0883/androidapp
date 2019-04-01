@@ -1,14 +1,10 @@
-package com.childhealthdiet.app2.model.bean;
+package com.ChildHealthDiet.app2.model.bean;
 
 
-
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Transient;
 

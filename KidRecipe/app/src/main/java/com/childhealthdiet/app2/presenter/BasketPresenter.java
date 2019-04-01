@@ -1,16 +1,10 @@
-package com.childhealthdiet.app2.presenter;
+package com.ChildHealthDiet.app2.presenter;
 
-import android.content.Context;
-
-import com.childhealthdiet.app2.model.RecipeModelImpl;
-import com.childhealthdiet.app2.model.SimpleModelImpl;
-import com.childhealthdiet.app2.model.bean.MineItem;
-import com.childhealthdiet.app2.model.bean.RecipeBean;
-import com.childhealthdiet.app2.model.contract.RecipeModel;
-import com.childhealthdiet.app2.model.contract.SimpleModel;
-import com.childhealthdiet.app2.presenter.contract.BasketContract;
-import com.childhealthdiet.app2.presenter.contract.MineContract;
-import com.childhealthdiet.app2.ui.base.RxPresenter;
+import com.ChildHealthDiet.app2.model.RecipeModelImpl;
+import com.ChildHealthDiet.app2.model.bean.RecipeBean;
+import com.ChildHealthDiet.app2.model.contract.RecipeModel;
+import com.ChildHealthDiet.app2.presenter.contract.BasketContract;
+import com.ChildHealthDiet.app2.ui.base.RxPresenter;
 
 import java.util.List;
 

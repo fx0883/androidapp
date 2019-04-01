@@ -1,4 +1,4 @@
-package com.childhealthdiet.app2.ui.base;
+package com.ChildHealthDiet.app2.ui.base;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-
-import com.childhealthdiet.app2.R;
 
 /**
  * Created by PC on 2016/9/8.
