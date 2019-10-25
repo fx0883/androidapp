@@ -12,11 +12,6 @@ import com.ChildHealthDiet.app2.model.bean.RecipeBean;
 import com.ChildHealthDiet.app2.ui.base.SuperViewHolder;
 import com.ChildHealthDiet.app2.ui.base.adapter.ListBaseAdapter;
 
-
-/**
- * Created by Lzx on 2016/12/30.
- */
-
 public class RecipeListDataAdapter extends ListBaseAdapter<RecipeBean> {
 
     public RecipeListDataAdapter(Context context) {
@@ -56,7 +51,6 @@ public class RecipeListDataAdapter extends ListBaseAdapter<RecipeBean> {
         chk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-//                CookDetailActivity.startActivity(activity, recipeViewHolder.ivRecipe, recipes.get(position), true);
                 item.isCanDelete = chk.isChecked();
             }
         });

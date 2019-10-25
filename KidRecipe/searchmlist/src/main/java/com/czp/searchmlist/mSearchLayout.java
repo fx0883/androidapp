@@ -27,9 +27,6 @@ import java.util.List;
 import java.util.Random;
 
 
-/**
- * Created by liuyunming on 2016/7/6.
- */
 public class mSearchLayout extends LinearLayout {
 
     private String msearch_hint;

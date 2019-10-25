@@ -19,28 +19,6 @@ import io.reactivex.schedulers.Schedulers;
 public class BasketPresenter extends RxPresenter<BasketContract.View>
         implements BasketContract.Presenter {
 
-
-
-
-//    public void getMineItems(Context context) {
-//        Disposable disposable =
-//                Single.create(new SingleOnSubscribe<List<MineItem>>() {
-//                    @Override
-//                    public void subscribe(SingleEmitter<List<MineItem>> emitter) throws Exception {
-//                        SimpleModel simpleModel = new SimpleModelImpl();
-//                        emitter.onSuccess(simpleModel.loadMineitem(context));
-//                    }
-//                }).subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(new Consumer<List<MineItem>>() {
-//                            @Override
-//                            public void accept(List<MineItem>  mineItems) throws Exception {
-//                                BasketPresenter.this.getView().updateMineItem(mineItems);
-//                            }
-//                        });
-//        addDisposable(disposable);
-//    }
-
     @Override
     public void getBasketRecipeList() {
         Disposable disposable =

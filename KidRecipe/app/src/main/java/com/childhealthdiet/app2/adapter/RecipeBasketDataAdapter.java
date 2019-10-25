@@ -1,17 +1,10 @@
 package com.ChildHealthDiet.app2.adapter;
-
 import android.content.Context;
 import android.widget.TextView;
-
 import com.ChildHealthDiet.app2.R;
 import com.ChildHealthDiet.app2.model.bean.RecipeBean;
 import com.ChildHealthDiet.app2.ui.base.SuperViewHolder;
 import com.ChildHealthDiet.app2.ui.base.adapter.ListBaseAdapter;
-
-
-/**
- * Created by Lzx on 2016/12/30.
- */
 
 public class RecipeBasketDataAdapter extends ListBaseAdapter<RecipeBean> {
 

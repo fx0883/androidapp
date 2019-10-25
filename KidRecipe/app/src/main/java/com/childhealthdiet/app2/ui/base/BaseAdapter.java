@@ -9,10 +9,6 @@ import java.util.List;
 import static android.support.v7.widget.RecyclerView.Adapter;
 import static android.support.v7.widget.RecyclerView.ViewHolder;
 
-/**
- * Created by PC on 2016/9/9.
- * 1、默认使用List作为容器
- */
 public abstract class BaseAdapter <E,VH extends ViewHolder> extends Adapter<VH> {
 
     //在Adapter中建立一个容器

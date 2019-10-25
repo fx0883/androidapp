@@ -5,9 +5,6 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
-/**
- * Created by liuyunming on 2016/7/4.
- */
 public class selfSearchGridView extends GridView {
 
     public selfSearchGridView(Context context) {
@@ -21,8 +18,6 @@ public class selfSearchGridView extends GridView {
     public selfSearchGridView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int heightSpec;

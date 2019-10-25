@@ -14,10 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by newbiechen on 2017/10/9.
- * 数据库更新策略
- */
 
 public class MigrationHelper {
 

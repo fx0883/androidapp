@@ -3,24 +3,15 @@ package com.ChildHealthDiet.app2.model.update;
 import android.database.Cursor;
 import android.text.TextUtils;
 import android.util.Log;
-
-
-
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.internal.DaoConfig;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by newbiechen on 2018/1/5.
- * 由于 BookChapterBean 做了一次表的大更改，所以需要自定义更新。
- * 作用：将数据库2.0 升级到 3.0
- */
 
 public class Update2Helper {
     private static final String TAG = "BookChapterHelper";
@@ -44,44 +35,9 @@ public class Update2Helper {
     }
 
     private void updateBookChapter(Database db) {
-//        Class<? extends AbstractDao<?, ?>> bookChapterClass = BookChapterBeanDao.class;
-//
-//        generateTempTables(db, bookChapterClass);
-//        deleteOriginalTables(db, bookChapterClass);
-//        createOrignalTables(db, bookChapterClass);
-//        restoreData(db, bookChapterClass);
     }
 
     private void updateCollBook(Database db) {
-//        Class<? extends AbstractDao<?, ?>> collBookClass = CollBookBeanDao.class;
-//
-//        // 遍历查找本地文件，然后修改本地文件的数据
-//        DaoConfig daoConfig = new DaoConfig(db, collBookClass);
-//        String tableName = daoConfig.tablename;
-//
-//        Cursor cursor = db.rawQuery("select _ID,IS_LOCAL from " + tableName, null);
-//        String id = null;
-//        String cover = null;
-//        String isLocal = null;
-//
-//        StringBuilder updateSb = new StringBuilder();
-//        while (cursor.moveToNext()) {
-//            cover = cursor.getString(0);
-//            id = MD5Utils.strToMd5By16(cover);
-//            isLocal = cursor.getString(1);
-//
-//            //如果是本地文件
-//            if (isLocal.equals("1")) {
-//                // 数据更新
-//                updateSb.append("UPDATE " + tableName + " SET ");
-//                updateSb.append("_ID=").append(String.format(QUOTE, id)).append(DIVIDER);
-//                updateSb.append("COVER=").append(String.format(QUOTE, cover)).append(" ");
-//                updateSb.append("WHERE _ID=").append(String.format(QUOTE,cover)).append(";");
-//
-//                db.execSQL(updateSb.toString());
-//                updateSb.delete(0, updateSb.length());
-//            }
-//        }
     }
 
     /**
@@ -90,92 +46,7 @@ public class Update2Helper {
      * @param db
      */
     private void generateTempTables(Database db, Class<? extends AbstractDao<?, ?>> bookChapterClass) {
-        // 解析 GreenDao，获取 table 名
-//        DaoConfig daoConfig = new DaoConfig(db, bookChapterClass);
-//        String tableName = daoConfig.tablename;
-//
-//        // 创建临时 table 名。
-//        String tempTableName = daoConfig.tablename.concat("_TEMP");
-//        ArrayList<String> properties = new ArrayList<>();
-//
-//        StringBuilder createTableStringBuilder = new StringBuilder();
-//        createTableStringBuilder.append("CREATE TABLE ").append(tempTableName).append(" (");
-//
-//        // 新增的三个字段
-//        String ID = "ID";
-//        String START = "START";
-//        String END = "end";
-//
-//
-//        // 新建的 id 主键字段
-//        createTableStringBuilder.append(ID + " ").append("TEXT ").append("PRIMARY KEY");
-//        properties.add(ID);
-//
-//        // 获取符合新表的旧字段。
-//        for (int j = 0; j < daoConfig.properties.length; j++) {
-//            String columnName = daoConfig.properties[j].columnName;
-//            if (getColumns(db, tableName).contains(columnName)) {
-//                properties.add(columnName);
-//
-//                String type = null;
-//
-//                try {
-//                    type = getTypeByClass(daoConfig.properties[j].type);
-//                } catch (Exception exception) {
-//                    exception.printStackTrace();
-//                }
-//
-//                createTableStringBuilder.append(DIVIDER).append(columnName).append(" ").append(type);
-//            }
-//        }
-//
-//        // 新建的 START，和 END 字段。
-//        createTableStringBuilder.append(DIVIDER).append(START).append(" ").append("INTEGER");
-//        createTableStringBuilder.append(DIVIDER).append(END).append(" ").append("INTEGER");
-//
-//        properties.add(START);
-//        properties.add(END);
-//
-//        createTableStringBuilder.append(");");
-//        // 创建临时数据表
-//        db.execSQL(createTableStringBuilder.toString());
-//
-//        StringBuilder insertTableStringBuilder = new StringBuilder();
-//
-//        // 将 link 字段的文件的内容转换成 Id
-//        Cursor cursor = db.rawQuery("select * from " + daoConfig.tablename, null);
-//
-//        String id = null;
-//        String link = null;
-//        String title = null;
-//        String taskName = null;
-//        String unreadble = null;
-//        String bookId = null;
-//
-//        while (cursor.moveToNext()) {
-//            link = cursor.getString(0);
-//            id = MD5Utils.strToMd5By16(link);
-//            title = cursor.getString(1);
-//            taskName = cursor.getString(2);
-//            unreadble = cursor.getString(4);
-//            bookId = cursor.getString(3);
-//
-//            insertTableStringBuilder.append("INSERT INTO ").append(tempTableName).append(" (");
-//            insertTableStringBuilder.append(TextUtils.join(",", properties));
-//            insertTableStringBuilder.append(") VALUES (");
-//            insertTableStringBuilder.append(String.format(QUOTE, id)).append(DIVIDER);
-//            insertTableStringBuilder.append(String.format(QUOTE, link)).append(DIVIDER);
-//            insertTableStringBuilder.append(String.format(QUOTE, title)).append(DIVIDER);
-//            insertTableStringBuilder.append(String.format(QUOTE, taskName)).append(DIVIDER);
-//            insertTableStringBuilder.append(unreadble).append(DIVIDER);
-//            insertTableStringBuilder.append(String.format(QUOTE, bookId)).append(DIVIDER);
-//            insertTableStringBuilder.append("0").append(DIVIDER);
-//            insertTableStringBuilder.append("0").append(");");
-//
-//            db.execSQL(insertTableStringBuilder.toString());
-//
-//            insertTableStringBuilder.delete(0, insertTableStringBuilder.length());
-//        }
+
     }
 
 

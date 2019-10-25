@@ -84,8 +84,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
             }
-
-
         });
 
         //禁止ViewPager滑动
@@ -108,8 +106,6 @@ public class MainActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         event -> {
-//                            //使用Toast提示
-//                            ToastUtils.show(event.message);
                             MainActivity.this.viewPager.setCurrentItem(event.tabIndex);
                         }
                 );
@@ -120,8 +116,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //默认 >3 的选中效果会影响ViewPager的滑动切换时的效果，故利用反射去掉
-
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -129,21 +123,13 @@ public class MainActivity extends BaseActivity {
         adapter.addFragment(new HomeFragment());
         adapter.addFragment(new CategoryFragment());
         adapter.addFragment(new MineFragment());
-//        adapter.addFragment(new BasketFragment());
+
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(adapter);
 
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//
-//        super.onActivityResult(requestCode, resultCode, data);
-//        /*在这里，我们通过碎片管理器中的Tag，就是每个碎片的名称，来获取对应的fragment*/
-//        Fragment f = this.getSupportFragmentManager().findFragmentByTag(HomeFragment.class.getName());
-//        /*然后在碎片中调用重写的onActivityResult方法*/
-//        f.onActivityResult(requestCode, resultCode, data);
-//        }
+
 
 
 

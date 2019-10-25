@@ -2,7 +2,6 @@ package com.ChildHealthDiet.app2.model.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,16 +58,13 @@ public class MonthRecipe implements Parcelable {
 
     }
 
-
     protected MonthRecipe(Parcel in) {
         this.key = in.readString();
         this.title = in.readString();
         this.subTitle = in.readString();
         this.images = new ArrayList<String>();
-//        this.images = null;
         in.readStringList(this.images);
     }
-
 
     public static final Parcelable.Creator<MonthRecipe> CREATOR = new Parcelable.Creator<MonthRecipe>() {
         @Override

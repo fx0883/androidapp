@@ -5,14 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
-/**
- * Created by liuyunming on 2016/7/3.
- */
 public class SearchOldDataAdapter extends BaseAdapter {
-
     private Context context;
     private ArrayList<String> list = new ArrayList<String>();
 
@@ -22,7 +17,6 @@ public class SearchOldDataAdapter extends BaseAdapter {
 
         list= strs;
     }
-
     @Override
     public int getCount() {
         return list.size();
@@ -52,16 +46,11 @@ public class SearchOldDataAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-
-
         holder.tv.setText(list.get(i));
-
         return view;
     }
 
     public class ViewHolder{
         TextView tv;
     }
-
-
 }

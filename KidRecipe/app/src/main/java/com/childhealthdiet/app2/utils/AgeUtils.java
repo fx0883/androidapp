@@ -1,12 +1,8 @@
 package com.ChildHealthDiet.app2.utils;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * Created by qing on 2017/3/28.
- */
 public class AgeUtils {
     // 根据年月日计算年龄,birthTimeString:"1994-11-14"
     public static int getAgeFromBirthTime(String birthTimeString) {
@@ -55,13 +51,6 @@ public class AgeUtils {
         return age;
     }
 
-//    // 根据时间戳计算年龄
-//    public static int getAgeFromBirthTime(long birthTimeLong) {
-//        Date date = new Date(birthTimeLong * 1000l);
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//        String birthTimeString = format.format(date);
-//        return getAgeFromBirthTime(birthTimeString);
-//    }
 
     public static String getAgeFromBirthTime(Date birthDay) {
         Calendar cal = Calendar.getInstance();

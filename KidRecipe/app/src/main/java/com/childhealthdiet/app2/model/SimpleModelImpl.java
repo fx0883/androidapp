@@ -46,8 +46,4 @@ public class SimpleModelImpl implements SimpleModel {
                 new TypeToken<List<MineItem>>(){}.getType());
         return mineItemList;
     }
-
-
-
-
 }

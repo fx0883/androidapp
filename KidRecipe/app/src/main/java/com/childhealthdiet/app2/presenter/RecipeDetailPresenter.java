@@ -48,23 +48,4 @@ public class RecipeDetailPresenter extends RxPresenter<RecipeDetailContract.View
         recipeModelImpl.updateRecipe(recipeBean);
     }
 
-
-//    public void loadRecipeByKeyword(Context context,String strKey) {
-//        Disposable disposable =
-//                Single.create(new SingleOnSubscribe<String[]>() {
-//                    @Override
-//                    public void subscribe(SingleEmitter<String[]> emitter) throws Exception {
-//                        SimpleModel simpleModel = new SimpleModelImpl();
-//                        emitter.onSuccess(simpleModel.loadCategoryField(context));
-//                    }
-//                }).subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(new Consumer<String[]>() {
-//                            @Override
-//                            public void accept(String[] strCategorys) throws Exception {
-////                                RecipeKeywordListPresenter.this.getView().updateCategory(strCategorys);
-//                            }
-//                        });
-//        addDisposable(disposable);
-//    }
 }

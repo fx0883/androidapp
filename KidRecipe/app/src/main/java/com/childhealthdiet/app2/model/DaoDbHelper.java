@@ -6,11 +6,6 @@ import com.ChildHealthDiet.app2.model.bean.DaoSession;
 
 import org.greenrobot.greendao.database.Database;
 
-
-/**
- * Created by newbiechen on 17-4-26.
- */
-
 public class DaoDbHelper {
     private static final String DB_NAME = "babydietfood.db";
 
@@ -45,7 +40,5 @@ public class DaoDbHelper {
         return mDb;
     }
 
-//    public DaoSession getNewSession(){
-//        return mDaoMaster.newSession();
-//    }
+
 }

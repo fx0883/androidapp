@@ -1,7 +1,5 @@
 package com.ChildHealthDiet.app2.model.bean;
 
-
-
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -13,7 +11,7 @@ import org.greenrobot.greendao.annotation.Transient;
         createInDb = false
 )
 public class RecipeBean {
-    //public class RecipeBean {
+
     @Property(nameInDb = "id")
     @Id(autoincrement = true)
     private Long id;

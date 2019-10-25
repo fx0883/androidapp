@@ -76,13 +76,6 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
         return mIsCollectModel;
     }
 
-//    public static void startActivity(Context context, RECIPETYPE recipetype, MonthRecipe monthRecipe){
-//        Intent intent  =new Intent(context,RecipeKeywordListActivity.class);
-//        intent.putExtra(RECIPE_TYPE_KEY,recipetype.ordinal());
-//        intent.putExtra(DATA_KEY,monthRecipe);
-//        context.startActivity(intent);
-//    }
-
     public static void startActivity(Context context, RECIPETYPE recipetype, KeyValueBean keyValueBean){
         Intent intent  =new Intent(context,RecipeKeywordListActivity.class);
         intent.putExtra(RECIPE_TYPE_KEY,recipetype.ordinal());
@@ -248,7 +241,6 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
     @Override
     protected void processLogic(){
         super.processLogic();
-//        mPresenter.loadCategoryField(this.getContext());
 
         switch (mRecipeType) {
             case None:
@@ -463,14 +455,6 @@ public class RecipeKeywordListActivity extends BaseMVPActivity<RecipeKeywordList
 
     @OnClick(R.id.tvCancel)
     public void onClickCancel() {
-//        for (RecipeBean bean : recipeListAdapter.recipes) {
-//            bean.setShowCheckBox(false);
-////            bean.isCanDelete(false);
-//            bean.setIsCanDelete(false);
-//        }
-//        recipeListAdapter.notifyDataSetChanged();
-//        hideBatchManagementLayout();
-//        toggle.setDrawerIndicatorEnabled(true);
         cancelShowChk();
     }
 

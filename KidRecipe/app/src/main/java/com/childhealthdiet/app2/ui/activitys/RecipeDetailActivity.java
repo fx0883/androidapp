@@ -97,32 +97,10 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
         return R.layout.activity_recipe_detail;
     }
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-////        setContentView(R.layout.activity_cook_detail);
-//        ButterKnife.bind(this);
-////        this.setupView();
-//        this.init(savedInstanceState);
-//    }
-
 
     @Override
     protected void initData(Bundle savedInstanceState){
 
-//        StatusBarUtil.setImmersiveStatusBar(this);
-//        StatusBarUtil.setImmersiveStatusBarToolbar(toolbar, this);
-//
-//        setSupportActionBar(toolbar);
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null)
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-
-
-
-
-
-//        imbtnShare.setTranslationY(-50);
     }
     @Override
     protected void initToolbar(){
@@ -162,22 +140,9 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
         mPresenter.getRecipeById(this,recipeId);
 
 
-        loadads();
+//        loadads();
     }
 
-
-
-
-
-
-
-
-
-//    @OnClick(R.id.btnShare)
-//    public void onClickShare() {
-//        //分享当前菜谱
-//        Log.d("134","134");
-//    }
 
     @Override
     public void onBackPressed() {
@@ -220,9 +185,7 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
         Glide.with(this).load(recipeUrl).into(this.imgvBg);
         getSupportActionBar().setTitle(recipeBean.getName());
         toolbarLayout.setTitle(recipeBean.getName());
-//        cookDetailAdapter = new RecipeDetailAdapter(this, recipeBean,isShowCollection);
         cookDetailAdapter = new RecipeDetailAdapter(this, recipeBean,mPresenter,isShowCollection);
-//        recyclerList.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerList.setLayoutManager(new LinearLayoutManager(this));
         recyclerList.setAdapter(cookDetailAdapter);
     }
@@ -244,31 +207,30 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
     }
 
 
-    private void loadads(){
-
-        if(this.adView != null || this.bv != null)
-        {
-            bannerContainer.removeAllViews();
-        }
-
-        if(tryloadadTime>=tryloadadMaxTimes){
-            return;
-        }
-        tryloadadTime++;
-        int min=0;
-        int max=99;
-        Random random = new Random();
-        int num = random.nextInt(max)%(max-min+1) + min;
-
-        if(num<=90){
-            this.getBanner().loadAD();
-        }
-        else{
-            getAdView();
-        }
-
-//        getAdView();
-    }
+//    private void loadads(){
+//
+//        if(this.adView != null || this.bv != null)
+//        {
+//            bannerContainer.removeAllViews();
+//        }
+//
+//        if(tryloadadTime>=tryloadadMaxTimes){
+//            return;
+//        }
+//        tryloadadTime++;
+//        int min=0;
+//        int max=99;
+//        Random random = new Random();
+//        int num = random.nextInt(max)%(max-min+1) + min;
+//
+//        if(num<=90){
+//            this.getBanner().loadAD();
+//        }
+//        else{
+//            getAdView();
+//        }
+//
+//    }
 
     private String getPosID() {
 
@@ -279,21 +241,13 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
         adView = new AdView(RecipeDetailActivity.this);
 
         adView.setAdUnitId(ConstantsAdmob.BannerPosID);
-//        recyclerViewItems.add(i, adView);
 
-
-
-
-        // Set an AdListener on the AdView to wait for the previous banner ad
-        // to finish loading before loading the next ad in the items list.
         adView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
                 tryloadadTime = 0;
                 super.onAdLoaded();
-                // The previous banner ad loaded successfully, call this method again to
-                // load the next ad in the items list.
-//                loadBannerAd(index + ITEMS_PER_AD);
+
             }
 
             @Override
@@ -302,9 +256,7 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
                 // the next ad in the items list.
                 Log.e("MainActivity", "The previous banner ad failed to load. Attempting to"
                         + " load the next banner ad in the items list.");
-//                loadBannerAd(index + ITEMS_PER_AD);
-                loadads();
-//                ERROR_CODE_INTERNAL_ERROR
+//                loadads();
             }
         });
 
@@ -323,8 +275,6 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
         String posId = getPosID();
 
         this.bv = new BannerView(this, ADSize.BANNER, Constants.APPID,posId);
-        // 注意：如果开发者的banner不是始终展示在屏幕中的话，请关闭自动刷新，否则将导致曝光率过低。
-        // 并且应该自行处理：当banner广告区域出现在屏幕后，再手动loadAD。
         bv.setRefresh(30);
         bv.setADListener(new AbstractBannerADListener() {
 
@@ -335,7 +285,7 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
                         "AD_DEMO",
                         String.format("Banner onNoAD，eCode = %d, eMsg = %s", error.getErrorCode(),
                                 error.getErrorMsg()));
-                loadads();
+//                loadads();
             }
 
             @Override

@@ -1,5 +1,4 @@
 package com.ChildHealthDiet.app2.adapter;
-
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,11 +9,6 @@ import com.ChildHealthDiet.app2.R;
 import com.ChildHealthDiet.app2.model.bean.MineItem;
 import com.ChildHealthDiet.app2.ui.base.SuperViewHolder;
 import com.ChildHealthDiet.app2.ui.base.adapter.ListBaseAdapter;
-
-
-/**
- * Created by Lzx on 2016/12/30.
- */
 
 public class MineDataAdapter extends ListBaseAdapter<MineItem> {
 
@@ -44,10 +38,8 @@ public class MineDataAdapter extends ListBaseAdapter<MineItem> {
             lineView.setVisibility(View.INVISIBLE);
         }
     }
-
     @Override
     public void onViewRecycled(SuperViewHolder holder) {
         super.onViewRecycled(holder);
     }
-
 }

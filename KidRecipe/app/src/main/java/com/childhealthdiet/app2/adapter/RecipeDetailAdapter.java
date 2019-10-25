@@ -1,5 +1,4 @@
 package com.ChildHealthDiet.app2.adapter;
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -12,11 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-//import com.Recipes.app2.R;
-//import com.Recipes.app2.RecipeApplication;
-//import com.Recipes.app2.model.bean.CookRecipeMethod;
-//import com.Recipes.app2.model.bean.RecipeBean;
-//import com.Recipes.app2.model.services.RecipeService;
 import com.bumptech.glide.Glide;
 import com.ChildHealthDiet.app2.R;
 import com.ChildHealthDiet.app2.model.bean.CookRecipeMethod;
@@ -29,11 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-//import com.squareup.picasso.Picasso;
 
-/**
- * Created by Administrator on 2017/2/21.
- */
 
 public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapter.ItemViewHolder>{
 
@@ -142,31 +132,6 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
 
         if(Cook_Detail_Item_Type_CookMan == getItemViewType(position)){
             final CookManItemViewHolder holderView = (CookManItemViewHolder)holder;
-
-            if(isShowCollection){
-//                holderView.switchIconView.setVisibility(View.VISIBLE);
-//
-//                holderView.switchIconView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-////                        if(holderView.switchIconView.isIconEnabled()){
-////                            CookCollectionManager.getInstance().delete(srcData);
-////                        }
-////                        else{
-////
-////
-////                            CookCollectionManager.getInstance().add(srcData);
-////                        }
-//                        holderView.switchIconView.switchState();
-//                    }
-//                });
-            }
-            else{
-//                holderView.switchIconView.setVisibility(View.GONE);
-            }
-
-
-
             holderView.textSumary.setText(sumary);
             return ;
         }
@@ -242,15 +207,6 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
             }
 
 
-
-//            holderView.imgButtonCollect.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    srcData.setCollect(!srcData.getCollect());
-//                    notifyDataSetChanged();
-//                }
-//            });
-
             holderView.btn_collect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -274,16 +230,14 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
 
             return ;
         }
-//
+
         StepItemViewHolder holderView = (StepItemViewHolder)holder;
         CookRecipeMethod data = datas.get(position).getData();
         holderView.textContent.setText(data.getStep());
 
         if(data.getImg() != null && (!TextUtils.isEmpty(data.getImg()))) {
             holderView.imgvStep.setVisibility(View.VISIBLE);
-//            Picasso.with(context)
-////                    .load(data.getImg())
-////                    .into(holderView.imgvStep);
+
                 Glide.with(context)
                     .load(data.getImg())
                     .into(holderView.imgvStep);
@@ -359,14 +313,8 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
     }
 
     public class CookManItemViewHolder extends ItemViewHolder{
-
-//        @BindView(R.id.switchIconView_collection)
-//        public SwitchIconView switchIconView;
         @BindView(R.id.text_sumary)
         public TextView textSumary;
-
-
-
         public CookManItemViewHolder(View itemView){
             super(itemView);
         }

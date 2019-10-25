@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.ChildHealthDiet.app2.R;
 import com.ChildHealthDiet.app2.adapter.MineDataAdapter;
 import com.ChildHealthDiet.app2.context.Kidinfo;
@@ -24,11 +23,9 @@ import com.ChildHealthDiet.app2.ui.categorys.RECIPETYPE;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 
 
@@ -55,18 +52,8 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
     private MineDataAdapter mMineDataAdapter = null;
 
     public MineFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MineFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MineFragment newInstance(String param1, String param2) {
         MineFragment fragment = new MineFragment();
         Bundle args = new Bundle();
@@ -116,8 +103,6 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
         headView = LayoutInflater.from(getActivity()).inflate(R.layout.mine_header_view,null);
         tvKidNickname = headView.findViewById(R.id.tv_kid_nickname);
         tvKidAge = headView.findViewById(R.id.tv_kid_age);
-//        mHomeTopBanner = headView.findViewById(R.id.home_top_banner);
-//        initTopBanner(mHomeTopBanner);
         btnEdit = headView.findViewById(R.id.btn_eidt_mine);
 
 
@@ -139,9 +124,6 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                Toast.makeText(view.getContext(), "点击了" + position, Toast.LENGTH_SHORT).show();
-//                long recipeId = mMineDataAdapter.getDataList().get(position).getId();
-//                RecipeDetailActivity.startActivity(RecipeKeywordListActivity.this,view,recipeId);
                 List<MineItem> mineItems = MineFragment.this.mMineDataAdapter.getDataList();
                 String strKey = mineItems.get(position).getKey();
                 switch (strKey)
@@ -175,15 +157,6 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
         }
     }
 
-
-
-//    @Override
-//    public void updateCategorysList(List<RecipeCategory> categoryslist) {
-//        mCategoryRecipeDataAdapter.setDataList(categoryslist);
-//        mLRecyclerViewAdapter.notifyDataSetChanged();
-//    }
-
-
     private void initLRecylerView(){
         mMineDataAdapter = new MineDataAdapter(getActivity());
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mMineDataAdapter);
@@ -209,16 +182,7 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
                     e.printStackTrace();
                 }
                 break;
-
-
-            case 2:
-
-                //来自按钮2的请求，作相应业务处理
-
         }
-
-
-
     }
 
     private void loadKidinfo() throws ParseException {

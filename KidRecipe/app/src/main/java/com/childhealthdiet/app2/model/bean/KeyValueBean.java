@@ -24,8 +24,6 @@ public class KeyValueBean implements Parcelable {
     public void setValue(String value) {
         this.value = value;
     }
-
-
     @Override
     public int describeContents() {
         return 0;
@@ -36,11 +34,7 @@ public class KeyValueBean implements Parcelable {
 
         dest.writeString(this.key);
         dest.writeString(this.value);
-
-
     }
-
-
     protected KeyValueBean(Parcel in) {
         this.key = in.readString();
         this.value = in.readString();

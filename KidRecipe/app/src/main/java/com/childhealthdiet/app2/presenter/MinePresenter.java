@@ -1,15 +1,12 @@
 package com.ChildHealthDiet.app2.presenter;
 
 import android.content.Context;
-
 import com.ChildHealthDiet.app2.model.SimpleModelImpl;
 import com.ChildHealthDiet.app2.model.bean.MineItem;
 import com.ChildHealthDiet.app2.model.contract.SimpleModel;
 import com.ChildHealthDiet.app2.presenter.contract.MineContract;
 import com.ChildHealthDiet.app2.ui.base.RxPresenter;
-
 import java.util.List;
-
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
@@ -21,28 +18,6 @@ import io.reactivex.schedulers.Schedulers;
 public class MinePresenter extends RxPresenter<MineContract.View>
         implements MineContract.Presenter {
 
-
-
-//    public void getCategorysList(Context context) {
-//
-//            Disposable disposable =
-//            Single.create(new SingleOnSubscribe<List<RecipeCategory>>() {
-//                @Override
-//                public void subscribe(SingleEmitter<List<RecipeCategory>> emitter) throws Exception {
-//                    SimpleModel simpleModel = new SimpleModelImpl();
-//                    emitter.onSuccess(simpleModel.loadCategoryslist(context));
-//                }
-//            }).subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Consumer<List<RecipeCategory>>() {
-//                        @Override
-//                        public void accept(List<RecipeCategory>  allcategoryslist) throws Exception {
-//                            MinePresenter.this.getView().updateCategorysList(allcategoryslist);
-//                        }
-//                    });
-//    addDisposable(disposable);
-//
-//    }
 
     @Override
     public void getMineItems(Context context) {

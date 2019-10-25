@@ -2,16 +2,10 @@ package com.ChildHealthDiet.app2.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-
-
 import com.ChildHealthDiet.app2.model.bean.DaoMaster;
 import com.ChildHealthDiet.app2.model.update.Update2Helper;
-
 import org.greenrobot.greendao.database.Database;
 
-/**
- * Created by newbiechen on 2017/10/9.
- */
 
 public class MyOpenHelper extends DaoMaster.DevOpenHelper{
     public MyOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory) {

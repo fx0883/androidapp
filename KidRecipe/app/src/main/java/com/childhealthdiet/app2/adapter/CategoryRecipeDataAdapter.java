@@ -1,10 +1,8 @@
 package com.ChildHealthDiet.app2.adapter;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-
 import com.ChildHealthDiet.app2.R;
 import com.ChildHealthDiet.app2.model.bean.KeyValueBean;
 import com.ChildHealthDiet.app2.model.bean.RecipeCategory;
@@ -17,11 +15,6 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.Set;
-
-
-/**
- * Created by Lzx on 2016/12/30.
- */
 
 public class CategoryRecipeDataAdapter extends ListBaseAdapter<RecipeCategory> {
 
@@ -43,7 +36,6 @@ public class CategoryRecipeDataAdapter extends ListBaseAdapter<RecipeCategory> {
 
         final LayoutInflater mInflater = LayoutInflater.from(mContext);
         TagFlowLayout mFlowLayout = (TagFlowLayout) holder.getView(R.id.id_categorys_flowlayout);
-//        mFlowLayout.setMaxSelectCount(3);
         mFlowLayout.setAdapter(new TagAdapter<RecipeCategory.CategoryName>(item.categorys)
         {
 
@@ -93,18 +85,14 @@ public class CategoryRecipeDataAdapter extends ListBaseAdapter<RecipeCategory> {
                 return true;
             }
         });
-//
-//
         mFlowLayout.setOnSelectListener(new TagFlowLayout.OnSelectListener()
         {
             @Override
             public void onSelected(Set<Integer> selectPosSet)
             {
-//                getActivity().setTitle("choose:" + selectPosSet.toString());
             }
         });
     }
-
     @Override
     public void onViewRecycled(SuperViewHolder holder) {
 

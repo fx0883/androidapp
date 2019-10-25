@@ -3,9 +3,6 @@ package com.ChildHealthDiet.app2.model.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Administrator on 2017/2/21.
- */
 
 public class CookRecipeMethod implements Parcelable {
 
