@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">填色花园</string>
+
+    <string name="myCreation">我的作品</string>
+    <string name="start">开始</string>
+    <string name="close">关闭</string>
+    <string name="cancel">取消</string>
+    <string name="ok">好的</string>
+    <string name="yes">是的</string>
+    <string name="color">颜色</string>
+    <string name="loading">载入中…</string>
+
+    <string name="action_settings">设置</string>
+    <string name="view_more">更多…</string>
+    <string name="network_err">网络错误</string>
+    <string name="enable_offline_mode">想要开启离线模式吗?</string>
+    <string name="no">不要</string>
+    <string name="offline">离线</string>
+    <string name="enable_internet">开启互联网?</string>
+    <string name="todo">要做的事</string>
+
+    <string name="no_internet_title">没有网络</string>
+    <string name="no_internet_body">你没有连接互联网</string>
+    <string name="wifi_on">Wifi</string>
+    <string name="mobile">移动数据</string>
+    <string name="airplane">飞行模式</string>
+    <string name="turn_on">请打开</string>
+    <string name="turn_off">请关闭</string>
+    <string name="airplane_on">你已打开飞行模式</string>
+    <string name="msg_main_exitApp">确定要退出应用吗?</string>
+    <string name="btn_main_yes">确定</string>
+    <string name="btn_main_no">取消</string>
+    <string name="msg_paint_saved">保存成功</string>
+    <string name="lbl_creation_title">我的作品</string>
+    <string name="msg_creation_notFound">你还没有作品哦</string>
+    <string name="msg_creation_deletePhoto">你确定要删除这张图吗?</string>
+
+    <string name ="lbl_color_rollerRink">溜冰场</string>
+    <string name ="lbl_color_vintageSweater">复古毛衣</string>
+    <string name ="lbl_color_candyStore">糖果店</string>
+    <string name ="lbl_color_flowerBasket">花篮</string>
+    <string name ="lbl_color_hummingBird">蜂鸟</string>
+    <string name ="lbl_color_sodaShop">苏打水</string>
+    <string name ="lbl_color_sunset">日落</string>
+    <string name ="lbl_color_thriftShop">旧货店</string>
+    <string name ="lbl_color_rainbow">彩虹</string>
+    <string name ="lbl_color_beachTime">海滩时间</string>
+    <string name ="lbl_color_teaTime">下午茶时间</string>
+    <string name ="lbl_color_electric">电子</string>
+    <string name ="lbl_color_mellowVibes">温馨氛围</string>
+    <string name ="lbl_color_mossyStones">苔藓石</string>
+    <string name ="lbl_color_flowerBouquet">鲜花花束</string>
+    <string name ="lbl_color_rainforest">雨林</string>
+    <string name ="lbl_color_succulentGarden">多汁花园</string>
+    <string name ="lbl_color_neon">霓虹灯</string>
+    <string name ="lbl_color_treeLine">树线</string>
+    <string name ="lbl_color_gelatin">明胶</string>
+    <string name ="lbl_color_oceanography">海洋学</string>
+    <string name ="lbl_color_lilyPad">百合石板</string>
+    <string name ="lbl_color_blackAndWhite">黑白</string>
+    <string name ="lbl_color_skinTone">肤色</string>
+    <string name ="lbl_color_metals">金属</string>
+    <string name ="lbl_paint_palettes">调色板</string>
+    <string name="lbl_paint_quitWithoutSaving">要退出当前涂色吗?</string>
+
+    <string name="gdtslogan">GDTslogan</string>
+    <string name="click_to_skip">点击跳过</string>
+
+    <string name="share_message">快看我创作了一张很酷的图片！！！</string>
+</resources>

@@ -3,6 +3,7 @@ package com.Recipes.app2.activitys;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -22,6 +23,11 @@ import android.widget.Toast;
 
 import com.Recipes.app2.Constants;
 import com.Recipes.app2.MainActivity;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
 import com.qq.e.comm.util.AdError;
@@ -29,6 +35,12 @@ import com.qq.e.comm.util.AdError;
 import java.util.ArrayList;
 import java.util.List;
 import com.Recipes.app2.R;
+
+import org.json.JSONObject;
+
+import static com.android.volley.Request.Method.GET;
+
+import com.Recipes.app2.utils.SharedPreferencesUtil;
 
 /**
  * 这是demo工程的入口Activity，在这里会首次调用广点通的SDK。
@@ -61,6 +73,7 @@ public class SplashActivity extends Activity implements SplashADListener {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_splash);
+    this.loadBaseUrlOnline(this);
     container = (ViewGroup) this.findViewById(R.id.splash_container);
     skipView = (TextView) findViewById(R.id.skip_view);
     splashHolder = (ImageView) findViewById(R.id.splash_holder);
@@ -156,8 +169,24 @@ public class SplashActivity extends Activity implements SplashADListener {
    */
   private void fetchSplashAD(Activity activity, ViewGroup adContainer, View skipContainer,
       String appId, String posId, SplashADListener adListener, int fetchDelay) {
-    fetchSplashADTime = System.currentTimeMillis();
-    splashAD = new SplashAD(activity, adContainer, skipContainer, appId, posId, adListener, fetchDelay);
+//    fetchSplashADTime = System.currentTimeMillis();
+//    splashAD = new SplashAD(activity, adContainer, skipContainer, appId, posId, adListener, fetchDelay);
+
+    Boolean bIsFirst = SharedPreferencesUtil.getInstance(this).getSPBool("bisfirst");
+    if(bIsFirst==false){
+      // 计算出还需要延时多久
+      handler.postDelayed(new Runnable() {
+        @Override
+        public void run() {
+          SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
+          SplashActivity.this.finish();
+        }
+      }, 1800);
+    }
+    else{
+      fetchSplashADTime = System.currentTimeMillis();
+      splashAD = new SplashAD(activity, adContainer, skipContainer, appId, posId, adListener, fetchDelay);
+    }
   }
 
   @Override
@@ -259,6 +288,31 @@ public class SplashActivity extends Activity implements SplashADListener {
       return true;
     }
     return super.onKeyDown(keyCode, event);
+  }
+
+  public void loadBaseUrlOnline(final Context context){
+    String configUrl = "http://fx0883.github.io/MySite/womenrecipe.json";
+
+    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(GET, configUrl, null, new Response.Listener <JSONObject>() {
+      @Override
+      public void onResponse(JSONObject response) {
+        Log.e("res====", "" + response.toString());
+        try {
+          boolean isFirst = response.getBoolean("bisfirst");
+          SharedPreferencesUtil.getInstance(context).putSPBool("bisfirst",isFirst);
+        }
+        catch (Exception e){
+          Log.e("error====", "" + e.getMessage());
+        }
+      }
+    }, new Response.ErrorListener() {
+      @Override
+      public void onErrorResponse(VolleyError error) {
+
+      }
+    });
+    RequestQueue requestQueue = Volley.newRequestQueue(context);
+    requestQueue.add(jsonObjectRequest);
   }
 
 }

@@ -24,6 +24,7 @@ import com.Recipes.app2.Constants;
 import com.Recipes.app2.ConstantsAdmob;
 import com.Recipes.app2.R;
 import com.Recipes.app2.model.bean.RecipeBean;
+import com.Recipes.app2.utils.SharedPreferencesUtil;
 import com.Recipes.app2.view.adapters.CookDetailAdapter;
 import com.Recipes.app2.view.components.StatusBarUtil;
 import com.bumptech.glide.Glide;
@@ -135,6 +136,11 @@ public class CookDetailActivity extends AppCompatActivity {
 
 
     private void loadads(){
+
+        Boolean bIsFirst = SharedPreferencesUtil.getInstance(this).getSPBool("bisfirst");
+        if(!bIsFirst){
+            return;
+        }
 
         if(this.adView != null || this.bv != null)
         {

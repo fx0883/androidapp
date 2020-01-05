@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.ActivityImageCategory"
+    tools:showIn="@layout/activity_image_category">
+
+    <RelativeLayout
+        android:id="@+id/rel_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/grid"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/rel_ad_view"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="3dp" />
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/rel_ad_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:layout_alignParentBottom="true">-->
+
+            <!--<com.google.android.gms.ads.AdView-->
+                <!--android:id="@+id/nativeadView"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--app:adSize="SMART_BANNER"-->
+                <!--app:adUnitId="@string/AdmobBannerAdsID" />-->
+        <!--</RelativeLayout>-->
+    </RelativeLayout>
+
+
+</RelativeLayout>

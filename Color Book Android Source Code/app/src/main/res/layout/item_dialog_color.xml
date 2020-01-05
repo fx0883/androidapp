@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp">
+
+        <ImageView
+            android:id="@+id/color1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/round_color"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/color2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/round_color"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/color3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/round_color"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/color4"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/round_color"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/color5"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/round_color"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/color6"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/round_color"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/color7"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:elevation="20dp"
+            android:src="@drawable/round_color"
+            tools:ignore="ContentDescription,UnusedAttribute" />
+
+        <ImageView
+            android:id="@+id/color8"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/round_color"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/color9"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/round_color"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dialog_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/delius_regular"
+        android:text="@string/color"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="@color/black" />
+
+</LinearLayout>

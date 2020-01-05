@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/iv_recreate"
+        android:icon="@drawable/ic_refresh_black_24dp"
+        android:title=""
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/iv_undo"
+        android:icon="@drawable/ic_undo_black_24dp"
+        android:title=""
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/iv_redo"
+        android:icon="@drawable/ic_redo_black_24dp"
+        android:title=""
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/iv_done"
+        android:icon="@drawable/ic_check_black_24dp"
+        android:title=""
+        app:showAsAction="always" />
+
+</menu>

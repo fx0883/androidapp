@@ -48,8 +48,6 @@
                     android:scaleType="centerCrop"
                     android:transitionName="@string/transition_cook_detail_imgv_bg"/>
 
-
-
             </RelativeLayout>
 
 
