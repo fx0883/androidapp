@@ -21,14 +21,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-//import com.Recipes.app2.Constants;
+//import com.Recipes.app2.ConstantAd;
 //import com.Recipes.app2.ConstantsAdmob;
 //import com.Recipes.app2.R;
 //import com.Recipes.app2.model.bean.RecipeBean;
 //import com.Recipes.app2.view.adapters.CookDetailAdapter;
 //import com.Recipes.app2.view.components.StatusBarUtil;
-import com.ChildHealthDiet.app2.Constants;
-import com.ChildHealthDiet.app2.ConstantsAdmob;
+import com.ChildHealthDiet.app2.ConstantAd;
 import com.bumptech.glide.Glide;
 import com.ChildHealthDiet.app2.R;
 import com.ChildHealthDiet.app2.adapter.RecipeDetailAdapter;
@@ -38,10 +37,7 @@ import com.ChildHealthDiet.app2.presenter.contract.RecipeDetailContract;
 import com.ChildHealthDiet.app2.ui.base.BaseMVPActivity;
 import com.ChildHealthDiet.app2.ui.components.StatusBarUtil;
 import com.childhealthdiet.app2.utils.WechatUtil;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
+
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
@@ -55,10 +51,8 @@ import com.qq.e.comm.util.AdError;
 //import com.qq.e.ads.banner.BannerView;
 //import com.qq.e.comm.util.AdError;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Random;
 
 import butterknife.BindView;
 import com.ChildHealthDiet.app2.utils.SharedPreferencesUtil;
@@ -98,7 +92,7 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
 
     BannerView bv = null;
 
-    AdView adView = null;
+
 
     final int tryloadadMaxTimes = 5;
 
@@ -332,7 +326,7 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
         if(!bIsFirst){
             return;
         }
-        if(this.adView != null || this.bv != null)
+        if(this.bv != null)
         {
             bannerContainer.removeAllViews();
         }
@@ -341,63 +335,61 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
             return;
         }
         tryloadadTime++;
-        int min=0;
-        int max=99;
-        Random random = new Random();
-        int num = random.nextInt(max)%(max-min+1) + min;
-
-        if(num<=90){
-            this.getBanner().loadAD();
-        }
-        else{
-            getAdView();
-        }
+//        int min=0;
+//        int max=99;
+//        Random random = new Random();
+//        int num = random.nextInt(max)%(max-min+1) + min;
+//
+//        if(num<=90){
+//
+//        }
+        this.getBanner().loadAD();
 
     }
 
     private String getPosID() {
 
-        return Constants.BannerPosID;
+        return ConstantAd.BannerPosID;
     }
 
-    AdView getAdView(){
-        adView = new AdView(RecipeDetailActivity.this);
-
-        adView.setAdUnitId(ConstantsAdmob.BannerPosID);
-
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                tryloadadTime = 0;
-                super.onAdLoaded();
-
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // The previous banner ad failed to load. Call this method again to load
-                // the next ad in the items list.
-                Log.e("MainActivity", "The previous banner ad failed to load. Attempting to"
-                        + " load the next banner ad in the items list.");
-                loadads();
-            }
-        });
-
-        // Load the banner ad.
-        adView.setAdSize(AdSize.SMART_BANNER);
-        adView.loadAd(new AdRequest.Builder().build());
-        bannerContainer.addView(adView);
-
-        return adView;
-
-    }
+//    AdView getAdView(){
+//        adView = new AdView(RecipeDetailActivity.this);
+//
+//        adView.setAdUnitId(ConstantsAdmob.BannerPosID);
+//
+//        adView.setAdListener(new AdListener() {
+//            @Override
+//            public void onAdLoaded() {
+//                tryloadadTime = 0;
+//                super.onAdLoaded();
+//
+//            }
+//
+//            @Override
+//            public void onAdFailedToLoad(int errorCode) {
+//                // The previous banner ad failed to load. Call this method again to load
+//                // the next ad in the items list.
+//                Log.e("MainActivity", "The previous banner ad failed to load. Attempting to"
+//                        + " load the next banner ad in the items list.");
+//                loadads();
+//            }
+//        });
+//
+//        // Load the banner ad.
+//        adView.setAdSize(AdSize.SMART_BANNER);
+//        adView.loadAd(new AdRequest.Builder().build());
+//        bannerContainer.addView(adView);
+//
+//        return adView;
+//
+//    }
 
 
     private BannerView getBanner() {
 
         String posId = getPosID();
 
-        this.bv = new BannerView(this, ADSize.BANNER, Constants.APPID,posId);
+        this.bv = new BannerView(this, ADSize.BANNER, ConstantAd.APPID,posId);
         bv.setRefresh(30);
         bv.setADListener(new AbstractBannerADListener() {
 
@@ -423,26 +415,20 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
 
     @Override
     protected void onResume() {
-        if(adView!=null){
-            adView.resume();
-        }
+
         super.onResume();
     }
 
     @Override
     protected void onPause() {
 
-        if(adView!=null){
-            adView.pause();
-        }
+
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        if(adView!=null){
-            adView.destroy();
-        }
+
         if(bv!=null) {
             bv.destroy();
         }

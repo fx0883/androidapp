@@ -23,7 +23,7 @@ import io.reactivex.disposables.Disposable;
 public class MainActivity extends BaseActivity {
 
     @BindView(R.id.viewpager)
-    ViewPager viewPager;
+    com.ChildHealthDiet.app2.ui.custom.NoAnimationViewPager viewPager;
 
     MenuItem menuItem;
     @BindView(R.id.bottom_navigation)
@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity {
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
+                        viewPager.isCanScroll = true;
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
                                 viewPager.setCurrentItem(0);
@@ -53,13 +53,9 @@ public class MainActivity extends BaseActivity {
                             case R.id.navigation_mine:
                                 viewPager.setCurrentItem(2);
                                 break;
-//                            case R.id.navigation_basket:
-//                                viewPager.setCurrentItem(2);
-//                                break;
-//                            case R.id.navigation_mine:
-//                                viewPager.setCurrentItem(3);
-//                                break;
+
                         }
+                        viewPager.isCanScroll = false;
                         return false;
                     }
                 });
@@ -87,12 +83,12 @@ public class MainActivity extends BaseActivity {
         });
 
         //禁止ViewPager滑动
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+//        viewPager.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return true;
+//            }
+//        });
 
         setupViewPager(viewPager);
 

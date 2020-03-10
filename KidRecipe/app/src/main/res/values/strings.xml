@@ -32,11 +32,13 @@
     <string name="title_activity_recipe_search">RecipeSearchActivity</string>
 
 
-    <string name="nickname_key">nikename_key</string>>
-    <string name="birthday_key">birthday_key</string>>
+    <string name="nickname_key">nikename_key</string>
+    <string name="birthday_key">birthday_key</string>
 
 
-    <string name="recommend">推荐</string>>
-    <string name="category">分类</string>>
-    <string name="mine">我的</string>>
+    <string name="recommend">推荐</string>
+    <string name="category">分类</string>
+    <string name="mine">我的</string>
+
+    <string name="splash_loading">广告加载中...</string>
 </resources>
