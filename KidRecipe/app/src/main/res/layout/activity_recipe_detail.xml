@@ -115,8 +115,6 @@ v
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:visibility="gone"
-        >
-    </RelativeLayout>
+        android:visibility="visible"></RelativeLayout>
 
 </RelativeLayout>

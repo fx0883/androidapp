@@ -71,6 +71,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_10"
         android:background="@color/colorPrimaryGray"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+  />
+
+
+
 
 </RelativeLayout>

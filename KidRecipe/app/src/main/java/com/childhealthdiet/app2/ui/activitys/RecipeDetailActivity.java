@@ -36,6 +36,7 @@ import com.ChildHealthDiet.app2.presenter.RecipeDetailPresenter;
 import com.ChildHealthDiet.app2.presenter.contract.RecipeDetailContract;
 import com.ChildHealthDiet.app2.ui.base.BaseMVPActivity;
 import com.ChildHealthDiet.app2.ui.components.StatusBarUtil;
+import com.childhealthdiet.app2.utils.AdUtils;
 import com.childhealthdiet.app2.utils.WechatUtil;
 
 import com.qq.e.ads.banner.ADSize;
@@ -162,7 +163,7 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
         mPresenter.getRecipeById(this,recipeId);
 
 
-//        loadads();
+        loadads();
     }
 
 
@@ -322,8 +323,8 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
 
     private void loadads(){
 
-        Boolean bIsFirst = SharedPreferencesUtil.getInstance(this).getSPBool("bisfirst");
-        if(!bIsFirst){
+        Boolean isShowAD = AdUtils.getInstance(this).bIsShowAd;
+        if(!isShowAD){
             return;
         }
         if(this.bv != null)
