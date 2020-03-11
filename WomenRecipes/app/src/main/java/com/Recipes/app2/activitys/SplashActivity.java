@@ -3,7 +3,6 @@ package com.Recipes.app2.activitys;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,51 +10,57 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.provider.Settings;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.Recipes.app2.Constants;
+//import com.colorgarden.app6.MainActivity;
+//import com.colorgarden.app6.R;
+//import com.colorgarden.app6.constant.ConstantAd;
+//import com.colorgarden.app6.utils.AdUtils;
+
+import com.Recipes.app2.ConstantAd;
 import com.Recipes.app2.MainActivity;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.Recipes.app2.R;
+import com.Recipes.app2.utils.AdUtils;
 import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
 import com.qq.e.comm.util.AdError;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.Recipes.app2.R;
-
-import org.json.JSONObject;
-
-import static com.android.volley.Request.Method.GET;
-
-import com.Recipes.app2.utils.SharedPreferencesUtil;
 
 /**
  * 这是demo工程的入口Activity，在这里会首次调用广点通的SDK。
  *
- * 在调用SDK之前，如果您的App的targetSDKVersion >= 23，那么一定要把"READ_PHONE_STATE"、"WRITE_EXTERNAL_STORAGE"、"ACCESS_FINE_LOCATION"这几个权限申请到，否则SDK将不会工作。
+ * 在调用SDK之前，如果您的App的targetSDKVersion >= 23，那么建议动态申请相关权限。
  */
-public class SplashActivity extends Activity implements SplashADListener {
+public class SplashActivity extends Activity implements SplashADListener, View.OnClickListener {
 
   private SplashAD splashAD;
   private ViewGroup container;
   private TextView skipView;
   private ImageView splashHolder;
   private static final String SKIP_TEXT = "点击跳过 %d";
-  
+
   public boolean canJump = false;
+  private boolean needStartDemoList = true;
+
+  private boolean loadAdOnly = false;
+  private boolean showingAd = false;
+  private LinearLayout loadAdOnlyView;
+  private Button loadAdOnlyCloseButton;
+  private Button loadAdOnlyDisplayButton;
+  private Button loadAdOnlyRefreshButton;
+  private TextView loadAdOnlyStatusTextView;
 
   /**
    * 为防止无广告时造成视觉上类似于"闪退"的情况，设定无广告时页面跳转根据需要延迟一定时间，demo
@@ -69,30 +74,54 @@ public class SplashActivity extends Activity implements SplashADListener {
   private long fetchSplashADTime = 0;
   private Handler handler = new Handler(Looper.getMainLooper());
 
+  private boolean bIsShowAd = false;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_splash);
-    this.loadBaseUrlOnline(this);
+
+    bIsShowAd = AdUtils.getInstance(this).isbIsShowAd();
+
     container = (ViewGroup) this.findViewById(R.id.splash_container);
-    skipView = (TextView) findViewById(R.id.skip_view);
+    boolean customSkipBtn = getIntent().getBooleanExtra("custom_skip_btn", false);
+    if (customSkipBtn) {
+      skipView = (TextView) findViewById(R.id.skip_view);
+      skipView.setVisibility(View.VISIBLE);
+    }
     splashHolder = (ImageView) findViewById(R.id.splash_holder);
     boolean needLogo = getIntent().getBooleanExtra("need_logo", true);
+//    needStartDemoList = getIntent().getBooleanExtra("need_start_demo_list", true);
+    loadAdOnly = getIntent().getBooleanExtra("load_ad_only", false);
+
+    loadAdOnlyView = findViewById(R.id.splash_load_ad_only);
+    loadAdOnlyCloseButton = findViewById(R.id.splash_load_ad_close);
+    loadAdOnlyCloseButton.setOnClickListener(this);
+    loadAdOnlyDisplayButton = findViewById(R.id.splash_load_ad_display);
+    loadAdOnlyDisplayButton.setOnClickListener(this);
+    loadAdOnlyRefreshButton = findViewById(R.id.splash_load_ad_refresh);
+    loadAdOnlyRefreshButton.setOnClickListener(this);
+    loadAdOnlyStatusTextView = findViewById(R.id.splash_load_ad_status);
+
+    if(loadAdOnly){
+      loadAdOnlyView.setVisibility(View.VISIBLE);
+      loadAdOnlyStatusTextView.setText(R.string.splash_loading);
+      loadAdOnlyDisplayButton.setEnabled(false);
+    }
     if (!needLogo) {
       findViewById(R.id.app_logo).setVisibility(View.GONE);
     }
-    // 如果targetSDKVersion >= 23，就要申请好权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
     if (Build.VERSION.SDK_INT >= 23) {
       checkAndRequestPermission();
     } else {
-      // 如果是Android6.0以下的机器，默认在安装时获得了所有权限，可以直接调用SDK
-      fetchSplashAD(this, container, skipView, Constants.APPID, getPosId(), this, 0);
+      // 如果是Android6.0以下的机器，建议在manifest中配置相关权限，这里可以直接调用SDK
+      fetchSplashAD(this, container, skipView, ConstantAd.APPID, getPosId(), this, 0);
     }
   }
 
   private String getPosId() {
-    String posId = getIntent().getStringExtra("pos_id");
-    return TextUtils.isEmpty(posId) ? Constants.SplashPosID : posId;
+
+    return ConstantAd.SplashPosID;
   }
 
   /**
@@ -101,7 +130,12 @@ public class SplashActivity extends Activity implements SplashADListener {
    *
    * Android6.0以上的权限适配简单示例：
    *
-   * 如果targetSDKVersion >= 23，那么必须要申请到所需要的权限，再调用广点通SDK，否则广点通SDK不会工作。
+   * 如果targetSDKVersion >= 23，那么建议动态申请相关权限，再调用广点通SDK
+   *
+   * SDK不强制校验下列权限（即:无下面权限sdk也可正常工作），但建议开发者申请下面权限，尤其是READ_PHONE_STATE权限
+   *
+   * READ_PHONE_STATE权限用于允许SDK获取用户标识,
+   * 针对单媒体的用户，允许获取权限的，投放定向广告；不允许获取权限的用户，投放通投广告，媒体可以选择是否把用户标识数据提供给优量汇，并承担相应广告填充和eCPM单价下降损失的结果。
    *
    * Demo代码里是一个基本的权限申请示例，请开发者根据自己的场景合理地编写这部分代码来实现权限申请。
    * 注意：下面的`checkSelfPermission`和`requestPermissions`方法都是在Android6.0的SDK中增加的API，如果您的App还没有适配到Android6.0以上，则不需要调用这些方法，直接调用广点通SDK即可。
@@ -113,19 +147,23 @@ public class SplashActivity extends Activity implements SplashADListener {
       lackedPermission.add(Manifest.permission.READ_PHONE_STATE);
     }
 
-    if (!(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
-      lackedPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-    }
-
     if (!(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
       lackedPermission.add(Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
-    // 权限都已经有了，那么直接调用SDK
+    // 快手SDK所需相关权限，存储权限，此处配置作用于流量分配功能，关于流量分配，详情请咨询商务;如果您的APP不需要快手SDK的流量分配功能，则无需申请SD卡权限
+    if (!(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED )){
+      lackedPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+    }
+    if (!(checkSelfPermission( Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+      lackedPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    // 如果需要的权限都已经有了，那么直接调用SDK
     if (lackedPermission.size() == 0) {
-      fetchSplashAD(this, container, skipView, Constants.APPID, getPosId(), this, 0);
+      fetchSplashAD(this, container, skipView, ConstantAd.APPID, getPosId(), this, 0);
     } else {
-      // 请求所缺少的权限，在onRequestPermissionsResult中再看是否获得权限，如果获得权限就可以调用SDK，否则不要调用SDK。
+      // 否则，建议请求所缺少的权限，在onRequestPermissionsResult中再看是否获得权限
       String[] requestPermissions = new String[lackedPermission.size()];
       lackedPermission.toArray(requestPermissions);
       requestPermissions(requestPermissions, 1024);
@@ -145,9 +183,8 @@ public class SplashActivity extends Activity implements SplashADListener {
   public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     if (requestCode == 1024 && hasAllPermissionsGranted(grantResults)) {
-      fetchSplashAD(this, container, skipView, Constants.APPID, getPosId(), this, 0);
+      fetchSplashAD(this, container, skipView, ConstantAd.APPID, ConstantAd.SplashPosID, this, 0);
     } else {
-      // 如果用户没有授权，那么应该说明意图，引导用户去设置里面授权。
       Toast.makeText(this, "应用缺少必要的权限！请点击\"权限\"，打开所需要的权限。", Toast.LENGTH_LONG).show();
       Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
       intent.setData(Uri.parse("package:" + getPackageName()));
@@ -168,36 +205,31 @@ public class SplashActivity extends Activity implements SplashADListener {
    * @param fetchDelay      拉取广告的超时时长：取值范围[3000, 5000]，设为0表示使用广点通SDK默认的超时时长。
    */
   private void fetchSplashAD(Activity activity, ViewGroup adContainer, View skipContainer,
-      String appId, String posId, SplashADListener adListener, int fetchDelay) {
-//    fetchSplashADTime = System.currentTimeMillis();
-//    splashAD = new SplashAD(activity, adContainer, skipContainer, appId, posId, adListener, fetchDelay);
-
-    Boolean bIsFirst = SharedPreferencesUtil.getInstance(this).getSPBool("bisfirst");
-    if(bIsFirst==false){
-      // 计算出还需要延时多久
-      handler.postDelayed(new Runnable() {
-        @Override
-        public void run() {
-          SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
-          SplashActivity.this.finish();
-        }
-      }, 1800);
+                             String appId, String posId, SplashADListener adListener, int fetchDelay) {
+    if(!bIsShowAd){
+      onNoAD(null);
     }
     else{
       fetchSplashADTime = System.currentTimeMillis();
-      splashAD = new SplashAD(activity, adContainer, skipContainer, appId, posId, adListener, fetchDelay);
+      splashAD = new SplashAD(activity, skipContainer, appId, posId, adListener, fetchDelay);
+      if(loadAdOnly) {
+        splashAD.fetchAdOnly();
+      }else{
+        splashAD.fetchAndShowIn(adContainer);
+      }
     }
+
   }
 
   @Override
   public void onADPresent() {
     Log.i("AD_DEMO", "SplashADPresent");
-    splashHolder.setVisibility(View.INVISIBLE); // 广告展示后一定要把预设的开屏图片隐藏起来
   }
 
   @Override
   public void onADClicked() {
-    Log.i("AD_DEMO", "SplashADClicked");
+    Log.i("AD_DEMO", "SplashADClicked clickUrl: "
+            + (splashAD.getExt() != null ? splashAD.getExt().get("clickUrl") : ""));
   }
 
   /**
@@ -209,12 +241,27 @@ public class SplashActivity extends Activity implements SplashADListener {
   @Override
   public void onADTick(long millisUntilFinished) {
     Log.i("AD_DEMO", "SplashADTick " + millisUntilFinished + "ms");
-    skipView.setText(String.format(SKIP_TEXT, Math.round(millisUntilFinished / 1000f)));
+    if (skipView != null) {
+      skipView.setText(String.format(SKIP_TEXT, Math.round(millisUntilFinished / 1000f)));
+    }
   }
 
   @Override
   public void onADExposure() {
     Log.i("AD_DEMO", "SplashADExposure");
+  }
+
+  @Override
+  public void onADLoaded(long expireTimestamp) {
+    Log.i("AD_DEMO", "SplashADFetch expireTimestamp:"+expireTimestamp);
+
+    if(loadAdOnly) {
+      loadAdOnlyDisplayButton.setEnabled(true);
+      long timeIntervalSec = (expireTimestamp- SystemClock.elapsedRealtime())/1000;
+      long min = timeIntervalSec/60;
+      long second = timeIntervalSec-(min*60);
+      loadAdOnlyStatusTextView.setText("加载成功,广告将在:"+min+"分"+second+"秒后过期，请在此之前展示(showAd)");
+    }
   }
 
   @Override
@@ -225,10 +272,19 @@ public class SplashActivity extends Activity implements SplashADListener {
 
   @Override
   public void onNoAD(AdError error) {
-    Log.i(
-        "AD_DEMO",
-        String.format("LoadSplashADFail, eCode=%d, errorMsg=%s", error.getErrorCode(),
-            error.getErrorMsg()));
+//    String str = String.format("LoadSplashADFail, eCode=%d, errorMsg=%s", error.getErrorCode(),
+//        error.getErrorMsg());
+//    Log.i("AD_DEMO",str);
+//    handler.post(new Runnable() {
+//      @Override
+//      public void run() {
+//        Toast.makeText(SplashActivity.this.getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+//      }
+//    });
+//    if(loadAdOnly && !showingAd) {
+//      loadAdOnlyStatusTextView.setText(str);
+//      return;//只拉取广告时，不终止activity
+//    }
     /**
      * 为防止无广告时造成视觉上类似于"闪退"的情况，设定无广告时页面跳转根据需要延迟一定时间，demo
      * 给出的延时逻辑是从拉取广告开始算开屏最少持续多久，仅供参考，开发者可自定义延时逻辑，如果开发者采用demo
@@ -236,12 +292,14 @@ public class SplashActivity extends Activity implements SplashADListener {
      **/
     long alreadyDelayMills = System.currentTimeMillis() - fetchSplashADTime;//从拉广告开始到onNoAD已经消耗了多少时间
     long shouldDelayMills = alreadyDelayMills > minSplashTimeWhenNoAD ? 0 : minSplashTimeWhenNoAD
-        - alreadyDelayMills;//为防止加载广告失败后立刻跳离开屏可能造成的视觉上类似于"闪退"的情况，根据设置的minSplashTimeWhenNoAD
+            - alreadyDelayMills;//为防止加载广告失败后立刻跳离开屏可能造成的视觉上类似于"闪退"的情况，根据设置的minSplashTimeWhenNoAD
     // 计算出还需要延时多久
     handler.postDelayed(new Runnable() {
       @Override
       public void run() {
-        SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        if (needStartDemoList) {
+          SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        }
         SplashActivity.this.finish();
       }
     }, shouldDelayMills);
@@ -253,7 +311,9 @@ public class SplashActivity extends Activity implements SplashADListener {
    */
   private void next() {
     if (canJump) {
-      this.startActivity(new Intent(this, MainActivity.class));
+      if (needStartDemoList) {
+        this.startActivity(new Intent(this, MainActivity.class));
+      }
       this.finish();
     } else {
       canJump = true;
@@ -285,34 +345,32 @@ public class SplashActivity extends Activity implements SplashADListener {
   @Override
   public boolean onKeyDown(int keyCode, KeyEvent event) {
     if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME) {
+      if(keyCode == KeyEvent.KEYCODE_BACK && loadAdOnlyView.getVisibility() == View.VISIBLE){
+        return super.onKeyDown(keyCode, event);
+      }
       return true;
     }
     return super.onKeyDown(keyCode, event);
   }
 
-  public void loadBaseUrlOnline(final Context context){
-    String configUrl = "http://fx0883.github.io/MySite/womenrecipe.json";
-
-    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(GET, configUrl, null, new Response.Listener <JSONObject>() {
-      @Override
-      public void onResponse(JSONObject response) {
-        Log.e("res====", "" + response.toString());
-        try {
-          boolean isFirst = response.getBoolean("bisfirst");
-          SharedPreferencesUtil.getInstance(context).putSPBool("bisfirst",isFirst);
-        }
-        catch (Exception e){
-          Log.e("error====", "" + e.getMessage());
-        }
-      }
-    }, new Response.ErrorListener() {
-      @Override
-      public void onErrorResponse(VolleyError error) {
-
-      }
-    });
-    RequestQueue requestQueue = Volley.newRequestQueue(context);
-    requestQueue.add(jsonObjectRequest);
+  @Override
+  public void onClick(View v) {
+    switch (v.getId()) {
+      case R.id.splash_load_ad_close:
+        this.finish();
+        break;
+      case R.id.splash_load_ad_refresh:
+        showingAd = false;
+        splashAD.fetchAdOnly();
+        this.loadAdOnlyStatusTextView.setText(R.string.splash_loading);
+        loadAdOnlyDisplayButton.setEnabled(false);
+        break;
+      case R.id.splash_load_ad_display:
+        loadAdOnlyView.setVisibility(View.GONE);
+        showingAd = true;
+        splashAD.showAd(container);
+        break;
+      default:
+    }
   }
-
 }

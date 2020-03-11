@@ -12,9 +12,9 @@
         android:theme="@style/AppTheme">
 
         <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5934917937656240~5205190102"/>
+<!--        <meta-data-->
+<!--            android:name="com.google.android.gms.ads.APPLICATION_ID"-->
+<!--            android:value="ca-app-pub-5934917937656240~5205190102"/>-->
 
         <!--<meta-data-->
             <!--android:name="com.google.android.gms.ads.APPLICATION_ID"-->
@@ -26,15 +26,14 @@
 
 
         <provider
-        android:name="android.support.v4.content.FileProvider"
-        android:authorities="${applicationId}.fileprovider"
-        android:exported="false"
-        android:grantUriPermissions="true">
-        <meta-data
-            android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/gdt_file_path" />
-    </provider>
-
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/gdt_file_path" />
+        </provider>
         <activity
             android:name=".activitys.SplashActivity"
             android:screenOrientation="portrait"

@@ -1,6 +1,6 @@
 package com.Recipes.app2;
 
-public class Constants {
+public class ConstantAd {
   public static final String APPID = "1105533230";
   public static final String BannerPosID = "7080716428908041";
   public static final String InterteristalPosID = "8575134060152130849";

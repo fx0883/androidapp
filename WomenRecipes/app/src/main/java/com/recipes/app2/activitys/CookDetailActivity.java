@@ -2,6 +2,9 @@ package com.Recipes.app2.activitys;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -11,40 +14,42 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.Recipes.app2.Constants;
+import com.Recipes.app2.ConstantAd;
 import com.Recipes.app2.ConstantsAdmob;
 import com.Recipes.app2.R;
 import com.Recipes.app2.model.bean.RecipeBean;
 import com.Recipes.app2.utils.SharedPreferencesUtil;
+import com.Recipes.app2.utils.WechatUtil;
 import com.Recipes.app2.view.adapters.CookDetailAdapter;
 import com.Recipes.app2.view.components.StatusBarUtil;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
+
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
 import com.qq.e.comm.util.AdError;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 //import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.google.android.gms.ads.AdRequest.ERROR_CODE_INTERNAL_ERROR;
 
 //public class CookDetailActivity extends BaseSwipeBackActivity {
 public class CookDetailActivity extends AppCompatActivity {
@@ -72,7 +77,7 @@ public class CookDetailActivity extends AppCompatActivity {
 
     BannerView bv = null;
 
-    AdView adView = null;
+
 
     final int tryloadadMaxTimes = 5;
 
@@ -90,8 +95,71 @@ public class CookDetailActivity extends AppCompatActivity {
     }
 
 //    @Override
-    protected int getLayoutId(){
-        return R.layout.activity_cook_detail;
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == android.R.id.home) {
+//            finish();
+//        }
+//        else if(id == R.id.recipedetail_action_share){
+//            shareToWechat();
+////            invokeMini();
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
+
+    private void shareToWechat(){
+
+        String appId = "wx32592946de54e8e9"; // 填应用AppId
+        IWXAPI api = WXAPIFactory.createWXAPI(this, appId);
+
+        WXMiniProgramObject miniProgramObj = new WXMiniProgramObject();
+        miniProgramObj.webpageUrl = "http://www.qq.com"; // 兼容低版本的网页链接
+        miniProgramObj.miniprogramType = WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE;// 正式版:0，测试版:1，体验版:2
+        miniProgramObj.userName = "gh_7ed7a01ba380";     // 小程序原始id
+        miniProgramObj.path = "/pages/recipe/recipe?id="+this.data.getId().toString();
+        WXMediaMessage msg = new WXMediaMessage(miniProgramObj);
+        msg.title = this.data.getName();                    // 小程序消息title
+        msg.description = this.data.getPrompt();               // 小程序消息desc
+        msg.thumbData = getThumb();                      // 小程序消息封面图片，小于128k
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("miniProgram");
+        req.message = msg;
+        req.scene = SendMessageToWX.Req.WXSceneSession;  // 目前只支持会话
+        api.sendReq(req);
+
+
+    }
+
+    private String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+    }
+
+    private byte[] getThumb(){
+//        this.mRecipeBean = recipeBean;
+        String recipeUrl = "recipesImage/" + this.data.getPhoto();
+
+        Bitmap bmp = this.getImageFromAssetsFile(recipeUrl);
+
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 100, 100, true);
+        bmp.recycle();
+
+//        WechatUtil
+        return WechatUtil.bmpToByteArray(thumbBmp,true);
+    }
+
+    public Bitmap getImageFromAssetsFile(String fileName) {
+        Bitmap image = null;
+        AssetManager am = getResources().getAssets();
+        try {
+            InputStream is = am.open(fileName);
+            image = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
 //    @Override
@@ -142,28 +210,26 @@ public class CookDetailActivity extends AppCompatActivity {
             return;
         }
 
-        if(this.adView != null || this.bv != null)
-        {
-            bannerContainer.removeAllViews();
-        }
+
 
         if(tryloadadTime>=tryloadadMaxTimes){
             return;
         }
         tryloadadTime++;
-        int min=0;
-        int max=99;
-        Random random = new Random();
-        int num = random.nextInt(max)%(max-min+1) + min;
-
-        if(num<=80){
-            this.getBanner().loadAD();
-        }
-        else{
-            getAdView();
-        }
-
+//        int min=0;
+//        int max=99;
+//        Random random = new Random();
+//        int num = random.nextInt(max)%(max-min+1) + min;
+//
+//        if(num<=80){
+//            this.getBanner().loadAD();
+//        }
+//        else{
+//            getAdView();
+//        }
+//        this.getBanner().loadAD();
 //        getAdView();
+        this.getBanner().loadAD();
     }
 
     @OnClick(R.id.btnShare)
@@ -178,12 +244,21 @@ public class CookDetailActivity extends AppCompatActivity {
         if (!success)
             super.onBackPressed();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.recipedetail_main, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
+        }
+        else if(id == R.id.recipedetail_action_share){
+            shareToWechat();
+//            invokeMini();
         }
 
         return super.onOptionsItemSelected(item);
@@ -206,57 +281,17 @@ public class CookDetailActivity extends AppCompatActivity {
     }
     private String getPosID() {
 
-        return Constants.BannerPosID;
+        return ConstantAd.BannerPosID;
     }
 
-    AdView getAdView(){
-        adView = new AdView(CookDetailActivity.this);
 
-        adView.setAdUnitId(ConstantsAdmob.BannerPosID);
-//        recyclerViewItems.add(i, adView);
-
-
-
-
-        // Set an AdListener on the AdView to wait for the previous banner ad
-        // to finish loading before loading the next ad in the items list.
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                tryloadadTime = 0;
-                super.onAdLoaded();
-                // The previous banner ad loaded successfully, call this method again to
-                // load the next ad in the items list.
-//                loadBannerAd(index + ITEMS_PER_AD);
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // The previous banner ad failed to load. Call this method again to load
-                // the next ad in the items list.
-                Log.e("MainActivity", "The previous banner ad failed to load. Attempting to"
-                        + " load the next banner ad in the items list.");
-//                loadBannerAd(index + ITEMS_PER_AD);
-                loadads();
-//                ERROR_CODE_INTERNAL_ERROR
-            }
-        });
-
-        // Load the banner ad.
-        adView.setAdSize(AdSize.BANNER);
-        adView.loadAd(new AdRequest.Builder().build());
-        bannerContainer.addView(adView);
-
-        return adView;
-
-    }
 
 
     private BannerView getBanner() {
 
         String posId = getPosID();
 
-        this.bv = new BannerView(this, ADSize.BANNER, Constants.APPID,posId);
+        this.bv = new BannerView(this, ADSize.BANNER, ConstantAd.APPID,posId);
         // 注意：如果开发者的banner不是始终展示在屏幕中的话，请关闭自动刷新，否则将导致曝光率过低。
         // 并且应该自行处理：当banner广告区域出现在屏幕后，再手动loadAD。
         bv.setRefresh(30);
@@ -284,26 +319,20 @@ public class CookDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        if(adView!=null){
-            adView.resume();
-        }
+
         super.onResume();
     }
 
     @Override
     protected void onPause() {
 
-        if(adView!=null){
-            adView.pause();
-        }
+
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        if(adView!=null){
-            adView.destroy();
-        }
+
         if(bv!=null) {
             bv.destroy();
         }

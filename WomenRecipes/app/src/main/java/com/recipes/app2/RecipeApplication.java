@@ -3,6 +3,7 @@
 package com.Recipes.app2;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
 import com.Recipes.app2.model.bean.DaoMaster;
@@ -16,6 +17,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -30,7 +33,7 @@ public class RecipeApplication extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        disableAPIDialog();
         //复制assets目录下的数据库文件到应用数据库中
         try {
 //            copyDataBase("zone.db");
@@ -55,6 +58,24 @@ public class RecipeApplication extends android.app.Application {
         return instance.getApplicationContext();
     }
 
+
+    /**
+     * 反射 禁止弹窗
+     */
+    private void disableAPIDialog(){
+        if (Build.VERSION.SDK_INT < 28)return;
+        try {
+            Class clazz = Class.forName("android.app.ActivityThread");
+            Method currentActivityThread = clazz.getDeclaredMethod("currentActivityThread");
+            currentActivityThread.setAccessible(true);
+            Object activityThread = currentActivityThread.invoke(null);
+            Field mHiddenApiWarningShown = clazz.getDeclaredField("mHiddenApiWarningShown");
+            mHiddenApiWarningShown.setAccessible(true);
+            mHiddenApiWarningShown.setBoolean(activityThread, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 //    /**
 //     * Copies your database from your local assets-folder to the just created
 //     * empty database in the system folder, from where it can be accessed and
