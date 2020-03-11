@@ -25,7 +25,7 @@ public class AdUtils {
 
     public final String AD_PREF = "Ad_Pref";
 
-    public final String AppStoreName = "huawei";
+    public final String AppStoreName = "xiaomi";
 
     private Context mContext = null;
     //类初始化时，不初始化这个对象(延时加载，真正用的时候再创建)
