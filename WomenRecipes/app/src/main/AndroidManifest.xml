@@ -24,6 +24,11 @@
             <!--android:value="ca-app-pub-5934917937656240~8328256014"/>-->
 
 
+        <!-- 渠道商编号 -->
+        <!-- 渠道商编号 -->
+        <meta-data
+            android:name="BaiduMobAd_CHANNEL"
+            android:value="huawei" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
