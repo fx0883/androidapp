@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'mtj-circle-plugin'
 
 android {
     signingConfigs {
@@ -14,10 +15,10 @@ android {
     defaultConfig {
 
         applicationId "com.ChildHealthDiet.app2"
-        minSdkVersion 22
+        minSdkVersion 21
         targetSdkVersion 27
-        versionCode 21
-        versionName "2.1"
+        versionCode 22
+        versionName "2.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
     }
@@ -32,6 +33,15 @@ android {
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
+    }
+
+    MtjCirclePluginConfig {
+        // 设置appkey
+        appkey = 'US0XOEOZuxqqQVqZ7ZrLlTB3I3ccQrHi'
+        // 设置debug 开关，如果需要查看日志则打开开关，为避免影响性能建议上线前关闭（设置为false）
+        debug = false
+        // 默认启动此插件，如果开发者不需要可以禁用（设置为false）
+        enabled = true
     }
 }
 //greendao{

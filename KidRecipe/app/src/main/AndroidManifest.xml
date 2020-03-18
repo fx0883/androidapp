@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- 渠道商编号 -->
+        <!-- 渠道商编号 -->
+        <meta-data
+            android:name="BaiduMobAd_CHANNEL"
+            android:value="huawei" />
+
 
 <!--        <uses-library-->
 <!--            android:name="org.apache.http.legacy"-->
