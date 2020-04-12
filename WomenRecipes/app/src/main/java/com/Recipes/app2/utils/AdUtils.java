@@ -18,7 +18,7 @@ import static com.android.volley.Request.Method.GET;
 
 
 public class AdUtils {
-    private final String URL = "http://fx0883.github.io/MySite/womenrecipe2.json";
+    private final String URL = "http://fx0883.github.io/MySite/womenrecipe.json";
 
     public final String AD_PREF = "Ad_Pref";
 

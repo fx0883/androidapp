@@ -2,7 +2,7 @@ package com.Recipes.app2;
 
 public class ConstantAd {
   public static final String APPID = "1105533230";
-  public static final String BannerPosID = "7080716428908041";
+  public static final String BannerPosID = "1031606874478835";
   public static final String InterteristalPosID = "8575134060152130849";
   public static final String SplashPosID = "6050843629109599";
   public static final String NativePosID = "5010320697302671";

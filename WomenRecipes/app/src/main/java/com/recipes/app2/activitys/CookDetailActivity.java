@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -19,13 +20,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.Recipes.app2.ConstantAd;
 import com.Recipes.app2.ConstantsAdmob;
 import com.Recipes.app2.R;
 import com.Recipes.app2.model.bean.RecipeBean;
+import com.Recipes.app2.utils.AdUtils;
 import com.Recipes.app2.utils.SharedPreferencesUtil;
 import com.Recipes.app2.utils.WechatUtil;
 import com.Recipes.app2.view.adapters.CookDetailAdapter;
@@ -35,6 +41,8 @@ import com.bumptech.glide.Glide;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
+import com.qq.e.ads.banner2.UnifiedBannerADListener;
+import com.qq.e.ads.banner2.UnifiedBannerView;
 import com.qq.e.comm.util.AdError;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
@@ -52,7 +60,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 //public class CookDetailActivity extends BaseSwipeBackActivity {
-public class CookDetailActivity extends AppCompatActivity {
+public class CookDetailActivity extends AppCompatActivity implements UnifiedBannerADListener {
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
     @BindView(R.id.toolbar_layout)
@@ -75,7 +83,7 @@ public class CookDetailActivity extends AppCompatActivity {
     @BindView(R.id.bannerContainer)
     ViewGroup bannerContainer;
 
-    BannerView bv = null;
+    UnifiedBannerView bv = null;
 
 
 
@@ -202,20 +210,19 @@ public class CookDetailActivity extends AppCompatActivity {
 //        imbtnShare.setTranslationY(-50);
     }
 
-
+    Boolean bIsShowAd = false;
     private void loadads(){
 
-        Boolean bIsFirst = SharedPreferencesUtil.getInstance(this).getSPBool("bisfirst");
-        if(!bIsFirst){
+        bIsShowAd = AdUtils.getInstance(this).isbIsShowAd();
+        if(!bIsShowAd){
             return;
         }
 
 
-
-        if(tryloadadTime>=tryloadadMaxTimes){
-            return;
-        }
-        tryloadadTime++;
+//        if(tryloadadTime>=tryloadadMaxTimes){
+//            return;
+//        }
+//        tryloadadTime++;
 //        int min=0;
 //        int max=99;
 //        Random random = new Random();
@@ -285,37 +292,63 @@ public class CookDetailActivity extends AppCompatActivity {
     }
 
 
-
-
-    private BannerView getBanner() {
-
+    private UnifiedBannerView getBanner() {
+        if(this.bv != null){
+            bannerContainer.removeView(bv);
+            bv.destroy();
+        }
         String posId = getPosID();
 
-        this.bv = new BannerView(this, ADSize.BANNER, ConstantAd.APPID,posId);
-        // 注意：如果开发者的banner不是始终展示在屏幕中的话，请关闭自动刷新，否则将导致曝光率过低。
-        // 并且应该自行处理：当banner广告区域出现在屏幕后，再手动loadAD。
-        bv.setRefresh(30);
-        bv.setADListener(new AbstractBannerADListener() {
+//        this.bv = new UnifiedBannerView(this, ConstantAd.APPID, posId, this);
 
-            @Override
-            public void onNoAD(AdError error) {
-                tryloadadTime = 0;
-                Log.i(
-                        "AD_DEMO",
-                        String.format("Banner onNoAD，eCode = %d, eMsg = %s", error.getErrorCode(),
-                                error.getErrorMsg()));
-                loadads();
-            }
-
-            @Override
-            public void onADReceiv() {
-
-                Log.i("AD_DEMO", "ONBannerReceive");
-            }
-        });
-        bannerContainer.addView(bv);
+        // 不需要传递tags使用下面构造函数
+        this.bv = new UnifiedBannerView(this, ConstantAd.APPID, posId, this);
+        bannerContainer.addView(bv, getUnifiedBannerLayoutParams());
         return this.bv;
     }
+
+    /**
+     * banner2.0规定banner宽高比应该为6.4:1 , 开发者可自行设置符合规定宽高比的具体宽度和高度值
+     *
+     * @return
+     */
+    private FrameLayout.LayoutParams getUnifiedBannerLayoutParams() {
+        Point screenSize = new Point();
+        getWindowManager().getDefaultDisplay().getSize(screenSize);
+        return new FrameLayout.LayoutParams(screenSize.x,  Math.round(screenSize.x / 6.4F));
+    }
+
+
+
+//    private BannerView getBanner() {
+//
+//        String posId = getPosID();
+//
+//        this.bv = new BannerView(this, ADSize.BANNER, ConstantAd.APPID,posId);
+//        // 注意：如果开发者的banner不是始终展示在屏幕中的话，请关闭自动刷新，否则将导致曝光率过低。
+//        // 并且应该自行处理：当banner广告区域出现在屏幕后，再手动loadAD。
+//        bv.setRefresh(30);
+//        bv.setADListener(new AbstractBannerADListener() {
+//
+//            @Override
+//            public void onNoAD(AdError error) {
+//                tryloadadTime = 0;
+//                Log.i(
+//                        "AD_DEMO",
+//                        String.format("Banner onNoAD，eCode = %d, eMsg = %s", error.getErrorCode(),
+//                                error.getErrorMsg()));
+//                loadads();
+//            }
+//
+//            @Override
+//            public void onADReceiv() {
+//
+//                Log.i("AD_DEMO", "ONBannerReceive");
+//            }
+//        });
+//        bannerContainer.addView(bv);
+//        return this.bv;
+//    }
 
     @Override
     protected void onResume() {
@@ -337,5 +370,45 @@ public class CookDetailActivity extends AppCompatActivity {
             bv.destroy();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onNoAD(AdError adError) {
+
+    }
+
+    @Override
+    public void onADReceive() {
+
+    }
+
+    @Override
+    public void onADExposure() {
+
+    }
+
+    @Override
+    public void onADClosed() {
+
+    }
+
+    @Override
+    public void onADClicked() {
+
+    }
+
+    @Override
+    public void onADLeftApplication() {
+
+    }
+
+    @Override
+    public void onADOpenOverlay() {
+
+    }
+
+    @Override
+    public void onADCloseOverlay() {
+
     }
 }
