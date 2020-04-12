@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -42,6 +44,8 @@ import com.childhealthdiet.app2.utils.WechatUtil;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
+import com.qq.e.ads.banner2.UnifiedBannerADListener;
+import com.qq.e.ads.banner2.UnifiedBannerView;
 import com.qq.e.comm.util.AdError;
 //import com.google.android.gms.ads.AdListener;
 //import com.google.android.gms.ads.AdRequest;
@@ -68,7 +72,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 //public class CookDetailActivity extends BaseSwipeBackActivity {
 public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.Presenter>
-        implements RecipeDetailContract.View {
+        implements RecipeDetailContract.View, UnifiedBannerADListener {
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
     @BindView(R.id.toolbar_layout)
@@ -91,7 +95,7 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
     @BindView(R.id.bannerContainer)
     ViewGroup bannerContainer;
 
-    BannerView bv = null;
+    UnifiedBannerView bv = null;
 
 
 
@@ -117,12 +121,6 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.recipedetail_main, menu);
-
-//        MenuItem item = menu.findItem(R.id.recipelist_action_search);
-//        searchView.setMenuItem(item);
-
-
-
         return true;
     }
     @Override
@@ -189,26 +187,6 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
     }
 
     private void shareToWechat(){
-
-//        String appId = "wx9666b12631d67687"; // 填应用AppId，APP在开放平台注册的id
-//        IWXAPI api = WXAPIFactory.createWXAPI(this, appId);
-//
-//        WXMiniProgramObject miniProgramObj = new WXMiniProgramObject();
-//        miniProgramObj.webpageUrl = "https://www.fsbooks.top"; // 兼容低版本的网页链接
-//        miniProgramObj.miniprogramType = WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE;// 正式版:0，测试版:1，体验版:2
-//        miniProgramObj.userName = "gh_5e52bc5b286b";     // 小程序原始id
-//        miniProgramObj.path = "/pages/recipe/recipe?id="+this.mRecipeBean.getId().toString();            //小程序页面路径
-//        WXMediaMessage msg = new WXMediaMessage(miniProgramObj);
-//        msg.title = this.mRecipeBean.getName();                    // 小程序消息title
-//        msg.description = this.mRecipeBean.getPrompt();               // 小程序消息desc
-//        msg.thumbData = getThumb();                      // 小程序消息封面图片，小于128k
-////        msg.thumbData = null;
-//
-//        SendMessageToWX.Req req = new SendMessageToWX.Req();
-//        req.transaction = "";
-//        req.message = msg;
-//        req.scene = SendMessageToWX.Req.WXSceneSession;  // 目前支持会话
-//        api.sendReq(req);
 
         String appId = "wx9666b12631d67687"; // 填应用AppId
         IWXAPI api = WXAPIFactory.createWXAPI(this, appId);
@@ -327,23 +305,6 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
         if(!isShowAD){
             return;
         }
-        if(this.bv != null)
-        {
-            bannerContainer.removeAllViews();
-        }
-
-        if(tryloadadTime>=tryloadadMaxTimes){
-            return;
-        }
-        tryloadadTime++;
-//        int min=0;
-//        int max=99;
-//        Random random = new Random();
-//        int num = random.nextInt(max)%(max-min+1) + min;
-//
-//        if(num<=90){
-//
-//        }
         this.getBanner().loadAD();
 
     }
@@ -386,32 +347,30 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
 //    }
 
 
-    private BannerView getBanner() {
-
+    private UnifiedBannerView getBanner() {
+        if(this.bv != null){
+            bannerContainer.removeView(bv);
+            bv.destroy();
+        }
         String posId = getPosID();
 
-        this.bv = new BannerView(this, ADSize.BANNER, ConstantAd.APPID,posId);
-        bv.setRefresh(30);
-        bv.setADListener(new AbstractBannerADListener() {
+//        this.bv = new UnifiedBannerView(this, ConstantAd.APPID, posId, this);
 
-            @Override
-            public void onNoAD(AdError error) {
-                tryloadadTime = 0;
-                Log.i(
-                        "AD_DEMO",
-                        String.format("Banner onNoAD，eCode = %d, eMsg = %s", error.getErrorCode(),
-                                error.getErrorMsg()));
-                loadads();
-            }
-
-            @Override
-            public void onADReceiv() {
-
-                Log.i("AD_DEMO", "ONBannerReceive");
-            }
-        });
-        bannerContainer.addView(bv);
+        // 不需要传递tags使用下面构造函数
+        this.bv = new UnifiedBannerView(this, ConstantAd.APPID, posId, this);
+        bannerContainer.addView(bv, getUnifiedBannerLayoutParams());
         return this.bv;
+    }
+
+    /**
+     * banner2.0规定banner宽高比应该为6.4:1 , 开发者可自行设置符合规定宽高比的具体宽度和高度值
+     *
+     * @return
+     */
+    private FrameLayout.LayoutParams getUnifiedBannerLayoutParams() {
+        Point screenSize = new Point();
+        getWindowManager().getDefaultDisplay().getSize(screenSize);
+        return new FrameLayout.LayoutParams(screenSize.x,  Math.round(screenSize.x / 6.4F));
     }
 
     @Override
@@ -436,4 +395,43 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
         super.onDestroy();
     }
 
+    @Override
+    public void onNoAD(AdError adError) {
+
+    }
+
+    @Override
+    public void onADReceive() {
+
+    }
+
+    @Override
+    public void onADExposure() {
+
+    }
+
+    @Override
+    public void onADClosed() {
+
+    }
+
+    @Override
+    public void onADClicked() {
+
+    }
+
+    @Override
+    public void onADLeftApplication() {
+
+    }
+
+    @Override
+    public void onADOpenOverlay() {
+
+    }
+
+    @Override
+    public void onADCloseOverlay() {
+
+    }
 }

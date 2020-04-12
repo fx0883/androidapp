@@ -2,7 +2,7 @@ package com.ChildHealthDiet.app2;
 
 public class ConstantAd {
   public static final String APPID = "1105610408";
-  public static final String BannerPosID = "5000612467693949";
+  public static final String BannerPosID = "6071602824991352";
   public static final String InterteristalPosID = "8575134060152130849";
   public static final String SplashPosID = "3000759686598603";
   public static final String NativePosID = "4051200382276498";
