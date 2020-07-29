@@ -1,27 +1,45 @@
 <resources>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="imgsize">150dp</dimen>
+    <dimen name="recsize">155dp</dimen>
+
+    <dimen name="dialog_width">320dp</dimen>
+    <dimen name="dialog_height">400dp</dimen>
+    <dimen name="dialog_padding">10dp</dimen>
+
+    <dimen name="margin_x_small">5dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_medium">15dp</dimen>
+    <dimen name="margin_large">20dp</dimen>
+    <dimen name="margin_x_large">25dp</dimen>
+    <dimen name="margin_xx_large">30dp</dimen>
+    <dimen name="margin_xxx_large">40dp</dimen>
+    <dimen name="margin_xxxx_large">60dp</dimen>
+    <dimen name="margin_xxxxx_large">90dp</dimen>
+    <dimen name="button_size">36dp</dimen>
+    <dimen name="button_size2">38dp</dimen>
+    <dimen name="progress_size">47dp</dimen>
+    <dimen name="button_width">118dp</dimen>
+    <dimen name="color_dot_size">36dp</dimen>
+
+    <dimen name="button_text_size">12sp</dimen>
+
+    <dimen name="dp_16">16dp</dimen>
+
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="splash_countdown_txt">14sp</dimen>
+    <dimen name="splash_title_txt">20sp</dimen>
+    <dimen name="splash_button_txt">20sp</dimen>
+    <dimen name="splash_desc_txt">16sp</dimen>
 
 
-    <dimen name="default_divider_height">1dp</dimen>
-    <dimen name="default_divider_padding">4dp</dimen>
+    <dimen name="editor_size">35dp</dimen>
+    <dimen name="normal_margin">8dp</dimen>
+    <dimen name="large_margin">16dp</dimen>
 
-    <dimen name="item_height">60dp</dimen>
-    <dimen name="item_margin">10dp</dimen>
-
-    <dimen name="pager_item_horizontal_margin">15dp</dimen>
-    <dimen name="pager_item_vertical_margin">100dp</dimen>
-    <dimen name="pager_item_big_margin">36dp</dimen>
-
-    <dimen name="related_thumbnail_width">90dp</dimen>
-    <dimen name="related_thumbnail_height">130dp</dimen>
-    <dimen name="related_item_height">140dp</dimen>
-    <dimen name="padding_size_small">3dp</dimen>
-    <dimen name="padding_size_default">8dp</dimen>
-    <dimen name="padding_size_medium">6dp</dimen>
-
-    <dimen name="app_bar_height">200dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
 </resources>
