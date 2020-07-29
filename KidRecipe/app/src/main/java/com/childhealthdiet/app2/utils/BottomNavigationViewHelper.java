@@ -22,8 +22,8 @@ public class BottomNavigationViewHelper {
 
             for (int i = 0; i < menuView.getChildCount(); i++) {
                 BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
-                itemView.setShiftingMode(false);
-                itemView.setChecked(itemView.getItemData().isChecked());
+//                itemView.setShiftingMode(false);
+//                itemView.setChecked(itemView.getItemData().isChecked());
             }
 
         } catch (NoSuchFieldException | IllegalAccessException e) {
