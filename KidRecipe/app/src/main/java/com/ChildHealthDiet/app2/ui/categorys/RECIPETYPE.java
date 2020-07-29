@@ -1,0 +1,17 @@
+package com.ChildHealthDiet.app2.ui.categorys;
+/**
+ * Created by HaiyuKing
+ * Used 存储位置类型
+ */
+
+public enum RECIPETYPE {
+    None,
+    Month,
+    Keyword,
+    Category,
+    Collect,
+    Eattime,
+    Type,
+    Ingredients,
+    Symptoms;
+}

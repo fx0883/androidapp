@@ -8,7 +8,7 @@
     tools:context=".ui.activitys.RecipeKeywordListActivity">
 
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
 
         android:id="@+id/basket_toolbar_id"
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:text="清空购物车"
             android:background="@color/transparent"/>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
     <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/basket_recycler_view"
         android:layout_width="match_parent"

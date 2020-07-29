@@ -1,16 +1,25 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'mtj-circle-plugin'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/Users/fengxin/Github/androidapp/fs.keystore')
+            storePassword '123456'
+            keyPassword '123456'
+            keyAlias 'fs.keystore'
+        }
+    }
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
     defaultConfig {
-        applicationId "com.childhealthdiet.app2"
+        applicationId "com.ChildHealthDiet.app2"
         minSdkVersion 22
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 300
+        versionName "3.0"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         release {
@@ -22,6 +31,16 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+
+    MtjCirclePluginConfig {
+        // 设置appkey
+        appkey = 'US0XOEOZuxqqQVqZ7ZrLlTB3I3ccQrHi'
+        // 设置debug 开关，如果需要查看日志则打开开关，为避免影响性能建议上线前关闭（设置为false）
+        debug = false
+        // 默认启动此插件，如果开发者不需要可以禁用（设置为false）
+        enabled = true
+    }
+
 }
 //greendao{
 //    schemaVersion 3
@@ -30,13 +49,13 @@ android {
 //}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     // View injection
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    implementation 'com.android.support:support-v4:28.0.0'
-    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    annotationProcessor "com.jakewharton:butterknife-compiler:10.2.1"
     // RxJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
@@ -44,10 +63,10 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-banner:2.2.5'
     //icon 按钮
     implementation 'com.githang:com-phillipcalvin-iconbutton:1.0.1@aar'
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //LRecyclerView
     implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.3'
     //NiceImageView
@@ -57,7 +76,7 @@ dependencies {
     implementation 'org.kie.modules:com-google-code-gson:6.5.0.Final'
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'net.zetetic:android-database-sqlcipher:4.0.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation project(path: ':searchmlist')
     implementation project(path: ':searchview')
     implementation 'com.hyman:flowlayout-lib:1.1.2'
