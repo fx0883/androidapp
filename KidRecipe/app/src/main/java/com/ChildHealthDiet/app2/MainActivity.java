@@ -133,7 +133,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void processLogic(){
         super.processLogic();
-//        check();
+        check(this);
 
     }
 

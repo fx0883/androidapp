@@ -17,8 +17,16 @@
     "key":"feedback",
     "name":"反馈",
     "picture":"file:///android_asset/image/feedback.png",
-    "jumpClassName":"file:///android_asset/image/breakfast.jpeg",
-    "jumpingParam":"收藏"
+    "jumpClassName":"file:///android_asset/image/feedback.png",
+    "jumpingParam":"反馈"
+  }
+,
+  {
+    "key":"about",
+    "name":"关于",
+    "picture":"file:///android_asset/image/about.png",
+    "jumpClassName":"file:///android_asset/image/about.png",
+    "jumpingParam":"关于"
   }
 ]
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.ChildHealthDiet.app2.R;
 import com.ChildHealthDiet.app2.adapter.MineDataAdapter;
+import com.ChildHealthDiet.app2.constant.Constant;
 import com.ChildHealthDiet.app2.context.Kidinfo;
 import com.ChildHealthDiet.app2.context.UserContext;
 import com.ChildHealthDiet.app2.model.bean.MineItem;
@@ -20,6 +21,7 @@ import com.ChildHealthDiet.app2.presenter.contract.MineContract;
 import com.ChildHealthDiet.app2.ui.activitys.BasketActivity;
 import com.ChildHealthDiet.app2.ui.activitys.KidEidtActivity;
 import com.ChildHealthDiet.app2.ui.activitys.RecipeKeywordListActivity;
+import com.ChildHealthDiet.app2.ui.activitys.WebViewActivity;
 import com.ChildHealthDiet.app2.ui.base.BaseMVPFragment;
 import com.ChildHealthDiet.app2.ui.categorys.RECIPETYPE;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
@@ -156,6 +158,9 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
                     case "feedback":
                         MineFragment.this.sendEmail();
                         break;
+                    case "about":
+                        MineFragment.this.gotoAbout();
+                        break;
                 }
 
             }
@@ -252,4 +257,11 @@ public class MineFragment extends BaseMVPFragment<MineContract.Presenter> implem
                 "选择email程序."));
     }
 
+
+    private void gotoAbout(){
+        Intent intent = new Intent(this.getContext(), WebViewActivity.class);
+        intent.putExtra("title", getString(R.string.about));
+        intent.putExtra("url", Constant.ABOUT_URL);
+        this.getActivity().startActivity(intent);
+    }
 }

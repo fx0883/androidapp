@@ -91,4 +91,5 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:3.10.0"
 
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    implementation 'com.kongzue.dialog_v3x:dialog:3.1.9'
 }

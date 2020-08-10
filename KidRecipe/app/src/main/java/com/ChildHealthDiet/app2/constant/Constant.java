@@ -14,17 +14,7 @@ import java.util.List;
 
 
 public class Constant {
-//    public static String BASE_IMAGE_URL = "http://192.168.0.100/colorbook/api/";
-//    //    public static String BASE_IMAGE_URL = "http://192.168.0.107/colorbook/api/";
-//    public static String UPLOAD_URL = "http://192.168.0.100/colorbook/uploads/";
 
-//    public static String BASE_IMAGE_URL = "http://templatevilla.net/codecanyon/colorbookadmin/admin/api/";
-//
-//    public static String UPLOAD_URL =  "http://templatevilla.net/codecanyon/colorbookadmin/admin/uploads/";
-
-//    public static String BASE_IMAGE_URL = "http://192.168.31.205:8090/images";
-//    public static String BASE_URL = "http://192.168.31.205:8090";
-//    public static String UPLOAD_URL =  "http://192.168.31.205/uploads/";
     public static Boolean DEBUG = true;
     public static String BASE_IMAGE_URL = "http://39.96.168.2:8090/images";
     public static String BASE_URL = "http://39.96.168.2:8090";
@@ -60,11 +50,11 @@ public class Constant {
 
 
 
-    public static String SERVICE_AGREEMENT_URL = "http://fx0883.github.io/MySite/cg_fuwuxiyi.html";
+    public static String SERVICE_AGREEMENT_URL = "http://www.fsbooks.top/static/configData/kidrecipe/kid_fuwuxiyi.html";
 
-    public static String PRIVACY_POLICY_URL = "http://fx0883.github.io/MySite/cg_privacy_policy.html";
+    public static String PRIVACY_POLICY_URL = "http://www.fsbooks.top/static/configData/kidrecipe/kid_privacy_policy.html";
 
-    public static String ABOUT_URL = "http://fx0883.github.io/MySite/cg_about.html";
+    public static String ABOUT_URL = "http://www.fsbooks.top/static/configData/kidrecipe/kid_about.html";
 
 
     public static String getSavedImgPath(Context context) {
