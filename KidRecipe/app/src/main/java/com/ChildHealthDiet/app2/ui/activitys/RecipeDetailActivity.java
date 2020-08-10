@@ -2,7 +2,12 @@ package com.ChildHealthDiet.app2.ui.activitys;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+
+import com.ChildHealthDiet.app2.utils.WechatUtil;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
@@ -11,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -30,6 +36,12 @@ import com.ChildHealthDiet.app2.presenter.RecipeDetailPresenter;
 import com.ChildHealthDiet.app2.presenter.contract.RecipeDetailContract;
 import com.ChildHealthDiet.app2.ui.base.BaseMVPActivity;
 import com.ChildHealthDiet.app2.ui.components.StatusBarUtil;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 //import com.google.android.gms.ads.AdListener;
 //import com.google.android.gms.ads.AdRequest;
 //import com.google.android.gms.ads.AdSize;
@@ -38,6 +50,9 @@ import com.ChildHealthDiet.app2.ui.components.StatusBarUtil;
 //import com.qq.e.ads.banner.AbstractBannerADListener;
 //import com.qq.e.ads.banner.BannerView;
 //import com.qq.e.comm.util.AdError;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 
@@ -93,6 +108,11 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
 //        this.init(savedInstanceState);
 //    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.recipedetail_main, menu);
+        return true;
+    }
 
     @Override
     protected void initData(Bundle savedInstanceState){
@@ -155,6 +175,10 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
         if (id == android.R.id.home) {
             finish();
         }
+        else if(id == R.id.recipedetail_action_share){
+            shareToWechat();
+//            invokeMini();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -176,15 +200,27 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
         activity.startActivityForResult(intent, 10029, options.toBundle());
     }
 
+//    @Override
+//    public void updateRecipe(RecipeBean recipeBean) {
+//        String recipeUrl = "file:///android_asset/recipeimage/" + recipeBean.getPicture();
+//        Glide.with(this).load(recipeUrl).into(this.imgvBg);
+//        getSupportActionBar().setTitle(recipeBean.getName());
+//        toolbarLayout.setTitle(recipeBean.getName());
+////        cookDetailAdapter = new RecipeDetailAdapter(this, recipeBean,isShowCollection);
+//        cookDetailAdapter = new RecipeDetailAdapter(this, recipeBean,mPresenter,isShowCollection);
+////        recyclerList.setLayoutManager(new LinearLayoutManager(getContext()));
+//        recyclerList.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerList.setAdapter(cookDetailAdapter);
+//    }
+
     @Override
     public void updateRecipe(RecipeBean recipeBean) {
+        this.mRecipeBean = recipeBean;
         String recipeUrl = "file:///android_asset/recipeimage/" + recipeBean.getPicture();
         Glide.with(this).load(recipeUrl).into(this.imgvBg);
         getSupportActionBar().setTitle(recipeBean.getName());
         toolbarLayout.setTitle(recipeBean.getName());
-//        cookDetailAdapter = new RecipeDetailAdapter(this, recipeBean,isShowCollection);
         cookDetailAdapter = new RecipeDetailAdapter(this, recipeBean,mPresenter,isShowCollection);
-//        recyclerList.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerList.setLayoutManager(new LinearLayoutManager(this));
         recyclerList.setAdapter(cookDetailAdapter);
     }
@@ -204,5 +240,74 @@ public class RecipeDetailActivity extends BaseMVPActivity<RecipeDetailContract.P
     protected RecipeDetailContract.Presenter bindPresenter() {
         return new RecipeDetailPresenter();
     }
+
+
+    private void shareToWechat(){
+
+        String appId = "wx9666b12631d67687"; // 填应用AppId
+        IWXAPI api = WXAPIFactory.createWXAPI(this, appId);
+
+        WXMiniProgramObject miniProgramObj = new WXMiniProgramObject();
+        miniProgramObj.webpageUrl = "http://www.qq.com"; // 兼容低版本的网页链接
+        miniProgramObj.miniprogramType = WXMiniProgramObject.MINIPTOGRAM_TYPE_RELEASE;// 正式版:0，测试版:1，体验版:2
+        miniProgramObj.userName = "gh_5e52bc5b286b";     // 小程序原始id
+        miniProgramObj.path = "/pages/recipe/recipe?id="+this.mRecipeBean.getId().toString();
+        WXMediaMessage msg = new WXMediaMessage(miniProgramObj);
+        msg.title = this.mRecipeBean.getName();                    // 小程序消息title
+        msg.description = this.mRecipeBean.getPrompt();               // 小程序消息desc
+        msg.thumbData = getThumb();                      // 小程序消息封面图片，小于128k
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("miniProgram");
+        req.message = msg;
+        req.scene = SendMessageToWX.Req.WXSceneSession;  // 目前只支持会话
+        api.sendReq(req);
+
+
+    }
+
+    private String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+    }
+
+    private void invokeMini(){
+        String appId = "wx9666b12631d67687"; // 填应用AppId
+        IWXAPI api = WXAPIFactory.createWXAPI(this, appId);
+
+        WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
+        req.userName = "gh_5e52bc5b286b"; // 填小程序原始id
+        req.path = "/pages/recipe/recipe?id="+this.mRecipeBean.getId().toString();    ;                  ////拉起小程序页面的可带参路径，不填默认拉起小程序首页，对于小游戏，可以只传入 query 部分，来实现传参效果，如：传入 "?foo=bar"。
+        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;// 可选打开 开发版，体验版和正式版
+        api.sendReq(req);
+    }
+
+    public Bitmap getImageFromAssetsFile(String fileName) {
+        Bitmap image = null;
+        AssetManager am = getResources().getAssets();
+        try {
+            InputStream is = am.open(fileName);
+            image = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+
+    private byte[] getThumb(){
+//        this.mRecipeBean = recipeBean;
+        String recipeUrl = "recipeimage/" + this.mRecipeBean.getPicture();
+
+        Bitmap bmp = this.getImageFromAssetsFile(recipeUrl);
+
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 100, 100, true);
+        bmp.recycle();
+
+//        WechatUtil
+        return WechatUtil.bmpToByteArray(thumbBmp,true);
+    }
+
+
 
 }

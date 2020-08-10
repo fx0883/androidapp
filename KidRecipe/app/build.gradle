@@ -17,8 +17,8 @@ android {
         applicationId "com.ChildHealthDiet.app2"
         minSdkVersion 22
         targetSdkVersion 28
-        versionCode 300
-        versionName "3.0"
+        versionCode 301
+        versionName "3.0.1"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
@@ -64,7 +64,7 @@ dependencies {
     //icon 按钮
     implementation 'com.githang:com-phillipcalvin-iconbutton:1.0.1@aar'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-    testImplementation 'junit:junit:4.12'
+//    testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //LRecyclerView
@@ -89,4 +89,6 @@ dependencies {
     // OkHttp3
     implementation "com.squareup.okhttp3:okhttp:3.14.4"
     implementation "com.squareup.okhttp3:logging-interceptor:3.10.0"
+
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 }

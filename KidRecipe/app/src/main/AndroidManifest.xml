@@ -14,7 +14,7 @@
         <!-- 渠道商编号 -->
         <meta-data
             android:name="BaiduMobAd_CHANNEL"
-            android:value="xiaomi" />
+            android:value="huawei" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">

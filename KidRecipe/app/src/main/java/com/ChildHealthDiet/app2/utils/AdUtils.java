@@ -15,11 +15,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class AdUtils {
-    private final String URL = "http://fx0883.github.io/MySite/kidrecipe_mi_ad.json";
+    private final String URL = "http://www.fsbooks.top/static/configData/kidrecipe/kidrecipe_mi_ad.json";
 
     public final String AD_PREF = "Ad_Pref";
 
-    public final String AppStoreName = "xiaomi";
+    public final String AppStoreName = "huawei";
 
     private Context mContext = null;
     //类初始化时，不初始化这个对象(延时加载，真正用的时候再创建)
